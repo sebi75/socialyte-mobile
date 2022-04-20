@@ -1,17 +1,19 @@
-import { View, FlatList } from "react-native"
+import { View, FlatList, StyleSheet } from "react-native"
 import FeedPost from "../components/FeedPost"
-import tw from "twrnc"
 
 import DUMMY from "../data/dummy"
+import Colors from "../constants/Colors"
 
 const FeedScreen: React.FC = () => {
   return (
-    <View style={tw`flex-1 items-center bg-red-500`}>
+    <View style={styles.screen}>
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={DUMMY}
         renderItem={({ item }) => {
           const { avatar, username, id, image } = item
           const caption = Math.random().toString(36).substring(7)
+
           return (
             <FeedPost
               avatarImage={avatar}
@@ -25,5 +27,13 @@ const FeedScreen: React.FC = () => {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: Colors.dark,
+    alignItems: "center",
+  },
+})
 
 export default FeedScreen

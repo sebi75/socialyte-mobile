@@ -29,7 +29,8 @@ const FeedStackNavigator: React.FC = () => {
           headerTintColor: FeedSettings.titleColor,
           headerRight: () => (
             <CustomHeaderButton
-              iconName={"ios-star-outline"}
+              iconName={"ios-send"}
+              color={"white"}
               onPress={() => navigation.jumpTo("Inbox")}
             />
           ),

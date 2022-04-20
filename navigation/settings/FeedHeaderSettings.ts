@@ -9,6 +9,6 @@ interface FeedSettingsType {
 
 export const FeedSettings: FeedSettingsType = {
   title: "Socialyte",
-  backgroundColor: Platform.OS === "ios" ? "#F8F8F8" : Colors.primary,
-  titleColor: Platform.OS === "ios" ? Colors.primary : "#fff",
+  backgroundColor: Platform.OS === "ios" ? Colors.dark : Colors.dark,
+  titleColor: "white",
 }
