@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     marginVertical: 35,
   },
   postContainer: {
-    width: width * 0.8,
+    width: width,
   },
   firstLine: {
     width: "100%",
@@ -73,6 +73,8 @@ const styles = StyleSheet.create({
   avatarImage: {
     width: 48,
     height: 48,
+    backgroundColor: "white",
+    borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
   },
