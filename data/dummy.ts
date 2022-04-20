@@ -1,4 +1,4 @@
-export const POSTS = [
+export default [
   {
     id: 1,
     first_name: "Thatch",
