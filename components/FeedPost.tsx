@@ -1,5 +1,6 @@
 import { View, Text, Dimensions, StyleSheet, Image } from "react-native"
 import Colors from "../constants/Colors"
+import { CustomIconButton } from "./IconButton"
 
 interface FeedPostProps {
   username: string
@@ -26,6 +27,27 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
           {/* @ts-ignore */}
           <Image style={styles.postImage} source={imageURL} />
         </View>
+        {/* THIRD LINE a.k.a. likes and comments icons */}
+        <View style={styles.thirdLine}>
+          {/* like button */}
+          <View>
+            <CustomIconButton
+              iconName={"ios-heart-outline"}
+              size={31}
+              color={"white"}
+              onPress={() => console.log("button clicked")}
+            />
+          </View>
+          {/* comment button */}
+          <View style={{ marginLeft: 10 }}>
+            <CustomIconButton
+              size={31}
+              iconName={"ios-chatbubbles"}
+              color={"white"}
+              onPress={() => console.log("button clicked")}
+            />
+          </View>
+        </View>
       </View>
     </View>
   )
@@ -36,7 +58,7 @@ const styles = StyleSheet.create({
     width: width,
     backgroundColor: Colors.dark,
     alignItems: "center",
-    marginVertical: 50,
+    marginVertical: 35,
   },
   postContainer: {
     width: width * 0.8,
@@ -62,6 +84,11 @@ const styles = StyleSheet.create({
   usernameStyle: {
     fontSize: 15,
     color: "white",
+  },
+  thirdLine: {
+    width: "100%",
+    flexDirection: "row",
+    marginVertical: 10,
   },
 })
 

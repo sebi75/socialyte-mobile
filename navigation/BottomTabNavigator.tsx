@@ -15,7 +15,7 @@ const TabNavigator = () => {
     >
       <Tab.Screen name="CameraScreen" component={CameraScreen} />
       <Tab.Screen name="FeedScreen" component={FeedStackNavigator} />
-      <Tab.Screen name="Inbox" component={InboxScreen} />
+      <Tab.Screen name="InboxScreen" component={InboxScreen} />
     </Tab.Navigator>
   )
 }

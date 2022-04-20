@@ -5,7 +5,7 @@ import { FeedSettings } from "../settings"
 import { useNavigation } from "@react-navigation/native"
 
 /* COMPONENTS */
-import { CustomHeaderButton } from "../../components/HeaderButton"
+import { CustomIconButton } from "../../components/IconButton"
 
 type RootStackParamList = {
   Feed: undefined
@@ -27,11 +27,20 @@ const FeedStackNavigator: React.FC = () => {
             backgroundColor: FeedSettings.backgroundColor,
           },
           headerTintColor: FeedSettings.titleColor,
-          headerRight: () => (
-            <CustomHeaderButton
-              iconName={"ios-send"}
+          headerLeft: () => (
+            <CustomIconButton
+              iconName={"ios-camera"}
+              size={25}
               color={"white"}
-              onPress={() => navigation.jumpTo("Inbox")}
+              onPress={() => navigation.jumpTo("CameraScreen")}
+            />
+          ),
+          headerRight: () => (
+            <CustomIconButton
+              iconName={"ios-send"}
+              size={25}
+              color={"white"}
+              onPress={() => navigation.jumpTo("InboxScreen")}
             />
           ),
         }}
