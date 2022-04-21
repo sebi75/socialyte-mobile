@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native"
-
-import BottomTabNavigator from "./navigation/BottomTabNavigator"
+import { StatusBar } from "expo-status-bar"
+import BottomTabNavigator from "./navigation/TabNavigators/BottomTabNavigator"
 import { LogBox } from "react-native"
 
 LogBox.ignoreLogs([

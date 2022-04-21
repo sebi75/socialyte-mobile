@@ -1,12 +1,14 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 
-import FeedStackNavigator from "./Stacks/FeedStackNavigator"
-import InboxScreen from "../screens/InboxScreen"
-import CameraScreen from "../screens/CameraScreen"
+import FeedStackNavigator from "../Stacks/FeedStackNavigator"
+import InboxScreen from "../../screens/InboxScreen"
+import CameraScreen from "../../screens/CameraScreen"
 
 const Tab = createMaterialTopTabNavigator()
 
-const TabNavigator = () => {
+/* THE NAVIGATOR THAT IT'S NOT VISIBLE AND IT SERVES FOR INBOX - FEED - CAMERA STACKS */
+
+const TopTabNavigator = () => {
   return (
     <Tab.Navigator
       initialRouteName="FeedScreen"
@@ -20,4 +22,4 @@ const TabNavigator = () => {
   )
 }
 
-export default TabNavigator
+export default TopTabNavigator

@@ -1,6 +1,7 @@
 import { View, Text, Dimensions, StyleSheet, Image } from "react-native"
 import Colors from "../constants/Colors"
 import { CustomIconButton } from "./IconButton"
+import { useNavigation } from "@react-navigation/native"
 
 interface FeedPostProps {
   username: string
@@ -13,6 +14,7 @@ const { width, height } = Dimensions.get("window")
 
 const FeedPost: React.FC<FeedPostProps> = (props) => {
   const { username, caption, imageURL, avatarImage } = props
+  const navigation: any = useNavigation()
 
   return (
     <View style={styles.screen}>
@@ -44,7 +46,7 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
               size={31}
               iconName={"ios-chatbubbles"}
               color={"white"}
-              onPress={() => console.log("button clicked")}
+              onPress={() => navigation.navigate("CommentsModal")}
             />
           </View>
         </View>
@@ -86,6 +88,7 @@ const styles = StyleSheet.create({
   usernameStyle: {
     fontSize: 15,
     color: "white",
+    marginLeft: 7,
   },
   thirdLine: {
     width: "100%",

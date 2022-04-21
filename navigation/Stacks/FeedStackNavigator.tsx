@@ -1,5 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
+
 import FeedScreen from "../../screens/FeedScreen"
+import CommentsModalScreen from "../../screens/CommentsModalScreen"
+
 /* import settings */
 import { FeedSettings } from "../settings"
 import { useNavigation } from "@react-navigation/native"
@@ -9,6 +12,7 @@ import { CustomIconButton } from "../../components/IconButton"
 
 type RootStackParamList = {
   Feed: undefined
+  CommentsModal: undefined
 }
 
 const FeedStack = createNativeStackNavigator<RootStackParamList>()
@@ -45,6 +49,20 @@ const FeedStackNavigator: React.FC = () => {
           ),
         }}
       />
+      <FeedStack.Group screenOptions={{ presentation: "modal" }}>
+        <FeedStack.Screen
+          name={"CommentsModal"}
+          component={CommentsModalScreen}
+          options={{
+            headerStyle: {
+              backgroundColor: FeedSettings.backgroundColor,
+            },
+            headerTitleStyle: {
+              color: FeedSettings.titleColor,
+            },
+          }}
+        />
+      </FeedStack.Group>
     </FeedStack.Navigator>
   )
 }
