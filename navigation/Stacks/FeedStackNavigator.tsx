@@ -4,7 +4,7 @@ import FeedScreen from "../../screens/FeedScreen"
 import CommentsModalScreen from "../../screens/CommentsModalScreen"
 
 /* import settings */
-import { FeedSettings } from "../settings"
+import { FeedSettings } from "./settings"
 import { useNavigation } from "@react-navigation/native"
 
 /* COMPONENTS */
