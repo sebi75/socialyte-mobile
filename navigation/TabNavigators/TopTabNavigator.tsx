@@ -12,25 +12,13 @@ const Tab = createMaterialTopTabNavigator()
 const TopTabNavigator = () => {
   return (
     <Tab.Navigator
-      initialRouteName="BottomTabNavigator"
+      initialRouteName="FeedStackNavigator"
       keyboardDismissMode={"on-drag"}
       tabBar={() => null}
     >
-      <Tab.Screen
-        name="CameraScreen"
-        component={CameraScreen}
-        options={{
-          tabBarStyle: { display: "none" },
-        }}
-      />
-      <Tab.Screen name="BottomTabNavigator" component={BottomTabNavigator} />
-      <Tab.Screen
-        name="InboxScreen"
-        component={InboxScreen}
-        options={{
-          tabBarStyle: { display: "none" },
-        }}
-      />
+      <Tab.Screen name="CameraScreen" component={CameraScreen} />
+      <Tab.Screen name="FeedStackNavigator" component={FeedStackNavigator} />
+      <Tab.Screen name="InboxScreen" component={InboxScreen} />
     </Tab.Navigator>
   )
 }

@@ -1,8 +1,22 @@
 import { View, Text } from "react-native"
+import { useEffect } from "react"
 import { useNavigation } from "@react-navigation/native"
 
-const InboxScreen: React.FC = (props) => {
-  const navigation: any = useNavigation()
+interface InboxScreenProps {
+  navigation: any
+  route: any
+}
+
+const InboxScreen: React.FC<InboxScreenProps> = ({ navigation, route }) => {
+  useEffect(() => {
+    console.log(navigation != undefined && "I have navigation")
+    navigation.setOptions({
+      tabBarStyle: {
+        display: "none",
+      },
+      tabBarVisible: false,
+    })
+  }, [])
   return (
     <View>
       <Text>Inbox</Text>

@@ -11,7 +11,7 @@ LogBox.ignoreLogs([
 export default function App() {
   return (
     <NavigationContainer>
-      <TopTabNavigator />
+      <BottomTabNavigator />
     </NavigationContainer>
   )
 }

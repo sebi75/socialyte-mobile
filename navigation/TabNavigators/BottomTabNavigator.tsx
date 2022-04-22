@@ -1,8 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
-import FeedStackNavigator from "../Stacks/FeedStackNavigator"
-import ProfileScreen from "../../screens/ProfileScreen"
-import FeedScreen from "../../screens/FeedScreen"
+import ProfileStackNavigator from "../Stacks/ProfileStackNavigator"
+import TopTabNavigator from "./TopTabNavigator"
+
+import { Ionicons } from "@expo/vector-icons"
+import { BlurView } from "expo-blur"
 
 /* SETTINGS */
 import BottomTabSettings from "./settings"
@@ -12,13 +14,48 @@ const Tab = createBottomTabNavigator()
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={{
-        ...BottomTabSettings,
+      screenOptions={({ route }) => {
+        return {
+          tabBarBackground: () => {
+            return <BlurView tint="dark" intensity={85} style={{ flex: 1 }} />
+          },
+          headerShown: false,
+        }
       }}
     >
       {/* SERVES AS THE MAIN ENTRY TO FEED */}
-      <Tab.Screen name="FeedStackNavigator" component={FeedStackNavigator} />
-      <Tab.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Tab.Screen
+        name="TopTabNavigator"
+        component={TopTabNavigator}
+        options={{
+          tabBarStyle: {
+            position: "absolute",
+          },
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => {
+            return <Ionicons name={"ios-home"} size={25} color={"white"} />
+          },
+        }}
+      />
+      <Tab.Screen
+        name="ProfileStackNavigator"
+        component={ProfileStackNavigator}
+        options={{
+          title: "Profile",
+          tabBarShowLabel: false,
+          tabBarStyle: {
+            position: "absolute",
+          },
+          tabBarIcon: ({ focused }) => {
+            return (
+              <Ionicons name={"add-circle-outline"} size={25} color={"white"} />
+            )
+          },
+          tabBarBackground: () => (
+            <BlurView tint="dark" intensity={85} style={{ flex: 1 }} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   )
 }

@@ -11,7 +11,7 @@ import { useNavigation } from "@react-navigation/native"
 import { CustomIconButton } from "../../components/IconButton"
 
 type RootStackParamList = {
-  Feed: undefined
+  FeedScreen: undefined
   CommentsModal: undefined
 }
 
@@ -23,7 +23,7 @@ const FeedStackNavigator: React.FC = () => {
   return (
     <FeedStack.Navigator>
       <FeedStack.Screen
-        name="Feed"
+        name="FeedScreen"
         component={FeedScreen}
         options={{
           title: FeedSettings.title,
@@ -54,6 +54,7 @@ const FeedStackNavigator: React.FC = () => {
           name={"CommentsModal"}
           component={CommentsModalScreen}
           options={{
+            title: "Comments: ",
             headerStyle: {
               backgroundColor: FeedSettings.backgroundColor,
             },
