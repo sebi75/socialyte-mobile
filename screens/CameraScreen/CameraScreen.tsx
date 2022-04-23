@@ -1,10 +1,19 @@
-import { View, Text, Alert, StyleSheet, Dimensions } from "react-native"
+import {
+  View,
+  TouchableOpacity,
+  Alert,
+  StyleSheet,
+  Dimensions,
+} from "react-native"
 import { useRef, useState, useEffect } from "react"
-import { TapGestureHandler } from "react-native-gesture-handler"
 import { Camera } from "expo-camera"
+import {
+  LongPressGestureHandler,
+  State,
+  TapGestureHandler,
+} from "react-native-gesture-handler"
 
-import { CustomIconButton } from "../components/IconButton"
-import { NavigationContainer } from "@react-navigation/native"
+import { CustomIconButton } from "../../components/IconButton"
 
 const { width, height } = Dimensions.get("window")
 const CameraScreen = ({
@@ -15,10 +24,41 @@ const CameraScreen = ({
   route: any
 }) => {
   const [hasPermissions, setHasPermissions] = useState<boolean | null>(null)
+  const [recordingUri, setRecordingUri] = useState<string | undefined>(
+    undefined
+  )
   const [type, setType] = useState<"front" | "back">(Camera.Constants.Type.back)
+  const autoFocus = Camera.Constants.AutoFocus.on
+  const cameraRef = useRef<any>(null)
+  const recordref = useRef<any>(null)
 
   const managePermissionsAsync = () => {
     return Camera.requestCameraPermissionsAsync()
+  }
+
+  const takePicture = async () => {
+    if (cameraRef.current) {
+      const photo = await cameraRef.current.takePictureAsync()
+      console.log(photo)
+      navigation.navigate("PicturePreviewScreen", {
+        resource: photo.uri,
+        isRecording: false,
+      })
+    }
+  }
+  const record = async () => {
+    const record = await cameraRef.current.recordAsync()
+    setRecordingUri(record)
+  }
+  const stopRecording = async () => {
+    const stop = await cameraRef.current.stopRecording()
+    setTimeout(() => {
+      navigation.navigate("PicturePreviewScreen", {
+        resource: recordingUri,
+        isRecording: true,
+      })
+      console.log(recordingUri)
+    }, 500)
   }
 
   useEffect(() => {
@@ -36,7 +76,12 @@ const CameraScreen = ({
       onActivated={() => setType(type === "front" ? "back" : "front")}
     >
       <View style={styles.container}>
-        <Camera style={styles.camera} type={type}>
+        <Camera
+          style={styles.camera}
+          type={type}
+          autoFocus={autoFocus}
+          ref={cameraRef}
+        >
           <View style={styles.insideOfCameraContent}>
             {/* TOP BUTTONS */}
             <View style={styles.topButtons}>
@@ -49,7 +94,24 @@ const CameraScreen = ({
             </View>
             {/* BOTTOM BUTTONS */}
             <View style={styles.bottomButtons}>
-              <View style={styles.captureButton} />
+              <LongPressGestureHandler
+                onEnded={() => {
+                  stopRecording()
+                }}
+                onActivated={() => {
+                  record()
+                }}
+                ref={recordref}
+                minDurationMs={500}
+              >
+                <TapGestureHandler
+                  waitFor={recordref}
+                  onActivated={takePicture}
+                >
+                  <TouchableOpacity style={styles.captureButton} />
+                </TapGestureHandler>
+              </LongPressGestureHandler>
+
               <CustomIconButton
                 iconName={"ios-camera-reverse-outline"}
                 size={45}
@@ -65,6 +127,10 @@ const CameraScreen = ({
 }
 
 const styles = StyleSheet.create({
+  wrapperCustom: {
+    borderRadius: 8,
+    padding: 6,
+  },
   container: {
     width,
     height: "100%",

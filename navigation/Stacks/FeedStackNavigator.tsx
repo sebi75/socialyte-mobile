@@ -5,19 +5,19 @@ import CommentsModalScreen from "../../screens/CommentsModalScreen"
 
 /* import settings */
 import { FeedSettings } from "./settings"
+import { View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 
 /* COMPONENTS */
 import { CustomIconButton } from "../../components/IconButton"
-import CameraScreen from "../../screens/CameraScreen"
+import CameraStackNavigator from "./CameraStackNavigator"
 import InboxScreen from "../../screens/InboxScreen"
-import { View } from "react-native"
 import CreatePostStackNavigator from "./CreatePostStackNavigator"
 
 type RootStackParamList = {
   FeedScreen: undefined
   CommentsModal: undefined
-  CameraScreen: undefined
+  CameraStackNavigator: undefined
   InboxScreen: undefined
   CreatePostModal: undefined
 }
@@ -44,7 +44,7 @@ const FeedStackNavigator: React.FC = () => {
                 iconName={"ios-camera"}
                 size={25}
                 color={"white"}
-                onPress={() => navigation.navigate("CameraScreen")}
+                onPress={() => navigation.navigate("CameraStackNavigator")}
               />
             </View>
           ),
@@ -101,8 +101,8 @@ const FeedStackNavigator: React.FC = () => {
         }}
       />
       <FeedStack.Screen
-        name={"CameraScreen"}
-        component={CameraScreen}
+        name={"CameraStackNavigator"}
+        component={CameraStackNavigator}
         options={{
           headerShown: false,
           //@ts-ignore
