@@ -11,12 +11,15 @@ import { useNavigation } from "@react-navigation/native"
 import { CustomIconButton } from "../../components/IconButton"
 import CameraScreen from "../../screens/CameraScreen"
 import InboxScreen from "../../screens/InboxScreen"
+import { View } from "react-native"
+import CreatePostStackNavigator from "./CreatePostStackNavigator"
 
 type RootStackParamList = {
   FeedScreen: undefined
   CommentsModal: undefined
   CameraScreen: undefined
   InboxScreen: undefined
+  CreatePostModal: undefined
 }
 
 const FeedStack = createNativeStackNavigator<RootStackParamList>()
@@ -36,23 +39,35 @@ const FeedStackNavigator: React.FC = () => {
           },
           headerTintColor: FeedSettings.titleColor,
           headerLeft: () => (
-            <CustomIconButton
-              iconName={"ios-camera"}
-              size={25}
-              color={"white"}
-              onPress={() => navigation.navigate("CameraScreen")}
-            />
+            <View>
+              <CustomIconButton
+                iconName={"ios-camera"}
+                size={25}
+                color={"white"}
+                onPress={() => navigation.navigate("CameraScreen")}
+              />
+            </View>
           ),
           headerRight: () => (
-            <CustomIconButton
-              iconName={"ios-send"}
-              size={25}
-              color={"white"}
-              onPress={() => navigation.navigate("InboxScreen")}
-            />
+            <View style={{ flexDirection: "row" }}>
+              <CustomIconButton
+                style={{ marginRight: 10 }}
+                iconName={"ios-add-circle-outline"}
+                size={25}
+                color={"white"}
+                onPress={() => navigation.navigate("CreatePostModal")}
+              />
+              <CustomIconButton
+                iconName={"ios-send"}
+                size={25}
+                color={"white"}
+                onPress={() => navigation.navigate("InboxScreen")}
+              />
+            </View>
           ),
         }}
       />
+      {/* COMMENTS MODAL SCREEN */}
       <FeedStack.Group screenOptions={{ presentation: "modal" }}>
         <FeedStack.Screen
           name={"CommentsModal"}
@@ -69,6 +84,22 @@ const FeedStackNavigator: React.FC = () => {
           }}
         />
       </FeedStack.Group>
+      {/* CREATING A POST MODAL SCREEN */}
+      <FeedStack.Screen
+        name={"CreatePostModal"}
+        component={CreatePostStackNavigator}
+        options={{
+          title: "Create a post: ",
+          headerStyle: {
+            backgroundColor: FeedSettings.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: FeedSettings.titleColor,
+          },
+          headerTintColor: FeedSettings.titleColor,
+          headerShown: false,
+        }}
+      />
       <FeedStack.Screen
         name={"CameraScreen"}
         component={CameraScreen}

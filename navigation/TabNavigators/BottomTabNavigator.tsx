@@ -18,15 +18,9 @@ const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => {
-        if (route.name == "CameraScreen") {
-          console.log(route.name)
-          return {
-            tabBarVisible: false,
-          }
-        }
         return {
           tabBarBackground: () => {
-            return <BlurView tint="dark" intensity={85} style={{ flex: 1 }} />
+            return <BlurView tint="dark" intensity={90} style={{ flex: 1 }} />
           },
           headerShown: false,
         }

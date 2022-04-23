@@ -44,7 +44,7 @@ const CameraScreen = ({
                 iconName={"exit"}
                 color={"white"}
                 onPress={() => navigation.goBack()}
-                size={45}
+                size={35}
               />
             </View>
             {/* BOTTOM BUTTONS */}
@@ -67,12 +67,12 @@ const CameraScreen = ({
 const styles = StyleSheet.create({
   container: {
     width,
-    height,
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
   camera: {
-    height,
+    height: "100%",
     width,
   },
   bottomButtons: {
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    marginBottom: height * 0.1,
+    marginBottom: height * 0.12,
   },
   topButtons: {
     backgroundColor: "transparent",
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     borderColor: "white",
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: 10,
+    marginHorizontal: 15,
   },
 })
 
