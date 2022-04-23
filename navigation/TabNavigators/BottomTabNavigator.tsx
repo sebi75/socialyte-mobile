@@ -10,6 +10,7 @@ import { BlurView } from "expo-blur"
 import BottomTabSettings from "./settings"
 
 import FeedStackNavigator from "../Stacks/FeedStackNavigator"
+import StoriesStackNavigator from "../Stacks/StoriesStackNavigator"
 
 const Tab = createBottomTabNavigator()
 
@@ -41,7 +42,30 @@ const BottomTabNavigator = () => {
           },
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => {
-            return <Ionicons name={"ios-home"} size={25} color={"white"} />
+            if (focused) {
+              return <Ionicons name={"ios-home"} size={25} color={"white"} />
+            }
+            return (
+              <Ionicons name={"ios-home-outline"} size={25} color={"white"} />
+            )
+          },
+        }}
+      />
+      <Tab.Screen
+        name="StoriesStackNavigator"
+        component={StoriesStackNavigator}
+        options={{
+          tabBarStyle: {
+            position: "absolute",
+          },
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => {
+            if (!focused) {
+              return (
+                <Ionicons name="ios-book-outline" size={25} color="white" />
+              )
+            }
+            return <Ionicons name={"ios-book"} size={25} color={"white"} />
           },
         }}
       />

@@ -65,6 +65,7 @@ const FeedStackNavigator: React.FC = () => {
             headerTitleStyle: {
               color: FeedSettings.titleColor,
             },
+            headerTintColor: FeedSettings.titleColor,
           }}
         />
       </FeedStack.Group>
@@ -74,7 +75,7 @@ const FeedStackNavigator: React.FC = () => {
         options={{
           headerShown: false,
           //@ts-ignore
-          gestureDirection: "horizontal",
+          gestureDirection: "horizontal-inverted",
         }}
       />
       <FeedStack.Screen
