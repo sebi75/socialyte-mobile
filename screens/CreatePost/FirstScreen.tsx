@@ -26,10 +26,22 @@ const FirstScreen: React.FC = () => {
     <View style={styles.screen}>
       {/* FIRST CONTAINER WHICH WILL CONTAIN AN IMAGE PREVIEW */}
       <View style={styles.imagePreviewContainer}>
-        {image && <Image style={styles.imageStyle} source={{ uri: image }} />}
+        {image ? (
+          <Image style={styles.imageStyle} source={{ uri: image }} />
+        ) : (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <CustomButton title={"Choose an image"} onPress={pickImageAsync} />
+          </View>
+        )}
       </View>
       <View>
-        <CustomButton title={"pick an image"} onPress={pickImageAsync} />
+        {image && (
+          <View style={{ width, justifyContent: "center" }}>
+            <CustomButton title={"Change Image"} onPress={pickImageAsync} />
+          </View>
+        )}
       </View>
     </View>
   )
