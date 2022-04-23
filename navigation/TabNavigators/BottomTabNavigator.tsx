@@ -9,12 +9,20 @@ import { BlurView } from "expo-blur"
 /* SETTINGS */
 import BottomTabSettings from "./settings"
 
+import FeedStackNavigator from "../Stacks/FeedStackNavigator"
+
 const Tab = createBottomTabNavigator()
 
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => {
+        if (route.name == "CameraScreen") {
+          console.log(route.name)
+          return {
+            tabBarVisible: false,
+          }
+        }
         return {
           tabBarBackground: () => {
             return <BlurView tint="dark" intensity={85} style={{ flex: 1 }} />
@@ -25,8 +33,8 @@ const BottomTabNavigator = () => {
     >
       {/* SERVES AS THE MAIN ENTRY TO FEED */}
       <Tab.Screen
-        name="TopTabNavigator"
-        component={TopTabNavigator}
+        name="FeedStackNavigator"
+        component={FeedStackNavigator}
         options={{
           tabBarStyle: {
             position: "absolute",

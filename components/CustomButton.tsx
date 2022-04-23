@@ -1,10 +1,4 @@
-import {
-  TouchableOpacity,
-  Text,
-  TouchableNativeFeedback,
-  Platform,
-  StyleSheet,
-} from "react-native"
+import { TouchableOpacity, Text, StyleSheet } from "react-native"
 
 interface CustomButtonProps {
   title: string
@@ -15,16 +9,14 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
   title,
   onPress,
 }) => {
-  const NativeTouchableOpacity: any =
-    Platform.OS === "android" ? TouchableNativeFeedback : TouchableOpacity
   return (
-    <NativeTouchableOpacity
+    <TouchableOpacity
       activeOpacity={0.8}
       style={styles.buttonStyle}
       onPress={onPress}
     >
       <Text style={styles.buttonText}>{title}</Text>
-    </NativeTouchableOpacity>
+    </TouchableOpacity>
   )
 }
 

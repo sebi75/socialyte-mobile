@@ -5,6 +5,11 @@ import InboxScreen from "../../screens/InboxScreen"
 import CameraScreen from "../../screens/CameraScreen"
 import BottomTabNavigator from "./BottomTabNavigator"
 
+/* 
+!!!!!!!!!
+CURRENTLY NOT IN USE
+*/
+
 const Tab = createMaterialTopTabNavigator()
 
 /* THE NAVIGATOR THAT IT'S NOT VISIBLE AND IT SERVES FOR INBOX - FEED - CAMERA STACKS */

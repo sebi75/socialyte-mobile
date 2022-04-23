@@ -9,10 +9,14 @@ import { useNavigation } from "@react-navigation/native"
 
 /* COMPONENTS */
 import { CustomIconButton } from "../../components/IconButton"
+import CameraScreen from "../../screens/CameraScreen"
+import InboxScreen from "../../screens/InboxScreen"
 
 type RootStackParamList = {
   FeedScreen: undefined
   CommentsModal: undefined
+  CameraScreen: undefined
+  InboxScreen: undefined
 }
 
 const FeedStack = createNativeStackNavigator<RootStackParamList>()
@@ -36,7 +40,7 @@ const FeedStackNavigator: React.FC = () => {
               iconName={"ios-camera"}
               size={25}
               color={"white"}
-              onPress={() => navigation.jumpTo("CameraScreen")}
+              onPress={() => navigation.navigate("CameraScreen")}
             />
           ),
           headerRight: () => (
@@ -44,7 +48,7 @@ const FeedStackNavigator: React.FC = () => {
               iconName={"ios-send"}
               size={25}
               color={"white"}
-              onPress={() => navigation.jumpTo("InboxScreen")}
+              onPress={() => navigation.navigate("InboxScreen")}
             />
           ),
         }}
@@ -64,6 +68,26 @@ const FeedStackNavigator: React.FC = () => {
           }}
         />
       </FeedStack.Group>
+      <FeedStack.Screen
+        name={"CameraScreen"}
+        component={CameraScreen}
+        options={{
+          headerShown: false,
+          //@ts-ignore
+          gestureDirection: "horizontal",
+        }}
+      />
+      <FeedStack.Screen
+        name={"InboxScreen"}
+        component={InboxScreen}
+        options={{
+          title: "Inbox",
+          headerStyle: {
+            backgroundColor: FeedSettings.backgroundColor,
+          },
+          headerTintColor: FeedSettings.titleColor,
+        }}
+      />
     </FeedStack.Navigator>
   )
 }
