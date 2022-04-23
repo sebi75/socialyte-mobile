@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: "transparent",
     flexDirection: "row",
-    marginBottom: 35,
+    marginBottom: height * 0.1,
   },
 })
 
