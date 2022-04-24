@@ -9,7 +9,6 @@ import { useRef, useState, useEffect } from "react"
 import { Camera } from "expo-camera"
 import {
   LongPressGestureHandler,
-  State,
   TapGestureHandler,
 } from "react-native-gesture-handler"
 
@@ -24,9 +23,7 @@ const CameraScreen = ({
   route: any
 }) => {
   const [hasPermissions, setHasPermissions] = useState<boolean | null>(null)
-  const [recordingUri, setRecordingUri] = useState<string | undefined>(
-    undefined
-  )
+  const [facesDetected, setFacesDetected] = useState<any>(undefined)
   const [type, setType] = useState<"front" | "back">(Camera.Constants.Type.back)
   const autoFocus = Camera.Constants.AutoFocus.on
   const cameraRef = useRef<any>(null)
@@ -63,12 +60,6 @@ const CameraScreen = ({
 
   const stopRecording = async () => {
     const stop = await cameraRef.current.stopRecording()
-    /* if (recordingUri) {
-        navigation.navigate("PicturePreviewScreen", {
-          resource: recordingUri,
-          isRecording: true,
-        })
-    } */
   }
 
   useEffect(() => {
@@ -92,6 +83,17 @@ const CameraScreen = ({
     })
   }, [hasPermissions])
 
+  const handleFacesDeteced = (faces: any) => {
+    if (faces.faces.length > 0) {
+      setFacesDetected({
+        origin: faces.faces[0].bounds.origin,
+        size: faces.faces[0].bounds.size,
+      })
+    } else {
+      setFacesDetected(undefined)
+    }
+  }
+
   return (
     <TapGestureHandler
       numberOfTaps={2}
@@ -103,7 +105,22 @@ const CameraScreen = ({
           type={type}
           autoFocus={autoFocus}
           ref={cameraRef}
+          focusDepth={0}
+          onFacesDetected={handleFacesDeteced}
         >
+          {facesDetected && (
+            <View
+              style={{
+                borderWidth: 1,
+                borderColor: "yellow",
+                width: facesDetected.size.width,
+                height: facesDetected.size.height,
+                position: "absolute",
+                top: facesDetected.origin.y,
+                left: facesDetected.origin.x,
+              }}
+            ></View>
+          )}
           <View style={styles.insideOfCameraContent}>
             {/* TOP BUTTONS */}
             <View style={styles.topButtons}>
