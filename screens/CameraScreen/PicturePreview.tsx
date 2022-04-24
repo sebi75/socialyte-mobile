@@ -3,6 +3,7 @@ import { CustomIconButton } from "../../components/IconButton"
 const { width, height } = Dimensions.get("window")
 import { Video, AVPlaybackStatus } from "expo-av"
 import { useRef } from "react"
+import Colors from "../../constants/Colors"
 
 const PicturePreviewScreen = ({
   navigation,
@@ -29,7 +30,7 @@ const PicturePreviewScreen = ({
           source={{ uri: resource }}
           style={styles.image}
           resizeMode="contain"
-          useNativeControls
+          shouldPlay
           isLooping
           ref={videoRef}
         />
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
   screen: {
     width,
     height,
-    backgroundColor: "green",
+    backgroundColor: Colors.dark,
   },
   image: {
     width: width,

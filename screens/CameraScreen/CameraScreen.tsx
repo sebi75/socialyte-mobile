@@ -47,25 +47,47 @@ const CameraScreen = ({
     }
   }
   const record = async () => {
-    const record = await cameraRef.current.recordAsync()
-    setRecordingUri(record)
-  }
-  const stopRecording = async () => {
-    const stop = await cameraRef.current.stopRecording()
-    setTimeout(() => {
+    const options = {
+      maxDuration: 7,
+      mute: false,
+    }
+    const record = await cameraRef.current.recordAsync(options)
+
+    if (record.uri) {
       navigation.navigate("PicturePreviewScreen", {
-        resource: recordingUri,
+        resource: record.uri,
         isRecording: true,
       })
-      console.log(recordingUri)
-    }, 500)
+    }
+  }
+
+  const stopRecording = async () => {
+    const stop = await cameraRef.current.stopRecording()
+    /* if (recordingUri) {
+        navigation.navigate("PicturePreviewScreen", {
+          resource: recordingUri,
+          isRecording: true,
+        })
+    } */
   }
 
   useEffect(() => {
     managePermissionsAsync().then(({ status }) => {
       setHasPermissions(status === "granted")
       if (status !== "granted") {
-        Alert.alert("No permission to use camera")
+        Alert.alert(
+          "No permission",
+          "Please grant permission if you want to access the camera",
+          [
+            {
+              text: "Okay",
+              onPress: () => {
+                navigation.goBack()
+              },
+              style: "cancel",
+            },
+          ]
+        )
       }
     })
   }, [hasPermissions])
