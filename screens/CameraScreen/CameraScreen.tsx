@@ -1,11 +1,5 @@
-import {
-  View,
-  TouchableOpacity,
-  Alert,
-  StyleSheet,
-  Dimensions,
-} from "react-native"
-import { useRef, useState, useEffect } from "react"
+import { View, TouchableOpacity, StyleSheet, Dimensions } from "react-native"
+import { useRef, useState } from "react"
 import { Camera } from "expo-camera"
 import {
   LongPressGestureHandler,
@@ -13,6 +7,9 @@ import {
 } from "react-native-gesture-handler"
 
 import { CustomIconButton } from "../../components/IconButton"
+
+/* Use camera features */
+import { useCameraFeatures } from "../../hooks/useCameraFeatures"
 
 const { width, height } = Dimensions.get("window")
 const CameraScreen = ({
@@ -22,83 +19,30 @@ const CameraScreen = ({
   navigation: any
   route: any
 }) => {
-  const [hasPermissions, setHasPermissions] = useState<boolean | null>(null)
+  const [showFrame, setShowFrame] = useState<boolean>(false)
   const [facesDetected, setFacesDetected] = useState<any>(undefined)
-  const [type, setType] = useState<"front" | "back">(Camera.Constants.Type.back)
-  const autoFocus = Camera.Constants.AutoFocus.on
   const cameraRef = useRef<any>(null)
   const recordref = useRef<any>(null)
 
-  const managePermissionsAsync = () => {
-    return Camera.requestCameraPermissionsAsync()
-  }
+  const { type, autoFocus, switchType, takePicture, record, stopRecording } =
+    useCameraFeatures(cameraRef, navigation)
 
-  const takePicture = async () => {
-    if (cameraRef.current) {
-      const photo = await cameraRef.current.takePictureAsync()
-      console.log(photo)
-      navigation.navigate("PicturePreviewScreen", {
-        resource: photo.uri,
-        isRecording: false,
-      })
-    }
-  }
-  const record = async () => {
-    const options = {
-      maxDuration: 7,
-      mute: false,
-    }
-    const record = await cameraRef.current.recordAsync(options)
-
-    if (record.uri) {
-      navigation.navigate("PicturePreviewScreen", {
-        resource: record.uri,
-        isRecording: true,
-      })
-    }
-  }
-
-  const stopRecording = async () => {
-    const stop = await cameraRef.current.stopRecording()
-  }
-
-  useEffect(() => {
-    managePermissionsAsync().then(({ status }) => {
-      setHasPermissions(status === "granted")
-      if (status !== "granted") {
-        Alert.alert(
-          "No permission",
-          "Please grant permission if you want to access the camera",
-          [
-            {
-              text: "Okay",
-              onPress: () => {
-                navigation.goBack()
-              },
-              style: "cancel",
-            },
-          ]
-        )
-      }
-    })
-  }, [hasPermissions])
-
-  const handleFacesDeteced = (faces: any) => {
+  /* const handleFacesDetected = (faces: any) => {
     if (faces.faces.length > 0) {
-      setFacesDetected({
-        origin: faces.faces[0].bounds.origin,
-        size: faces.faces[0].bounds.size,
-      })
+      setTimeout(() => {
+        setFacesDetected({
+          origin: faces.faces[0].bounds.origin,
+          size: faces.faces[0].bounds.size,
+        })
+      }, 1000)
+      setFacesDetected(undefined)
     } else {
       setFacesDetected(undefined)
     }
-  }
+  } */
 
   return (
-    <TapGestureHandler
-      numberOfTaps={2}
-      onActivated={() => setType(type === "front" ? "back" : "front")}
-    >
+    <TapGestureHandler numberOfTaps={2} onActivated={() => switchType()}>
       <View style={styles.container}>
         <Camera
           style={styles.camera}
@@ -106,12 +50,13 @@ const CameraScreen = ({
           autoFocus={autoFocus}
           ref={cameraRef}
           focusDepth={0}
-          onFacesDetected={handleFacesDeteced}
+          //onFacesDetected={handleFacesDetected}
         >
           {facesDetected && (
             <View
               style={{
                 borderWidth: 1,
+                borderRadius: 5,
                 borderColor: "yellow",
                 width: facesDetected.size.width,
                 height: facesDetected.size.height,
@@ -155,7 +100,7 @@ const CameraScreen = ({
                 iconName={"ios-camera-reverse-outline"}
                 size={45}
                 color={"white"}
-                onPress={() => setType(type === "front" ? "back" : "front")}
+                onPress={() => switchType()}
               />
             </View>
           </View>
