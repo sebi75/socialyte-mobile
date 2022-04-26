@@ -1,8 +1,8 @@
 import { View, FlatList, StyleSheet } from "react-native"
-import FeedPost from "../components/FeedPost"
+import FeedPost from "../../components/FeedPost"
 
-import DUMMY from "../data/dummy"
-import Colors from "../constants/Colors"
+import DUMMY from "../../data/dummy"
+import Colors from "../../constants/Colors"
 
 const FeedScreen: React.FC = () => {
   return (

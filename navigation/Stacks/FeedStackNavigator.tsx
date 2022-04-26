@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
-import FeedScreen from "../../screens/FeedScreen"
-import CommentsModalScreen from "../../screens/CommentsModalScreen"
+import FeedScreen from "../../screens/FeedGroup/FeedScreen"
+import CommentsModalScreen from "../../screens/FeedGroup/CommentsModalScreen"
 
 /* import settings */
 import { FeedSettings } from "./settings"
@@ -11,7 +11,7 @@ import { useNavigation } from "@react-navigation/native"
 /* COMPONENTS */
 import { CustomIconButton } from "../../components/IconButton"
 import CameraStackNavigator from "./CameraStackNavigator"
-import InboxScreen from "../../screens/InboxScreen"
+import InboxScreen from "../../screens/InboxGroup/InboxScreen"
 import CreatePostStackNavigator from "./CreatePostStackNavigator"
 
 type RootStackParamList = {
@@ -105,8 +105,7 @@ const FeedStackNavigator: React.FC = () => {
         component={CameraStackNavigator}
         options={{
           headerShown: false,
-          //@ts-ignore
-          gestureDirection: "horizontal-inverted",
+          animation: "slide_from_bottom",
         }}
       />
       <FeedStack.Screen

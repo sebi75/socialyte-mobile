@@ -1,8 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
 /* SCREENS */
-import CameraScreen from "../../screens/CameraScreen/CameraScreen"
-import PicturePreviewScreen from "../../screens/CameraScreen/PicturePreview"
+import CameraScreen from "../../screens/CameraGroup/CameraScreen"
+import PicturePreviewScreen from "../../screens/CameraGroup/PicturePreview"
 
 const CameraStack = createNativeStackNavigator()
 
@@ -14,10 +14,16 @@ const CameraStackNavigator: React.FC = () => {
         headerShown: false,
       }}
     >
+      {/* first screen that contains most of configuration and UI of camera */}
       <CameraStack.Screen name={"CameraScreen"} component={CameraScreen} />
       <CameraStack.Screen
         name={"PicturePreviewScreen"}
         component={PicturePreviewScreen}
+        options={{
+          //animation for smooth transition between screens
+          // like the instagram camera preview
+          animation: "fade",
+        }}
       />
     </CameraStack.Navigator>
   )

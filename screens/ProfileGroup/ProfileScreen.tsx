@@ -6,9 +6,9 @@ import {
   Button,
   ScrollView,
 } from "react-native"
-import { CustomButton } from "../components/CustomButton"
+import { CustomButton } from "../../components/CustomButton"
 
-import Colors from "../constants/Colors"
+import Colors from "../../constants/Colors"
 
 const { width, height } = Dimensions.get("window")
 const ProfileScreen: React.FC = () => {
