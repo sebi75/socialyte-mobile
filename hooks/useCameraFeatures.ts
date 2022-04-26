@@ -36,17 +36,13 @@ export const useCameraFeatures = (cameraRef: any, navigation: any) => {
         [{ rotate: 180 }, { flip: FlipType.Vertical }],
         { compress: 1, format: SaveFormat.PNG }
       )
-
-      navigation.navigate("PicturePreviewScreen", {
-        resource: photo.uri,
-        isRecording: false,
-      })
-    } else {
-      navigation.navigate("PicturePreviewScreen", {
-        resource: photo.uri,
-        isRecording: false,
-      })
+      cameraRef.current.resumePreview()
     }
+
+    navigation.navigate("PicturePreviewScreen", {
+      resource: photo.uri,
+      isRecording: false,
+    })
   }
   const record = async () => {
     const record = await cameraRef.current.recordAsync(recordOptions)
