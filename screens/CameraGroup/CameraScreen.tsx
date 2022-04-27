@@ -19,13 +19,20 @@ const CameraScreen = ({
   navigation: any
   route: any
 }) => {
-  const [showFrame, setShowFrame] = useState<boolean>(false)
   const [facesDetected, setFacesDetected] = useState<any>(undefined)
   const cameraRef = useRef<any>(null)
   const recordref = useRef<any>(null)
 
-  const { type, autoFocus, switchType, takePicture, record, stopRecording } =
-    useCameraFeatures(cameraRef, navigation)
+  const {
+    type,
+    autoFocus,
+    switchType,
+    takePicture,
+    record,
+    stopRecording,
+    isFlashModeActive,
+    switchFlashMode,
+  } = useCameraFeatures(cameraRef, navigation)
 
   /* const handleFacesDetected = (faces: any) => {
     if (faces.faces.length > 0) {
@@ -43,13 +50,15 @@ const CameraScreen = ({
 
   return (
     <TapGestureHandler numberOfTaps={2} onActivated={() => switchType()}>
-      <View style={styles.container}>
+      <Layout>
         <Camera
           style={styles.camera}
           type={type}
           autoFocus={autoFocus}
           ref={cameraRef}
           focusDepth={0}
+          flashMode={isFlashModeActive}
+          focusable={true}
           //onFacesDetected={handleFacesDetected}
         >
           {facesDetected && (
@@ -74,6 +83,16 @@ const CameraScreen = ({
                 color={"white"}
                 onPress={() => navigation.goBack()}
                 size={35}
+                style={{ marginLeft: 10 }}
+              />
+
+              {/* FLASH TOGGLE BUTTON */}
+              <CustomIconButton
+                iconName={isFlashModeActive == "on" ? "flash" : "flash-off"}
+                color={"white"}
+                onPress={() => switchFlashMode()}
+                size={30}
+                style={{ marginRight: 10 }}
               />
             </View>
             {/* BOTTOM BUTTONS */}
@@ -105,9 +124,13 @@ const CameraScreen = ({
             </View>
           </View>
         </Camera>
-      </View>
+      </Layout>
     </TapGestureHandler>
   )
+}
+
+const Layout: React.FC = ({ children }) => {
+  return <View style={styles.container}>{children}</View>
 }
 
 const styles = StyleSheet.create({
@@ -134,10 +157,11 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.12,
   },
   topButtons: {
-    backgroundColor: "transparent",
+    width: width,
+    justifyContent: "space-between",
+    alignItems: "center",
     flexDirection: "row",
     marginVertical: 40,
-    marginHorizontal: 15,
     alignSelf: "flex-start",
   },
   insideOfCameraContent: {

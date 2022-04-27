@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
 /* SCREENS */
 import CameraScreen from "../../screens/CameraGroup/CameraScreen"
-import PicturePreviewScreen from "../../screens/CameraGroup/PicturePreview"
+import PicturePreviewScreen from "../../screens/CameraGroup/PicturePreviewScreen"
 
 const CameraStack = createNativeStackNavigator()
 

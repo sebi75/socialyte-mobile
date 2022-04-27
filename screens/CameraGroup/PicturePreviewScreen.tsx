@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Dimensions, Image } from "react-native"
 import { CustomIconButton } from "../../components/IconButton"
 const { width, height } = Dimensions.get("window")
-import { Video, AVPlaybackStatus } from "expo-av"
+import { Video } from "expo-av"
 import { useRef } from "react"
 import Colors from "../../constants/Colors"
 

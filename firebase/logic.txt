@@ -1,0 +1,39 @@
+for selecting friends:
+we have a "users" collection in firebase firestore that would look like this:
+
+//users is the collection
+users:     
+        //userids represent the documents inside of the collection
+        userid1:
+                userData,
+                friends: [
+                    an array of userIds
+                ]
+
+        userid2:
+                userData,
+                friends: [
+                    an array of userIds
+                ]
+
+        //...
+QUERYING ONE USER's FRIENDS:
+we would have his user id so in order to get his friend list, we would construct an array with user documents that contain his userid in the "friends" array like the following:
+
+******
+const usersRef = collection(db, "users")
+const q = query(usersRef, where("friends", "array-contains", userId))
+******
+
+// When we need to get the friends list?
+For reducing bandwidth usage and reducing the requests:
+        // keep a "total" of friends field in db that we get with one request
+
+//keep track: list of who liked a post:
+        //media collection consists of unique documents named with userIds
+        //every document is an array of posts 
+        media:   
+                userId:
+                        ***
+                        //...media data
+                        ***

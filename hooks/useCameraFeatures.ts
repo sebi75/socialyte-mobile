@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator"
 import { Camera } from "expo-camera"
 import { Alert } from "react-native"
@@ -7,8 +7,9 @@ export const useCameraFeatures = (cameraRef: any, navigation: any) => {
   const [type, setCameraType] = useState<"front" | "back">("back")
   const [hasPermissions, setHasPermissions] = useState<boolean | null>(null)
   const autoFocus = Camera.Constants.AutoFocus.on
-
-  console.log("camera features hook called")
+  const [isFlashModeActive, setIsFlashModeActive] = useState<"on" | "off">(
+    "off"
+  )
 
   const managePermissionsAsync = () => {
     return Camera.requestCameraPermissionsAsync()
@@ -17,6 +18,7 @@ export const useCameraFeatures = (cameraRef: any, navigation: any) => {
   const recordOptions = {
     maxDuration: 7,
     mute: false,
+    flashMode: isFlashModeActive,
   }
 
   const switchType = () => {
@@ -59,6 +61,12 @@ export const useCameraFeatures = (cameraRef: any, navigation: any) => {
     const stop = await cameraRef.current.stopRecording()
   }
 
+  const switchFlashMode = () => {
+    return isFlashModeActive == "on"
+      ? setIsFlashModeActive("off")
+      : setIsFlashModeActive("on")
+  }
+
   useEffect(() => {
     managePermissionsAsync().then(({ status }) => {
       setHasPermissions(status === "granted")
@@ -87,5 +95,7 @@ export const useCameraFeatures = (cameraRef: any, navigation: any) => {
     takePicture,
     record,
     stopRecording,
+    switchFlashMode,
+    isFlashModeActive,
   }
 }

@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  Button,
-  ScrollView,
-} from "react-native"
+import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native"
 import { CustomButton } from "../../components/CustomButton"
 
 import Colors from "../../constants/Colors"
