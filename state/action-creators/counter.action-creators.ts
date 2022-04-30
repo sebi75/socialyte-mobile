@@ -1,5 +1,1 @@
-export {
-  increment,
-  decreement,
-  incrementByAmount,
-} from "../reducers/demoReducer"
+export default 1
