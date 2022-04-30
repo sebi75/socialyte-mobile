@@ -2,6 +2,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import Colors from "../../constants/Colors"
 
 import FirstScreen from "../../screens/CreatePost/FirstScreen"
+import SecondScreen from "../../screens/CreatePost/SecondScreen"
+
 import { CustomIconButton } from "../../components/IconButton"
 import { CustomButton } from "../../components/CustomButton"
 
@@ -38,7 +40,36 @@ const CreatePostStackNavigator = ({
           headerRight: () => {
             return (
               <CustomButton
-                title={"Next"}
+                title={"Continue"}
+                onPress={() => navigation.navigate("SecondScreen")}
+              />
+            )
+          },
+        }}
+      />
+      <CreatePostStack.Screen
+        name="SecondScreen"
+        component={SecondScreen}
+        options={{
+          title: "Set Bio",
+          headerStyle: {
+            backgroundColor: Colors.dark,
+          },
+          headerTintColor: "white",
+          headerLeft: () => {
+            return (
+              <CustomIconButton
+                iconName={"arrow-back"}
+                color={"white"}
+                size={30}
+                onPress={() => navigation.navigate("FirstScreen")}
+              />
+            )
+          },
+          headerRight: () => {
+            return (
+              <CustomButton
+                title={"Share Post"}
                 onPress={() => console.log("Next")}
               />
             )

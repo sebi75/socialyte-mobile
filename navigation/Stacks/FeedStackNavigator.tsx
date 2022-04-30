@@ -25,14 +25,12 @@ type RootStackParamList = {
 const FeedStack = createNativeStackNavigator<RootStackParamList>()
 
 const FeedStackNavigator: React.FC = () => {
-  const navigation: any = useNavigation()
-
   return (
     <FeedStack.Navigator>
       <FeedStack.Screen
         name="FeedScreen"
         component={FeedScreen}
-        options={{
+        options={({ navigation }) => ({
           title: FeedSettings.title,
           headerStyle: {
             backgroundColor: FeedSettings.backgroundColor,
@@ -65,7 +63,7 @@ const FeedStackNavigator: React.FC = () => {
               />
             </View>
           ),
-        }}
+        })}
       />
       {/* COMMENTS MODAL SCREEN */}
       <FeedStack.Group screenOptions={{ presentation: "modal" }}>
