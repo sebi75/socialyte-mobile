@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit"
+import { configureStore } from "@reduxjs/toolkit"
 import { useDispatch } from "react-redux"
 import counterReducer from "./reducers/demoReducer"
 

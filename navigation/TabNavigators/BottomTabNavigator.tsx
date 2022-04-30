@@ -1,13 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
 import ProfileStackNavigator from "../Stacks/ProfileStackNavigator"
-import TopTabNavigator from "./TopTabNavigator"
 
-import { Ionicons } from "@expo/vector-icons"
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons"
 import { BlurView } from "expo-blur"
-
-/* SETTINGS */
-import BottomTabSettings from "./settings"
 
 import FeedStackNavigator from "../Stacks/FeedStackNavigator"
 import StoriesStackNavigator from "../Stacks/StoriesStackNavigator"
@@ -73,9 +69,19 @@ const BottomTabNavigator = () => {
             position: "absolute",
           },
           tabBarIcon: ({ focused }) => {
-            return (
-              <Ionicons name={"add-circle-outline"} size={25} color={"white"} />
-            )
+            if (focused) {
+              return (
+                <MaterialCommunityIcons name={"face"} size={25} color="white" />
+              )
+            } else {
+              return (
+                <MaterialCommunityIcons
+                  name={"face-outline"}
+                  size={25}
+                  color="white"
+                />
+              )
+            }
           },
           tabBarBackground: () => (
             <BlurView tint="dark" intensity={85} style={{ flex: 1 }} />
