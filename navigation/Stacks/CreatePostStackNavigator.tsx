@@ -7,6 +7,8 @@ import SecondScreen from "../../screens/CreatePost/SecondScreen"
 import { CustomIconButton } from "../../components/IconButton"
 import { CustomButton } from "../../components/CustomButton"
 
+import { uploadImage } from "../../firebase/storage"
+
 const CreatePostStack = createNativeStackNavigator()
 
 const CreatePostStackNavigator = ({
@@ -21,7 +23,7 @@ const CreatePostStackNavigator = ({
       <CreatePostStack.Screen
         name="FirstScreen"
         component={FirstScreen}
-        options={{
+        options={({ route }: { route: any }) => ({
           title: "Create Post",
           headerStyle: {
             backgroundColor: Colors.dark,
@@ -41,16 +43,16 @@ const CreatePostStackNavigator = ({
             return (
               <CustomButton
                 title={"Continue"}
-                onPress={() => navigation.navigate("SecondScreen")}
+                onPress={() => console.log("continue")}
               />
             )
           },
-        }}
+        })}
       />
       <CreatePostStack.Screen
         name="SecondScreen"
         component={SecondScreen}
-        options={{
+        options={({ route }) => ({
           title: "Set Bio",
           headerStyle: {
             backgroundColor: Colors.dark,
@@ -70,11 +72,11 @@ const CreatePostStackNavigator = ({
             return (
               <CustomButton
                 title={"Share Post"}
-                onPress={() => console.log("Next")}
+                onPress={() => console.log(route.params)}
               />
             )
           },
-        }}
+        })}
       />
     </CreatePostStack.Navigator>
   )

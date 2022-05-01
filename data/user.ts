@@ -1,6 +1,7 @@
 export default {
   username: "sebys7",
   lastName: "Sebastian",
+  userId: "wever5hS%eg34wG4rg",
   firstName: "Semeniuc",
   email: "sebisemeniuc@gmail.com",
   postImage:
