@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { useDispatch } from "react-redux"
+
 import counterReducer from "./reducers/demoReducer"
+import createPostReducer from "./reducers/createPostReducer"
 
 const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    postData: createPostReducer,
   },
   devTools: process.env.NODE_ENV !== "production",
 })

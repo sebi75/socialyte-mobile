@@ -1,5 +1,5 @@
 import { db } from "../../firebaseConfig"
-import { doc, getDoc, addDoc, collection } from "firebase/firestore"
+import { doc, setDoc, addDoc, collection } from "firebase/firestore"
 
 import dummyPost from "../../../data/user"
 

@@ -9,6 +9,9 @@ import { CustomButton } from "../../components/CustomButton"
 
 import { uploadImage } from "../../firebase/storage"
 
+import { useSelector } from "react-redux"
+import { RootState } from "../../state/store"
+
 const CreatePostStack = createNativeStackNavigator()
 
 const CreatePostStackNavigator = ({
@@ -18,6 +21,12 @@ const CreatePostStackNavigator = ({
   navigation: any
   route: any
 }) => {
+  const { imageUri, caption } = useSelector(
+    (state: RootState) => state.postData
+  )
+  console.log("image from redux store")
+  console.log(imageUri)
+
   return (
     <CreatePostStack.Navigator>
       <CreatePostStack.Screen

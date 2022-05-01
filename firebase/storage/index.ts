@@ -1,5 +1,5 @@
 import { storage } from "../firebaseConfig"
-import { ref, uploadBytes } from "firebase/storage"
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 
 //create ref to the cloud storage
 
@@ -16,4 +16,23 @@ export const uploadImage = async (uploadUri: any) => {
   uploadBytes(imagesRef, blob).then((snapshot) => {
     console.log("Uploaded a blob or file!")
   })
+}
+
+/* Logic to get the media Google storage url for using in the app */
+export const getImageUrl = async () => {
+  //const startDate = performance.now()
+  const imageName = "qh152o8efl2nayul7dbrk"
+  const imageRef = ref(storage, `images/${imageName}`)
+
+  let imageUrl
+  try {
+    const downloadURL = await getDownloadURL(imageRef)
+
+    imageUrl = downloadURL
+  } catch (error: any) {
+    console.log("error encountered: ", error.message)
+  }
+  //const endDate = performance.now()
+  //console.log("miliseconds taken to get image url: ", endDate - startDate)
+  return imageUrl
 }

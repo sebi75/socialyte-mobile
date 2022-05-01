@@ -14,8 +14,10 @@ import { CustomButton } from "../../components/CustomButton"
 import Colors from "../../constants/Colors"
 
 import * as ImageManipulator from "expo-image-manipulator"
-import { uploadImage } from "../../firebase/storage"
+import { uploadImage, getImageUrl } from "../../firebase/storage"
 import { savePost } from "../../firebase/database/post/savePost"
+import { useAppDispatch } from "../../state/store"
+import { setImageUri, clearImageUri } from "../../state/action-creators"
 
 const { width, height } = Dimensions.get("window")
 const FirstScreen = ({
@@ -26,6 +28,7 @@ const FirstScreen = ({
   route: any
 }) => {
   const [source, setSource] = useState<any>(undefined)
+  const dispatch = useAppDispatch()
 
   const pickImageAsync = async () => {
     setSource(undefined)
@@ -37,18 +40,24 @@ const FirstScreen = ({
     })
 
     if (!result.cancelled) {
-      navigation.setParams({ image: result.uri })
       setSource({ uri: result.uri })
+
+      try {
+        const compressedImage = await compressImage(result.uri)
+        console.log("got here and compressed image: ", compressedImage)
+        dispatch(setImageUri(compressedImage))
+      } catch (error) {
+        console.log("error in compressing the image")
+        console.log("error: ", error)
+      }
     }
   }
 
-  const uploadImageHandler = async () => {
-    const { uri } = source
-
+  const compressImage = async (uri: string) => {
     const manipResult = await ImageManipulator.manipulateAsync(
       uri,
-      [{ resize: { width: width * 0.8 } }],
-      { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
+      [{ resize: { width: width, height: width } }],
+      { compress: 0.8, format: ImageManipulator.SaveFormat.JPEG }
     )
 
     const uploadUri =
@@ -56,8 +65,13 @@ const FirstScreen = ({
         ? manipResult.uri.replace("file://", "")
         : manipResult.uri
 
-    uploadImage(uploadUri)
+    return uploadUri
   }
+
+  /*   const getUrlTest = async () => {
+    const url = await getImageUrl()
+    console.log(url)
+  } */
 
   return (
     <ScrollView style={styles.screen}>
@@ -79,8 +93,15 @@ const FirstScreen = ({
             <CustomButton title={"Change Image"} onPress={pickImageAsync} />
           </View>
         )}
-        <Button title={"try upload"} onPress={uploadImageHandler} />
+        {/*  <Button title={"try upload"} onPress={uploadImageHandler} /> */}
         <Button title={"try post save"} onPress={savePost} />
+        <Button
+          title={"clear image"}
+          onPress={() => {
+            setSource(undefined)
+            dispatch(clearImageUri())
+          }}
+        />
       </View>
     </ScrollView>
   )
