@@ -1,13 +1,12 @@
 import { View, StyleSheet, Dimensions, Text, TextInput } from "react-native"
 import Colors from "../../constants/Colors"
-import { useState } from "react"
 
 import { useAppDispatch } from "../../state/store"
 import { setCaption } from "../../state/reducers/createPostReducer"
 
 import { useSelector } from "react-redux"
 
-const { width, height } = Dimensions.get("window")
+const { width } = Dimensions.get("window")
 const SecondScreen: React.FC = () => {
   const dispatch = useAppDispatch()
 
