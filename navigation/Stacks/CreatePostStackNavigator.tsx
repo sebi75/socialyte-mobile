@@ -18,6 +18,17 @@ const CreatePostStackNavigator = ({
   navigation: any
   route: any
 }) => {
+  const sharePostPrototype = () => {
+    //need the user id, the image, the caption, the date
+    //no to have a "posts" field in a user's document
+    //bacause we will query for his posts using his id in the "posts" collection
+    //upload the image to firebase storage
+    //get the url of the image
+    //create a post object
+    //upload the post object to firebase
+    //navigate to the home screen
+  }
+
   return (
     <CreatePostStack.Navigator>
       <CreatePostStack.Screen

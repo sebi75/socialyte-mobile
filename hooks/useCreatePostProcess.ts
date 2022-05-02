@@ -31,7 +31,6 @@ export const useCreatePostProcess = (width: any, height: any) => {
 
       try {
         const compressedImage = await compressImage(result.uri)
-        console.log("got here and compressed image: ", compressedImage)
         dispatch(setImageUri(compressedImage))
       } catch (error) {
         console.log("error in compressing the image")

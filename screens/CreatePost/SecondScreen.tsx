@@ -12,7 +12,6 @@ const SecondScreen: React.FC = () => {
   const dispatch = useAppDispatch()
 
   const { caption } = useSelector((state: any) => state.postData)
-  console.log(caption)
 
   const handleCaptionChange = (text: string) => {
     dispatch(setCaption(text))
@@ -29,7 +28,8 @@ const SecondScreen: React.FC = () => {
           numberOfLines={3}
           onChangeText={handleCaptionChange}
           style={styles.textInputStyle}
-          placeholder="set a description..."
+          value={caption != undefined && caption}
+          placeholder="type your description..."
           placeholderTextColor={"rgba(255,255,255,0.5)"}
         />
       </View>
