@@ -1,9 +1,18 @@
-import { View, StyleSheet, Dimensions, Image, ScrollView } from "react-native"
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Image,
+  ScrollView,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native"
 import { CustomButton } from "../../components/CustomButton"
 
 import Colors from "../../constants/Colors"
 
 import { useCreatePostLogic } from "../../hooks/useCreatePostLogic"
+import { useSelector } from "react-redux"
 
 const { width, height } = Dimensions.get("window")
 const FirstScreen = ({
@@ -17,21 +26,33 @@ const FirstScreen = ({
     width,
     height
   )
+  const { isLoading } = useSelector((state: any) => state.postData)
 
   return (
     <ScrollView style={styles.screen}>
       {/* FIRST CONTAINER WHICH WILL CONTAIN AN IMAGE PREVIEW */}
-      <View style={styles.imagePreviewContainer}>
-        {source ? (
+      <TouchableOpacity
+        style={styles.imagePreviewContainer}
+        onPress={pickImageAsync}
+      >
+        {isLoading ? (
+          <View style={styles.loadingStateStyle}>
+            <ActivityIndicator size="large" color={"white"} />
+          </View>
+        ) : source ? (
           <Image style={styles.imageStyle} source={{ uri: source.uri }} />
         ) : (
           <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
             <CustomButton title={"Choose an image"} onPress={pickImageAsync} />
           </View>
         )}
-      </View>
+      </TouchableOpacity>
       <View>
         {source && (
           <View style={{ width, justifyContent: "center" }}>
@@ -53,11 +74,19 @@ const styles = StyleSheet.create({
   imagePreviewContainer: {
     width: width,
     height: height * 0.5,
-    backgroundColor: "green",
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "rgba(255,255,255,0.5)",
   },
   imageStyle: {
     width: "100%",
     height: "100%",
+  },
+  loadingStateStyle: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
 })
 

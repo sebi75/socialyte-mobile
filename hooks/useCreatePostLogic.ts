@@ -5,7 +5,11 @@ import { useAppDispatch } from "../state/store"
 import * as ImageManipulator from "expo-image-manipulator"
 import { uploadImage, getImageUrl } from "../firebase/storage"
 import * as ImagePicker from "expo-image-picker"
-import { setImageUri, clearImageUri } from "../state/action-creators"
+import {
+  setImageUri,
+  clearImageUri,
+  setIsLoading,
+} from "../state/action-creators/createPostActions"
 
 export const useCreatePostLogic = (width: any, height: any) => {
   const [source, setSource] = useState<any>(undefined)
@@ -13,6 +17,7 @@ export const useCreatePostLogic = (width: any, height: any) => {
 
   const pickImageAsync = async () => {
     dispatch(clearImageUri())
+    dispatch(setIsLoading(true))
     setSource(undefined)
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -23,6 +28,7 @@ export const useCreatePostLogic = (width: any, height: any) => {
 
     if (!result.cancelled) {
       setSource({ uri: result.uri })
+      dispatch(setIsLoading(false))
 
       try {
         const compressedImage = await compressImage(result.uri)
@@ -32,6 +38,8 @@ export const useCreatePostLogic = (width: any, height: any) => {
         console.log("error in compressing the image")
         console.log("error: ", error)
       }
+    } else {
+      dispatch(setIsLoading(false))
     }
   }
 

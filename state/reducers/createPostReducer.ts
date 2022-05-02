@@ -2,12 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export interface CreatePostInterface {
   imageUri: string | undefined
+  isLoading: boolean
   caption: string | undefined
 }
 
 const initialState: CreatePostInterface = {
   imageUri: undefined,
   caption: undefined,
+  isLoading: false,
 }
 
 export const createPostSlice = createSlice({
@@ -26,9 +28,17 @@ export const createPostSlice = createSlice({
     clearCaption: (state) => {
       state.caption = undefined
     },
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload
+    },
   },
 })
 
-export const { setImageUri, setCaption, clearCaption, clearImageUri } =
-  createPostSlice.actions
+export const {
+  setImageUri,
+  setCaption,
+  clearCaption,
+  clearImageUri,
+  setIsLoading,
+} = createPostSlice.actions
 export default createPostSlice.reducer
