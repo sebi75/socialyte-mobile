@@ -6,6 +6,9 @@ import { setCaption } from "../../state/reducers/createPostReducer"
 
 import { useSelector } from "react-redux"
 
+/* component will rerender with every key press for settings the description */
+/* because I used dispatch to keep al the post related data in the store and not overcomplicate things */
+// I considered it will not result in any performance issues as it is a small component
 const { width } = Dimensions.get("window")
 const SecondScreen: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -15,6 +18,8 @@ const SecondScreen: React.FC = () => {
   const handleCaptionChange = (text: string) => {
     dispatch(setCaption(text))
   }
+
+  console.log("rerendered")
 
   return (
     <View style={styles.screen}>
@@ -27,7 +32,7 @@ const SecondScreen: React.FC = () => {
           numberOfLines={3}
           onChangeText={handleCaptionChange}
           style={styles.textInputStyle}
-          value={caption != undefined && caption}
+          value={caption != undefined ? caption : ""}
           placeholder="type your description..."
           placeholderTextColor={"rgba(255,255,255,0.5)"}
         />
