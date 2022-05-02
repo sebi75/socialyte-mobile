@@ -9,7 +9,11 @@ import { CustomButton } from "../../components/CustomButton"
 
 import { sharePost } from "./functions/sharePost"
 import { useAppDispatch } from "../../state/store"
-import { setIsLoading } from "../../state/reducers/createPostReducer"
+import {
+  setIsLoading,
+  clearCaption,
+  clearImageUri,
+} from "../../state/reducers/createPostReducer"
 
 const CreatePostStack = createNativeStackNavigator()
 
@@ -27,6 +31,8 @@ const CreatePostStackNavigator = ({
     try {
       await sharePost()
       dispatch(setIsLoading(false))
+      dispatch(clearCaption())
+      dispatch(clearImageUri())
     } catch (error: any) {
       throw new Error(error.message)
     }
