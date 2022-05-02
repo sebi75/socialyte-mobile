@@ -11,7 +11,7 @@ import { CustomButton } from "../../components/CustomButton"
 
 import Colors from "../../constants/Colors"
 
-import { useCreatePostLogic } from "../../hooks/useCreatePostLogic"
+import { useCreatePostProcess } from "../../hooks/useCreatePostProcess"
 import { useSelector } from "react-redux"
 
 const { width, height } = Dimensions.get("window")
@@ -22,7 +22,7 @@ const FirstScreen = ({
   navigation: any
   route: any
 }) => {
-  const { pickImageAsync, source, setSource } = useCreatePostLogic(
+  const { pickImageAsync, source, setSource } = useCreatePostProcess(
     width,
     height
   )

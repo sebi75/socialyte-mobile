@@ -10,7 +10,7 @@ import {
   setIsLoading,
 } from "../state/action-creators/createPostActions"
 
-export const useCreatePostLogic = (width: any, height: any) => {
+export const useCreatePostProcess = (width: any, height: any) => {
   const [source, setSource] = useState<any>(undefined)
   const dispatch = useAppDispatch()
 

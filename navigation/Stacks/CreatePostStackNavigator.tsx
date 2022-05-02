@@ -9,9 +9,6 @@ import { CustomButton } from "../../components/CustomButton"
 
 import { uploadImage } from "../../firebase/storage"
 
-import { useSelector } from "react-redux"
-import { RootState } from "../../state/store"
-
 const CreatePostStack = createNativeStackNavigator()
 
 const CreatePostStackNavigator = ({
@@ -21,12 +18,6 @@ const CreatePostStackNavigator = ({
   navigation: any
   route: any
 }) => {
-  const { imageUri, caption } = useSelector(
-    (state: RootState) => state.postData
-  )
-  console.log("image from redux store")
-  console.log(imageUri)
-
   return (
     <CreatePostStack.Navigator>
       <CreatePostStack.Screen
@@ -52,7 +43,7 @@ const CreatePostStackNavigator = ({
             return (
               <CustomButton
                 title={"Continue"}
-                onPress={() => console.log("continue")}
+                onPress={() => navigation.navigate("SecondScreen")}
               />
             )
           },
@@ -81,7 +72,7 @@ const CreatePostStackNavigator = ({
             return (
               <CustomButton
                 title={"Share Post"}
-                onPress={() => console.log(route.params)}
+                onPress={() => console.log("share post")}
               />
             )
           },
