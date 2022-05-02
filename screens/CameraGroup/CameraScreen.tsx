@@ -49,83 +49,78 @@ const CameraScreen = ({
   } */
 
   return (
-    <TapGestureHandler numberOfTaps={2} onActivated={() => switchType()}>
-      <Layout>
-        <Camera
-          style={styles.camera}
-          type={type}
-          autoFocus={autoFocus}
-          ref={cameraRef}
-          focusDepth={0}
-          flashMode={isFlashModeActive}
-          focusable={true}
-          //onFacesDetected={handleFacesDetected}
-        >
-          {facesDetected && (
-            <View
-              style={{
-                borderWidth: 1,
-                borderRadius: 5,
-                borderColor: "yellow",
-                width: facesDetected.size.width,
-                height: facesDetected.size.height,
-                position: "absolute",
-                top: facesDetected.origin.y,
-                left: facesDetected.origin.x,
-              }}
-            ></View>
-          )}
-          <View style={styles.insideOfCameraContent}>
-            {/* TOP BUTTONS */}
-            <View style={styles.topButtons}>
-              <CustomIconButton
-                iconName={"exit"}
-                color={"white"}
-                onPress={() => navigation.goBack()}
-                size={35}
-                style={{ marginLeft: 10 }}
-              />
+    <Layout>
+      <Camera
+        style={styles.camera}
+        type={type}
+        autoFocus={autoFocus}
+        ref={cameraRef}
+        focusDepth={0}
+        flashMode={isFlashModeActive}
+        focusable={true}
+        //onFacesDetected={handleFacesDetected}
+      >
+        {facesDetected && (
+          <View
+            style={{
+              borderWidth: 1,
+              borderRadius: 5,
+              borderColor: "yellow",
+              width: facesDetected.size.width,
+              height: facesDetected.size.height,
+              position: "absolute",
+              top: facesDetected.origin.y,
+              left: facesDetected.origin.x,
+            }}
+          ></View>
+        )}
+        <View style={styles.insideOfCameraContent}>
+          {/* TOP BUTTONS */}
+          <View style={styles.topButtons}>
+            <CustomIconButton
+              iconName={"exit"}
+              color={"white"}
+              onPress={() => navigation.goBack()}
+              size={35}
+              style={{ marginLeft: 10 }}
+            />
 
-              {/* FLASH TOGGLE BUTTON */}
-              <CustomIconButton
-                iconName={isFlashModeActive == "on" ? "flash" : "flash-off"}
-                color={"white"}
-                onPress={() => switchFlashMode()}
-                size={30}
-                style={{ marginRight: 10 }}
-              />
-            </View>
-            {/* BOTTOM BUTTONS */}
-            <View style={styles.bottomButtons}>
-              <LongPressGestureHandler
-                onEnded={() => {
-                  stopRecording()
-                }}
-                onActivated={() => {
-                  record()
-                }}
-                ref={recordref}
-                minDurationMs={500}
-              >
-                <TapGestureHandler
-                  waitFor={recordref}
-                  onActivated={takePicture}
-                >
-                  <TouchableOpacity style={styles.captureButton} />
-                </TapGestureHandler>
-              </LongPressGestureHandler>
-
-              <CustomIconButton
-                iconName={"ios-camera-reverse-outline"}
-                size={45}
-                color={"white"}
-                onPress={() => switchType()}
-              />
-            </View>
+            {/* FLASH TOGGLE BUTTON */}
+            <CustomIconButton
+              iconName={isFlashModeActive == "on" ? "flash" : "flash-off"}
+              color={"white"}
+              onPress={() => switchFlashMode()}
+              size={30}
+              style={{ marginRight: 10 }}
+            />
           </View>
-        </Camera>
-      </Layout>
-    </TapGestureHandler>
+          {/* BOTTOM BUTTONS */}
+          <View style={styles.bottomButtons}>
+            <LongPressGestureHandler
+              onEnded={() => {
+                stopRecording()
+              }}
+              onActivated={() => {
+                record()
+              }}
+              ref={recordref}
+              minDurationMs={500}
+            >
+              <TapGestureHandler waitFor={recordref} onActivated={takePicture}>
+                <TouchableOpacity style={styles.captureButton} />
+              </TapGestureHandler>
+            </LongPressGestureHandler>
+
+            <CustomIconButton
+              iconName={"ios-camera-reverse-outline"}
+              size={45}
+              color={"white"}
+              onPress={() => switchType()}
+            />
+          </View>
+        </View>
+      </Camera>
+    </Layout>
   )
 }
 
