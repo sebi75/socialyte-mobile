@@ -3,7 +3,6 @@ import { useState } from "react"
 import { useAppDispatch } from "../state/store"
 
 import * as ImageManipulator from "expo-image-manipulator"
-import { uploadImage, getImageUrl } from "../firebase/storage"
 import * as ImagePicker from "expo-image-picker"
 import {
   setImageUri,
