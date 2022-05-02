@@ -13,8 +13,8 @@ export const sharePost = async () => {
 
   try {
     await uploadImage(imageUri, remoteImageLocation)
-  } catch (error) {
-    console.log("Error in uploading the image on firebase firestore", error)
+  } catch (error: any) {
+    throw new Error(error.message)
   }
 
   const post = {
@@ -28,7 +28,7 @@ export const sharePost = async () => {
 
   try {
     await savePost(post)
-  } catch (error) {
-    console.log("error in saving the post on firebase firestore", error)
+  } catch (error: any) {
+    throw new Error(error.message)
   }
 }

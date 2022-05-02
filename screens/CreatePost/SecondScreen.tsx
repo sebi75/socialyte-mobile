@@ -1,4 +1,11 @@
-import { View, StyleSheet, Dimensions, Text, TextInput } from "react-native"
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Text,
+  TextInput,
+  ActivityIndicator,
+} from "react-native"
 import Colors from "../../constants/Colors"
 
 import { useAppDispatch } from "../../state/store"
@@ -13,13 +20,25 @@ const { width } = Dimensions.get("window")
 const SecondScreen: React.FC = () => {
   const dispatch = useAppDispatch()
 
-  const { caption } = useSelector((state: any) => state.postData)
+  const { caption, isLoading } = useSelector((state: any) => state.postData)
 
   const handleCaptionChange = (text: string) => {
     dispatch(setCaption(text))
   }
 
   console.log("rerendered")
+  if (isLoading) {
+    return (
+      <View
+        style={[
+          styles.screen,
+          { justifyContent: "center", alignItems: "center" },
+        ]}
+      >
+        <ActivityIndicator size={"large"} color={"white"} />
+      </View>
+    )
+  }
 
   return (
     <View style={styles.screen}>

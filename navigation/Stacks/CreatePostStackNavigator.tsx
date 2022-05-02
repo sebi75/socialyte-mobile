@@ -7,11 +7,9 @@ import SecondScreen from "../../screens/CreatePost/SecondScreen"
 import { CustomIconButton } from "../../components/IconButton"
 import { CustomButton } from "../../components/CustomButton"
 
-import { uploadImage } from "../../firebase/storage"
-import { uuidv } from "../../utils/uuidv"
-
 import { sharePost } from "./functions/sharePost"
-import { useEffect } from "react"
+import { useAppDispatch } from "../../state/store"
+import { setIsLoading } from "../../state/reducers/createPostReducer"
 
 const CreatePostStack = createNativeStackNavigator()
 
@@ -22,8 +20,16 @@ const CreatePostStackNavigator = ({
   navigation: any
   route: any
 }) => {
-  const sharePostPrototype = () => {
-    sharePost()
+  const dispatch = useAppDispatch()
+
+  const sharePostPrototype = async () => {
+    dispatch(setIsLoading(true))
+    try {
+      await sharePost()
+      dispatch(setIsLoading(false))
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
   }
 
   return (
