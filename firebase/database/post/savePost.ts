@@ -1,17 +1,33 @@
 import { db } from "../../firebaseConfig"
 import { doc, setDoc, addDoc, collection } from "firebase/firestore"
 
-import dummyPost from "../../../data/user"
+interface PostInterface {
+  mediaReference: string
+  description: string
+  mediaType: string
+  username: string
+  createdAt: Date
+  postOwner: string
+}
 
-export const savePost = async (post?: any) => {
+export const savePost = async (post: PostInterface) => {
   const collectionRef = collection(db, "media")
+  const {
+    mediaReference,
+    description,
+    mediaType,
+    username,
+    createdAt,
+    postOwner,
+  } = post
 
   const postData = {
-    postOwner: dummyPost.userId,
-    mediaReference: "qh152o8efl2nayul7dbrk",
-    mediaType: "image/jpeg",
-    username: dummyPost.username,
-    createdAt: new Date(),
+    postOwner: postOwner,
+    mediaReference: mediaReference,
+    description: description,
+    mediaType: mediaType,
+    username: username,
+    createdAt: createdAt,
   }
 
   try {
