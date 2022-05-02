@@ -3,11 +3,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 
 //create ref to the cloud storage
 
-export const uploadImage = async (uploadUri: any) => {
-  const fileName =
-    Math.random().toString(36).substring(2, 15) +
-    Math.random().toString(36).substring(2, 15)
-
+export const uploadImage = async (uploadUri: any, fileName: string) => {
   const imagesRef = ref(storage, `images/${fileName}`)
 
   const response = await fetch(uploadUri)

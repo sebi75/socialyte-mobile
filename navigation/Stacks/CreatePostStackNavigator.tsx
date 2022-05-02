@@ -8,6 +8,10 @@ import { CustomIconButton } from "../../components/IconButton"
 import { CustomButton } from "../../components/CustomButton"
 
 import { uploadImage } from "../../firebase/storage"
+import { uuidv } from "../../utils/uuidv"
+
+import testFunction from "../../functions/index"
+import { useEffect } from "react"
 
 const CreatePostStack = createNativeStackNavigator()
 
@@ -19,6 +23,7 @@ const CreatePostStackNavigator = ({
   route: any
 }) => {
   const sharePostPrototype = () => {
+    const remoteImageLocation = uuidv() // images/filename.jpeg
     //need the user id, the image, the caption, the date
     //no to have a "posts" field in a user's document
     //bacause we will query for his posts using his id in the "posts" collection
@@ -28,6 +33,9 @@ const CreatePostStackNavigator = ({
     //upload the post object to firebase
     //navigate to the home screen
   }
+  useEffect(() => {
+    testFunction()
+  }, [])
 
   return (
     <CreatePostStack.Navigator>
