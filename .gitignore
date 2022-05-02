@@ -1,5 +1,14 @@
-node_modules/
-firebase/
+# dependencies
+/node_modules
+/.firebase
+/.pnp
+firebase/firebaseConfig.ts
+.pnp.js
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules
+
 .expo/
 dist/
 npm-debug.*
@@ -10,6 +19,9 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+
+# misc
+.env
 
 # macOS
 .DS_Store
