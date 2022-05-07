@@ -14,7 +14,7 @@ import { setCaption } from "../../state/reducers/createPostReducer"
 import { useSelector } from "react-redux"
 
 /* component will rerender with every key press for settings the description */
-/* because I used dispatch to keep al the post related data in the store and not overcomplicate things */
+/* because I used dispatch to keep all the post related data in the store and not overcomplicate things */
 // I considered it will not result in any performance issues as it is a small component
 const { width } = Dimensions.get("window")
 const SecondScreen: React.FC = () => {
