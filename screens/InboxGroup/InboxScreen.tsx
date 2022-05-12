@@ -9,7 +9,6 @@ interface InboxScreenProps {
 
 const InboxScreen: React.FC<InboxScreenProps> = ({ navigation, route }) => {
   useEffect(() => {
-    console.log(navigation != undefined && "I have navigation")
     navigation.setOptions({
       tabBarStyle: {
         display: "none",

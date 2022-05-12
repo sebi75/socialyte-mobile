@@ -13,6 +13,9 @@ const StartupScreen: React.FC = () => {
       const userData = await AsyncStorage.getItem("userData")
 
       if (!userData) {
+        console.log(
+          "no user found -->> naivgating to authentication stack navigator"
+        )
         navigation.navigate("AuthStackNavigator")
         return
       }

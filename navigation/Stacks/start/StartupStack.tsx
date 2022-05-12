@@ -13,10 +13,16 @@ const StartupStackNavigator: React.FC = () => {
       <StartupStack.Screen
         name={"AuthStackNavigator"}
         component={AuthenticationStackNavigator}
+        options={{
+          headerShown: false,
+        }}
       />
       <StartupStack.Screen
         name={"BottomTabNavigator"}
         component={BottomTabNavigator}
+        options={{
+          headerShown: false,
+        }}
       />
     </StartupStack.Navigator>
   )
