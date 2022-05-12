@@ -56,6 +56,13 @@ const FeedStackNavigator: React.FC = () => {
                 onPress={() => navigation.navigate("CreatePostModal")}
               />
               <CustomIconButton
+                style={{ marginRight: 10 }}
+                iconName={"ios-mail"}
+                size={25}
+                color={"white"}
+                onPress={() => navigation.navigate("SignupScreen")}
+              />
+              <CustomIconButton
                 iconName={"ios-send"}
                 size={25}
                 color={"white"}
