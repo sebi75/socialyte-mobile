@@ -2,6 +2,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import SignupScreen from "../../screens/Authentication/SignupScreen"
 import SigninScreen from "../../screens/Authentication/SignInScreen"
 
+import { CustomIconButton } from "../../components/IconButton"
+import { NavigationContainer } from "@react-navigation/native"
+
 const AuthenticationStack = createNativeStackNavigator()
 
 const AuthenticationStackNavigator: React.FC = () => {
@@ -10,6 +13,18 @@ const AuthenticationStackNavigator: React.FC = () => {
       <AuthenticationStack.Screen
         name="SignupScreen"
         component={SignupScreen}
+        options={({ navigation, route }) => ({
+          headerRight: () => {
+            return (
+              <CustomIconButton
+                iconName={"ios-home"}
+                color={"black"}
+                size={25}
+                onPress={() => navigation.navigate("BottomTabNavigator")}
+              />
+            )
+          },
+        })}
       />
       <AuthenticationStack.Screen name="LoginScreen" component={SigninScreen} />
     </AuthenticationStack.Navigator>
