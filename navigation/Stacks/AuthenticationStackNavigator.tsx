@@ -10,17 +10,10 @@ const AuthenticationStackNavigator: React.FC = () => {
       <AuthenticationStack.Screen
         name="SignupScreen"
         component={SignupScreen}
-        options={{
-          headerShown: false,
-        }}
       />
-      <AuthenticationStack.Screen
-        name="LoginScreen"
-        component={SigninScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
+      <AuthenticationStack.Screen name="LoginScreen" component={SigninScreen} />
     </AuthenticationStack.Navigator>
   )
 }
+
+export default AuthenticationStackNavigator
