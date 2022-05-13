@@ -51,6 +51,7 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(signUpWithEmailThunk.fulfilled, (state, action) => {
+      console.log("builder case enter so thunk fulfilled")
       const { user } = action.payload
       state.isAuthenticated = true
       state.username = user.username
