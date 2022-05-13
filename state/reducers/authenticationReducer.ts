@@ -7,24 +7,57 @@ import { createUserDocumentAtSignup } from "../../firebase/database/createUser"
 
 const userInitialState = {
   isAuthenticated: false,
+  isLoading: false,
   username: "",
   email: "",
   uid: "",
 }
 
+const userSlice = createSlice({
+  name: "user",
+  initialState: userInitialState,
+  reducers: {
+    setUser: (state, action) => {
+      state.isAuthenticated = true
+      state.uid = action.payload.uid
+      state.email = action.payload.email
+      state.username = action.payload.username
+    },
+
+    signUpWithEmailStart: (state) => {
+      state.isLoading = true
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(signUpWithEmailThunk.fulfilled, (state, action) => {
+      console.log("action in the reducer Thunk: ")
+      console.log(action)
+    })
+  },
+})
+
+export const { setUser, signUpWithEmailStart } = userSlice.actions
+
 export const signUpWithEmailThunk = createAsyncThunk(
   "auth/signUpWithEmail",
   async (
-    { email, password }: { email: string; password: string },
+    {
+      email,
+      password,
+      username,
+    }: { email: string; password: string; username: string },
     thunkAPI
   ) => {
+    const { dispatch } = thunkAPI
+
     try {
       const response: any = await signUpWithEmail(email, password)
-      console.log("got here with response: ")
       console.log(response)
 
       try {
-        await createUserDocumentAtSignup(response.user.uid)
+        //create the user document in the db with first signup details
+        //get the permanent user id from the response and username from input
+        await createUserDocumentAtSignup(response.uid, response.email, username)
       } catch (error) {
         throw Error(
           "An error occured when creating a new document for new signed up user"
@@ -37,28 +70,5 @@ export const signUpWithEmailThunk = createAsyncThunk(
     }
   }
 )
-
-const userSlice = createSlice({
-  name: "user",
-  initialState: userInitialState,
-  reducers: {
-    setUser: (state, action) => {
-      state.isAuthenticated = true
-      state.uid = action.payload.uid
-      state.email = action.payload.email
-      state.username = action.payload.username
-    },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(signUpWithEmailThunk.fulfilled, (state, action) => {
-      console.log("builder case enter so thunk fulfilled")
-      const { user } = action.payload
-      state.isAuthenticated = true
-      state.username = user.username
-      state.email = user.email
-      state.uid = user.uid
-    })
-  },
-})
 
 export default userSlice.reducer

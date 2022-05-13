@@ -1,14 +1,18 @@
 import { db } from "../firebaseConfig"
 import { doc, setDoc, addDoc, collection } from "firebase/firestore"
 
-export const createUserDocumentAtSignup = async (uid: string) => {
+export const createUserDocumentAtSignup = async (
+  uid: string,
+  email: string,
+  username: string
+) => {
   const docRef = doc(db, "users", uid)
 
   try {
     await setDoc(docRef, {
       uid,
-      email: "",
-      username: "",
+      email,
+      username,
     })
   } catch (error) {
     throw Error(

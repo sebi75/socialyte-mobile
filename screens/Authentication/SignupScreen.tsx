@@ -26,13 +26,13 @@ const SignupScreen: React.FC = () => {
   const dispatch = useAppDispatch()
 
   const signupHandler = async () => {
-    console.log("started in signupHandler: -->")
     try {
       if (formState?.isFormValid) {
         dispatch(
           signUpWithEmailThunk({
             email: formState.inputValues.email,
             password: formState.inputValues.password,
+            username: formState.inputValues.username,
           })
         )
       }
