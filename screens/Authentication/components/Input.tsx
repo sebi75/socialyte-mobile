@@ -104,6 +104,11 @@ export const Input: React.FC<InputProps> = (props) => {
         onBlur={lostFocusHandler}
         onChangeText={textChangeHandler}
       />
+      {!inputState.isValid && inputState.touched && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{props.errorText}</Text>
+        </View>
+      )}
     </View>
   )
 }
@@ -122,5 +127,14 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     width: width * 0.7,
     height: 30,
+  },
+
+  errorContainer: {
+    marginVertical: 5,
+  },
+
+  errorText: {
+    fontSize: 14,
+    color: "red",
   },
 })

@@ -24,6 +24,7 @@ const AuthenticationStackNavigator: React.FC = () => {
               />
             )
           },
+          headerShown: false,
         })}
       />
       <AuthenticationStack.Screen name="LoginScreen" component={SigninScreen} />

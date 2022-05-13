@@ -1,5 +1,6 @@
 import {
   View,
+  Text,
   Dimensions,
   StyleSheet,
   KeyboardAvoidingView,
@@ -10,28 +11,33 @@ import Colors from "../../constants/Colors"
 
 import { Input } from "./components/Input"
 import formReducer from "./components/reducer"
+import CustomButton from "./components/CustomButton"
+import { useAppDispatch } from "../../state/store"
+
+import { signUpWithEmailThunk } from "../../state/reducers/authenticationReducer"
 
 const FORM_UPDATE = "FORM_UPDATE"
 
 const { width, height } = Dimensions.get("window")
 const SignupScreen: React.FC = () => {
-  const [formState, formDispatch] = useReducer(formReducer, {
-    inputValues: {
-      username: "",
-      email: "",
-      password: "",
-    },
-    inputValidities: {
-      username: false,
-      email: false,
-      password: false,
-    },
-    isFormValid: false,
-  })
+  const [formState, formDispatch] = useReducer(formReducer, initialFormState)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
+  const dispatch = useAppDispatch()
 
-  console.log(formState?.inputValues.username)
+  const signupHandler = async () => {
+    console.log("started in signupHandler: -->")
+    try {
+      if (formState?.isFormValid) {
+        dispatch(
+          signUpWithEmailThunk({
+            email: formState.inputValues.email,
+            password: formState.inputValues.password,
+          })
+        )
+      }
+    } catch (error) {}
+  }
 
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
@@ -52,7 +58,8 @@ const SignupScreen: React.FC = () => {
       style={styles.screen}
     >
       {/* FORM */}
-      <View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.mainTextLabelStyle}>Signup</Text>
         <Input
           id={"username"}
           label={"Username: "}
@@ -84,6 +91,20 @@ const SignupScreen: React.FC = () => {
           initialValue={""}
           onInputChange={inputChangeHandler}
         />
+        <View>
+          <Text style={styles.redirectToSigninStyle}>
+            Already have an account?
+          </Text>
+        </View>
+        <CustomButton
+          title="Signup"
+          onPress={signupHandler}
+          buttonStyle={{
+            width: width * 0.5,
+            alignSelf: "center",
+            marginTop: 15,
+          }}
+        />
       </View>
     </KeyboardAvoidingView>
   )
@@ -96,6 +117,35 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  inputContainer: {
+    width: width * 0.8,
+    height: "auto",
+  },
+  mainTextLabelStyle: {
+    fontSize: 31,
+    fontWeight: "bold",
+    color: Colors.primary,
+  },
+  redirectToSigninStyle: {
+    fontSize: 13,
+    textDecorationLine: "underline",
+    marginTop: 10,
+    color: Colors.primary,
+  },
 })
+
+const initialFormState = {
+  inputValues: {
+    username: "",
+    email: "",
+    password: "",
+  },
+  inputValidities: {
+    username: false,
+    email: false,
+    password: false,
+  },
+  isFormValid: false,
+}
 
 export default SignupScreen
