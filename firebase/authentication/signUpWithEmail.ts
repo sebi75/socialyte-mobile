@@ -2,9 +2,17 @@ import { auth } from "./"
 
 import { createUserWithEmailAndPassword } from "firebase/auth"
 
-interface SignUpWithEmailRessult {}
+interface UserResult {
+  uid: string
+  email: string
+  token: string
+}
+type SignUpWithEmailResult = UserResult | undefined
 
-export const signUpWithEmail = async (email: string, password: string) => {
+export const signUpWithEmail = async (
+  email: string,
+  password: string
+): Promise<SignUpWithEmailResult> => {
   let returnedUser
   await createUserWithEmailAndPassword(auth, email, password)
     .then(async (userCredential) => {
