@@ -2,26 +2,29 @@ import { View, ActivityIndicator, StyleSheet } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useEffect } from "react"
 import { useNavigation } from "@react-navigation/native"
-import { useAppDispatch } from "../state/store"
 import Colors from "../constants/Colors"
+
+/* redux */
+import { useAppDispatch } from "../state/store"
+import { setUser } from "../state/reducers/authenticationReducer"
 
 const StartupScreen: React.FC = () => {
   const dispatch = useAppDispatch()
   const navigation: any = useNavigation()
+
   const tryLogin = async () => {
     try {
-      const tokenJSON = await AsyncStorage.getItem("token")
+      const userDataJson = await AsyncStorage.getItem("userData")
 
-      if (!tokenJSON) {
-        console.log(
-          "no user found -->> naivgating to authentication stack navigator"
-        )
+      if (!userDataJson) {
+        console.log("no user found --> navigating client to authentication")
         navigation.navigate("AuthStackNavigator")
         return
       }
 
-      console.log("we have a token")
-      const token = JSON.parse(tokenJSON)
+      const parsedUserData = JSON.parse(userDataJson)
+      const { token, uid, email, username } = parsedUserData
+      dispatch(setUser({ uid, email, username }))
 
       navigation.navigate("BottomTabNavigator")
     } catch (error) {}

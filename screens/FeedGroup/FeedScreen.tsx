@@ -4,7 +4,12 @@ import FeedPost from "../../components/FeedPost"
 import DUMMY from "../../data/dummy"
 import Colors from "../../constants/Colors"
 
+import { useSelector } from "react-redux"
+import { RootState } from "../../state/store"
+
 const FeedScreen: React.FC = () => {
+  const user = useSelector((state: RootState) => state.user)
+  console.log("current user: ", user)
   return (
     <View style={styles.screen}>
       <FlatList

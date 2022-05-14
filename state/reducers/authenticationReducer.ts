@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 import { signUpWithEmail } from "../../firebase/authentication/signUpWithEmail"
 
@@ -18,15 +18,23 @@ const userInitialState: UserState = {
   uid: undefined,
 }
 
+interface SetUserProps {
+  email: string
+  uid: string
+  username: string
+}
+
 const userSlice = createSlice({
   name: "user",
   initialState: userInitialState,
   reducers: {
-    setUser: (state, action) => {
+    setUser: (state, action: PayloadAction<SetUserProps>) => {
+      const { username, email, uid } = action.payload
+
+      state.username = username
+      state.email = email
+      state.uid = uid
       state.isAuthenticated = true
-      state.uid = action.payload.uid
-      state.email = action.payload.email
-      state.username = action.payload.username
     },
     clearError: (state) => {
       state.error = undefined

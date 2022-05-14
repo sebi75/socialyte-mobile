@@ -25,8 +25,12 @@ import {
   signUpWithEmailThunk,
   clearError,
 } from "../../state/reducers/authenticationReducer"
+import { useNavigation } from "@react-navigation/native"
 
 const FORM_UPDATE = "FORM_UPDATE"
+
+//signup logic will inject uid, email and token in the async store
+//next time user will be still logged in
 
 const { width, height } = Dimensions.get("window")
 const SignupScreen: React.FC = () => {
@@ -35,6 +39,7 @@ const SignupScreen: React.FC = () => {
   const { isLoading, error } = useSelector((state: RootState) => state.user)
 
   const dispatch = useAppDispatch()
+  const navigation: any = useNavigation()
 
   const signupHandler = async () => {
     try {
@@ -50,8 +55,17 @@ const SignupScreen: React.FC = () => {
         //store the token in the async storage for keeping auth state
         try {
           const validResponse: any = response.payload
-          const jsonValue = JSON.stringify(validResponse.token)
-          await AsyncStorage.setItem("token", jsonValue)
+          const userData = {
+            token: validResponse.token,
+            uid: validResponse.uid,
+            email: validResponse.email,
+            username: initialFormState.inputValues.username,
+          }
+          const jsonValue = JSON.stringify(userData)
+
+          await AsyncStorage.setItem("userData", jsonValue)
+
+          navigation.navigate("BottomTabNavigator")
         } catch (error) {
           console.log("failed when storing in async storage")
         }
