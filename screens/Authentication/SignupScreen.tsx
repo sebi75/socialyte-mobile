@@ -6,7 +6,9 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
 } from "react-native"
-import { useReducer, useCallback, useState } from "react"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useReducer, useCallback } from "react"
+import { Ionicons } from "@expo/vector-icons"
 
 import Colors from "../../constants/Colors"
 
@@ -19,7 +21,10 @@ import { useAppDispatch } from "../../state/store"
 import { useSelector } from "react-redux"
 import { RootState } from "../../state/store"
 
-import { signUpWithEmailThunk } from "../../state/reducers/authenticationReducer"
+import {
+  signUpWithEmailThunk,
+  clearError,
+} from "../../state/reducers/authenticationReducer"
 
 const FORM_UPDATE = "FORM_UPDATE"
 
@@ -27,26 +32,41 @@ const { width, height } = Dimensions.get("window")
 const SignupScreen: React.FC = () => {
   const [formState, formDispatch] = useReducer(formReducer, initialFormState)
 
-  const { isLoading } = useSelector((state: RootState) => state.user)
-  const [error, setError] = useState(null)
+  const { isLoading, error } = useSelector((state: RootState) => state.user)
+
   const dispatch = useAppDispatch()
 
   const signupHandler = async () => {
     try {
       if (formState?.isFormValid) {
-        dispatch(
+        const response = await dispatch(
           signUpWithEmailThunk({
             email: formState.inputValues.email,
             password: formState.inputValues.password,
             username: formState.inputValues.username,
           })
         )
+        //getting the token from the returned object --> response.payload.token
+        //store the token in the async storage for keeping auth state
+        try {
+          const validResponse: any = response.payload
+          const jsonValue = JSON.stringify(validResponse.token)
+          await AsyncStorage.setItem("token", jsonValue)
+        } catch (error) {
+          console.log("failed when storing in async storage")
+        }
       }
-    } catch (error) {}
+    } catch (error) {
+      throw Error("Error in signing up")
+    }
   }
 
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
+      if (typeof error === "string") {
+        dispatch(clearError())
+      }
+
       formDispatch({
         type: FORM_UPDATE,
         value: inputValue,
@@ -102,6 +122,12 @@ const SignupScreen: React.FC = () => {
             Already have an account?
           </Text>
         </View>
+        {error && (
+          <View style={styles.errorContainer}>
+            <Ionicons name="warning" size={24} color="red" />
+            <Text style={styles.errorTextStyle}>{error}</Text>
+          </View>
+        )}
         {isLoading ? (
           <ActivityIndicator size={"small"} color={"red"} />
         ) : (
@@ -141,6 +167,17 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     marginTop: 10,
     color: Colors.primary,
+  },
+
+  errorContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 5,
+  },
+
+  errorTextStyle: {
+    fontSize: 14,
+    color: "red",
   },
 })
 

@@ -10,9 +10,9 @@ const StartupScreen: React.FC = () => {
   const navigation: any = useNavigation()
   const tryLogin = async () => {
     try {
-      const userData = await AsyncStorage.getItem("userData")
+      const tokenJSON = await AsyncStorage.getItem("token")
 
-      if (!userData) {
+      if (!tokenJSON) {
         console.log(
           "no user found -->> naivgating to authentication stack navigator"
         )
@@ -20,8 +20,8 @@ const StartupScreen: React.FC = () => {
         return
       }
 
-      const parsedUserData = JSON.parse(userData)
-      const { token, userId } = parsedUserData
+      console.log("we have a token")
+      const token = JSON.parse(tokenJSON)
 
       navigation.navigate("BottomTabNavigator")
     } catch (error) {}

@@ -2,11 +2,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 import { signUpWithEmail } from "../../firebase/authentication/signUpWithEmail"
 
+import { UserState } from "../types/User"
+
 /* FIREBASE actions --> */
 import { createUserDocumentAtSignup } from "../../firebase/database/createUser"
 import { SignUpWithEmailResult } from "../../firebase/authentication/signUpWithEmail"
 
-const userInitialState = {
+const userInitialState: UserState = {
   isAuthenticated: false,
   isLoading: false,
   profilePicture: undefined,
@@ -26,22 +28,30 @@ const userSlice = createSlice({
       state.email = action.payload.email
       state.username = action.payload.username
     },
+    clearError: (state) => {
+      state.error = undefined
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(signUpWithEmailThunk.pending, (state, action) => {
-      console.log("started loading state")
       state.isLoading = true
     })
     builder.addCase(signUpWithEmailThunk.fulfilled, (state, action) => {
-      console.log("stopping the loading state: ")
       state.isLoading = false
-      console.log(action)
+    })
+    builder.addCase(signUpWithEmailThunk.rejected, (state, action) => {
+      state.isLoading = false
+      state.error = action.error.message
     })
   },
 })
 
-export const { setUser } = userSlice.actions
+export const { setUser, clearError } = userSlice.actions
 
+//to be known:
+// the createAsykcthunk doens't return only the value you return in it
+// it returns a bigger object with the arguments sent, status and the thing
+//you return is in the response.payload
 export const signUpWithEmailThunk = createAsyncThunk(
   "auth/signUpWithEmail",
   async (
@@ -51,7 +61,7 @@ export const signUpWithEmailThunk = createAsyncThunk(
       username,
     }: { email: string; password: string; username: string },
     thunkAPI
-  ) => {
+  ): Promise<SignUpWithEmailResult> => {
     const { dispatch } = thunkAPI
 
     try {
@@ -75,7 +85,7 @@ export const signUpWithEmailThunk = createAsyncThunk(
 
       return response
     } catch (error) {
-      throw Error("error in signing up a new user!")
+      throw Error("User with that email already exists!")
     }
   }
 )
