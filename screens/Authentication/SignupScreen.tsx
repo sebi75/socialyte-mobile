@@ -4,6 +4,7 @@ import {
   Dimensions,
   StyleSheet,
   KeyboardAvoidingView,
+  ActivityIndicator,
 } from "react-native"
 import { useReducer, useCallback, useState } from "react"
 
@@ -12,7 +13,11 @@ import Colors from "../../constants/Colors"
 import { Input } from "./components/Input"
 import formReducer from "./components/reducer"
 import CustomButton from "./components/CustomButton"
+
+/* REDUX: */
 import { useAppDispatch } from "../../state/store"
+import { useSelector } from "react-redux"
+import { RootState } from "../../state/store"
 
 import { signUpWithEmailThunk } from "../../state/reducers/authenticationReducer"
 
@@ -21,7 +26,8 @@ const FORM_UPDATE = "FORM_UPDATE"
 const { width, height } = Dimensions.get("window")
 const SignupScreen: React.FC = () => {
   const [formState, formDispatch] = useReducer(formReducer, initialFormState)
-  const [isLoading, setIsLoading] = useState(false)
+
+  const { isLoading } = useSelector((state: RootState) => state.user)
   const [error, setError] = useState(null)
   const dispatch = useAppDispatch()
 
@@ -96,15 +102,19 @@ const SignupScreen: React.FC = () => {
             Already have an account?
           </Text>
         </View>
-        <CustomButton
-          title="Signup"
-          onPress={signupHandler}
-          buttonStyle={{
-            width: width * 0.5,
-            alignSelf: "center",
-            marginTop: 15,
-          }}
-        />
+        {isLoading ? (
+          <ActivityIndicator size={"small"} color={"red"} />
+        ) : (
+          <CustomButton
+            title="Signup"
+            onPress={signupHandler}
+            buttonStyle={{
+              width: width * 0.5,
+              alignSelf: "center",
+              marginTop: 15,
+            }}
+          />
+        )}
       </View>
     </KeyboardAvoidingView>
   )

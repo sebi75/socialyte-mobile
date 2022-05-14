@@ -7,7 +7,7 @@ interface UserResult {
   email: string
   token: string
 }
-type SignUpWithEmailResult = UserResult | undefined
+export type SignUpWithEmailResult = UserResult | undefined
 
 export const signUpWithEmail = async (
   email: string,

@@ -4,13 +4,16 @@ import { signUpWithEmail } from "../../firebase/authentication/signUpWithEmail"
 
 /* FIREBASE actions --> */
 import { createUserDocumentAtSignup } from "../../firebase/database/createUser"
+import { SignUpWithEmailResult } from "../../firebase/authentication/signUpWithEmail"
 
 const userInitialState = {
   isAuthenticated: false,
   isLoading: false,
-  username: "",
-  email: "",
-  uid: "",
+  profilePicture: undefined,
+  username: undefined,
+  error: undefined,
+  email: undefined,
+  uid: undefined,
 }
 
 const userSlice = createSlice({
@@ -23,20 +26,21 @@ const userSlice = createSlice({
       state.email = action.payload.email
       state.username = action.payload.username
     },
-
-    signUpWithEmailStart: (state) => {
-      state.isLoading = true
-    },
   },
   extraReducers: (builder) => {
+    builder.addCase(signUpWithEmailThunk.pending, (state, action) => {
+      console.log("started loading state")
+      state.isLoading = true
+    })
     builder.addCase(signUpWithEmailThunk.fulfilled, (state, action) => {
-      console.log("action in the reducer Thunk: ")
+      console.log("stopping the loading state: ")
+      state.isLoading = false
       console.log(action)
     })
   },
 })
 
-export const { setUser, signUpWithEmailStart } = userSlice.actions
+export const { setUser } = userSlice.actions
 
 export const signUpWithEmailThunk = createAsyncThunk(
   "auth/signUpWithEmail",
@@ -51,13 +55,18 @@ export const signUpWithEmailThunk = createAsyncThunk(
     const { dispatch } = thunkAPI
 
     try {
-      const response: any = await signUpWithEmail(email, password)
-      console.log(response)
+      const response: SignUpWithEmailResult = await signUpWithEmail(
+        email,
+        password
+      )
 
       try {
         //create the user document in the db with first signup details
         //get the permanent user id from the response and username from input
-        await createUserDocumentAtSignup(response.uid, response.email, username)
+        if (response != undefined) {
+          const { uid, email } = response
+          await createUserDocumentAtSignup(uid, email, username)
+        }
       } catch (error) {
         throw Error(
           "An error occured when creating a new document for new signed up user"
