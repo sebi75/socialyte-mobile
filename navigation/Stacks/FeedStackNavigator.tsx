@@ -66,24 +66,10 @@ const FeedStackNavigator: React.FC = () => {
             <View style={{ flexDirection: "row" }}>
               <CustomIconButton
                 style={{ marginRight: 10 }}
-                iconName={"log-out"}
-                size={25}
-                color={"white"}
-                onPress={() => signOutHandler()}
-              />
-              <CustomIconButton
-                style={{ marginRight: 10 }}
                 iconName={"ios-add-circle-outline"}
                 size={25}
                 color={"white"}
                 onPress={() => navigation.navigate("CreatePostModal")}
-              />
-              <CustomIconButton
-                style={{ marginRight: 10 }}
-                iconName={"ios-mail"}
-                size={25}
-                color={"white"}
-                onPress={() => navigation.navigate("AuthStackNavigator")}
               />
               <CustomIconButton
                 iconName={"ios-send"}

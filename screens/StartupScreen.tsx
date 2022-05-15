@@ -2,11 +2,10 @@ import { View, StyleSheet } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useEffect } from "react"
 import { useNavigation } from "@react-navigation/native"
-import Colors from "../constants/Colors"
 
 /* redux */
 import { useAppDispatch } from "../state/store"
-import { setUser } from "../state/reducers/authenticationReducer"
+import { setUser } from "../state/reducers/userSlice"
 
 const StartupScreen: React.FC = () => {
   const dispatch = useAppDispatch()

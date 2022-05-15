@@ -10,7 +10,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { signOut } from "../../firebase/authentication/signOut."
 
 /* user actions */
-import { setUser, clearUserState } from "./userSlice"
+import { clearUserState } from "./userSlice"
 
 const authenticationInitialState: AuthenticationState = {
   isAuthenticated: false,

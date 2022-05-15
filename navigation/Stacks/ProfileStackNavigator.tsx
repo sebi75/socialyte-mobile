@@ -1,6 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
 import ProfileScreen from "../../screens/ProfileGroup/ProfileScreen"
+import SettingsModal from "../../screens/ProfileGroup/SettingsModal"
+
 import { ProfileSettings } from "./settings"
 
 import { CustomIconButton } from "../../components/IconButton"
@@ -19,7 +21,7 @@ const ProfileStackNavigator: React.FC = () => {
               <CustomIconButton
                 iconName={"settings"}
                 color={"white"}
-                onPress={() => console.log("open settings drawer / something")}
+                onPress={() => navigation.navigate("SettingsModal")}
                 size={25}
               />
             )
@@ -33,6 +35,21 @@ const ProfileStackNavigator: React.FC = () => {
           },
         })}
       />
+      <ProfileStack.Group screenOptions={{ presentation: "modal" }}>
+        <ProfileStack.Screen
+          name="SettingsModal"
+          component={SettingsModal}
+          options={{
+            title: "Settings",
+            headerStyle: {
+              backgroundColor: "black",
+            },
+            headerTitleStyle: {
+              color: "white",
+            },
+          }}
+        />
+      </ProfileStack.Group>
     </ProfileStack.Navigator>
   )
 }
