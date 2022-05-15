@@ -4,6 +4,7 @@ import { signUpWithEmail } from "../../../firebase/authentication/signUpWithEmai
 import { createUserDocumentAtSignup } from "../../../firebase/database/createUser"
 
 import { SignUpWithEmailResult } from "../../../firebase/authentication/signUpWithEmail"
+import { setUser } from "../../reducers/userSlice"
 
 export const signUpWithEmailThunk = createAsyncThunk(
   "auth/signUpWithEmail",
@@ -29,6 +30,8 @@ export const signUpWithEmailThunk = createAsyncThunk(
         if (response != undefined) {
           const { uid, email } = response
           await createUserDocumentAtSignup(uid, email, username)
+
+          dispatch(setUser({ email, uid: response.uid, username: "" }))
         }
       } catch (error) {
         throw Error(

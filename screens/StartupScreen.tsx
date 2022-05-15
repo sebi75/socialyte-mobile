@@ -1,4 +1,4 @@
-import { View, ActivityIndicator, StyleSheet } from "react-native"
+import { View, StyleSheet } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useEffect } from "react"
 import { useNavigation } from "@react-navigation/native"
@@ -34,11 +34,7 @@ const StartupScreen: React.FC = () => {
     tryLogin()
   }, [dispatch])
 
-  return (
-    <View style={styles.screen}>
-      <ActivityIndicator size={"large"} color={Colors.primary} />
-    </View>
-  )
+  return <View style={styles.screen}></View>
 }
 
 const styles = StyleSheet.create({
@@ -46,6 +42,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#000",
   },
 })
 

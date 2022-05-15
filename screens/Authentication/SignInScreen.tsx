@@ -9,7 +9,7 @@ import {
 } from "react-native"
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { useReducer, useCallback } from "react"
+import { useReducer, useCallback, useEffect } from "react"
 import { Ionicons } from "@expo/vector-icons"
 
 import Colors from "../../constants/Colors"
@@ -34,7 +34,9 @@ const { width, height } = Dimensions.get("window")
 const SigninScreen: React.FC = () => {
   const [formState, formDispatch] = useReducer(formReducer, initialFormState)
 
-  const { isLoading, error } = useSelector((state: RootState) => state.user)
+  const { isLoading, error, isAuthenticated } = useSelector(
+    (state: RootState) => state.user
+  )
 
   const dispatch = useAppDispatch()
   const navigation: any = useNavigation()
@@ -86,6 +88,12 @@ const SigninScreen: React.FC = () => {
     },
     [formDispatch]
   )
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigation.navigate("BottomTabNavigator")
+    }
+  }, [])
   return (
     <KeyboardAvoidingView
       behavior={"padding"}

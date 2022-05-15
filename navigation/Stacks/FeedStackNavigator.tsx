@@ -83,7 +83,7 @@ const FeedStackNavigator: React.FC = () => {
                 iconName={"ios-mail"}
                 size={25}
                 color={"white"}
-                onPress={() => navigation.navigate("SignupScreen")}
+                onPress={() => navigation.navigate("AuthStackNavigator")}
               />
               <CustomIconButton
                 iconName={"ios-send"}

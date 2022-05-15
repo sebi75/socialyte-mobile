@@ -3,7 +3,6 @@ import SignupScreen from "../../screens/Authentication/SignUpScreen"
 import SigninScreen from "../../screens/Authentication/SignInScreen"
 
 import { CustomIconButton } from "../../components/IconButton"
-import { NavigationContainer } from "@react-navigation/native"
 
 const AuthenticationStack = createNativeStackNavigator()
 
@@ -27,7 +26,13 @@ const AuthenticationStackNavigator: React.FC = () => {
           headerShown: false,
         })}
       />
-      <AuthenticationStack.Screen name="LoginScreen" component={SigninScreen} />
+      <AuthenticationStack.Screen
+        name="LoginScreen"
+        component={SigninScreen}
+        options={({ navigation, route }) => ({
+          headerShown: false,
+        })}
+      />
     </AuthenticationStack.Navigator>
   )
 }

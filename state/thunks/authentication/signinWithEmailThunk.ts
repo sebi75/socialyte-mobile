@@ -2,6 +2,7 @@ import { signInWithEmail } from "../../../firebase/authentication/signInWithEmai
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
 import { SignInWithEmailResult } from "../../../firebase/authentication/signInWithEmail"
+import { setUser } from "../../reducers/userSlice"
 
 export const signInWithEmailThunk = createAsyncThunk(
   "auth/signInWithEmail",
@@ -16,6 +17,9 @@ export const signInWithEmailThunk = createAsyncThunk(
         email,
         password
       )
+      if (response) {
+        dispatch(setUser({ email, uid: response.uid, username: "" }))
+      }
 
       return response
     } catch (error: any) {

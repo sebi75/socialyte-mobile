@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
-import { UserState } from "../types/User"
+import { AuthenticationState } from "../types/Authentication"
 
 /* thunks import */
 import { signUpWithEmailThunk } from "../thunks/authentication/signUpWithEmailThunk"
@@ -9,46 +9,21 @@ import { signInWithEmailThunk } from "../thunks/authentication/signInWithEmailTh
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { signOut } from "../../firebase/authentication/signOut."
 
-const userInitialState: UserState = {
+/* user actions */
+import { setUser, clearUserState } from "./userSlice"
+
+const authenticationInitialState: AuthenticationState = {
   isAuthenticated: false,
   isLoading: false,
-  profilePicture: undefined,
-  username: undefined,
   error: undefined,
-  email: undefined,
-  uid: undefined,
-}
-
-interface SetUserProps {
-  email: string
-  uid: string
-  username: string
 }
 
 const userSlice = createSlice({
-  name: "user",
-  initialState: userInitialState,
+  name: "authentication",
+  initialState: authenticationInitialState,
   reducers: {
-    setUser: (state, action: PayloadAction<SetUserProps>) => {
-      const { username, email, uid } = action.payload
-
-      state.username = username
-      state.email = email
-      state.uid = uid
-      state.isAuthenticated = true
-    },
     clearError: (state) => {
       state.error = undefined
-    },
-
-    clearUserState: (state) => {
-      state.isAuthenticated = false
-      state.isLoading = false
-      state.profilePicture = undefined
-      state.username = undefined
-      state.error = undefined
-      state.email = undefined
-      state.uid = undefined
     },
   },
 
@@ -70,6 +45,7 @@ const userSlice = createSlice({
       state.isLoading = true
     })
     builder.addCase(signInWithEmailThunk.fulfilled, (state, action) => {
+      state.isAuthenticated = true
       state.isLoading = false
     })
     builder.addCase(signInWithEmailThunk.rejected, (state, action) => {
@@ -79,7 +55,7 @@ const userSlice = createSlice({
   },
 })
 
-export const { setUser, clearError, clearUserState } = userSlice.actions
+export const { clearError } = userSlice.actions
 
 //to be known:
 // the createAsykcthunk doens't return only the value you return in it

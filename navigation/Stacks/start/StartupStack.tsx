@@ -9,7 +9,13 @@ const StartupStack = createNativeStackNavigator()
 const StartupStackNavigator: React.FC = () => {
   return (
     <StartupStack.Navigator>
-      <StartupStack.Screen name="StartupScreen" component={StartupScreen} />
+      <StartupStack.Screen
+        name="StartupScreen"
+        component={StartupScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
       <StartupStack.Screen
         name={"AuthStackNavigator"}
         component={AuthenticationStackNavigator}
