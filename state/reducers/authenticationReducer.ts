@@ -6,6 +6,7 @@ import { UserState } from "../types/User"
 
 /* thunks import */
 import { signUpWithEmailThunk } from "../thunks/authentication/signupWithEmailThunk"
+import { signInWithEmailThunk } from "../thunks/authentication/signinWithEmailThunk"
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
@@ -53,6 +54,7 @@ const userSlice = createSlice({
   },
 
   extraReducers: (builder) => {
+    //signup builder cases
     builder.addCase(signUpWithEmailThunk.pending, (state, action) => {
       state.isLoading = true
     })
@@ -60,6 +62,18 @@ const userSlice = createSlice({
       state.isLoading = false
     })
     builder.addCase(signUpWithEmailThunk.rejected, (state, action) => {
+      state.isLoading = false
+      state.error = action.error.message
+    })
+
+    //signin builder cases
+    builder.addCase(signInWithEmailThunk.pending, (state, action) => {
+      state.isLoading = true
+    })
+    builder.addCase(signInWithEmailThunk.fulfilled, (state, action) => {
+      state.isLoading = false
+    })
+    builder.addCase(signInWithEmailThunk.rejected, (state, action) => {
       state.isLoading = false
       state.error = action.error.message
     })

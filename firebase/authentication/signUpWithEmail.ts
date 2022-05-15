@@ -17,7 +17,7 @@ export const signUpWithEmail = async (
   await createUserWithEmailAndPassword(auth, email, password)
     .then(async (userCredential) => {
       const user = userCredential.user
-      const tokenPromise = await userCredential.user.getIdTokenResult()
+      const tokenPromise = await user.getIdTokenResult()
       const token = tokenPromise.token
 
       returnedUser = {
