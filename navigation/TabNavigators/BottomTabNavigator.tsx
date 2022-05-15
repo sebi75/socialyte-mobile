@@ -1,12 +1,12 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
-import ProfileStackNavigator from "../Stacks/ProfileStackNavigator"
-
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons"
+import { Ionicons, MaterialCommunityIcons, Feather } from "@expo/vector-icons"
 import { BlurView } from "expo-blur"
 
 import FeedStackNavigator from "../Stacks/FeedStackNavigator"
 import StoriesStackNavigator from "../Stacks/StoriesStackNavigator"
+import DiscoverStackNavigator from "../Stacks/DiscoverStackNAvigator"
+import ProfileStackNavigator from "../Stacks/ProfileStackNavigator"
 
 const Tab = createBottomTabNavigator()
 
@@ -38,6 +38,19 @@ const BottomTabNavigator = () => {
             return (
               <Ionicons name={"ios-home-outline"} size={25} color={"white"} />
             )
+          },
+        }}
+      />
+      <Tab.Screen
+        name="DiscoverScreen"
+        component={DiscoverStackNavigator}
+        options={{
+          tabBarStyle: {
+            position: "absolute",
+          },
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => {
+            return <Feather name="search" size={25} color="white" />
           },
         }}
       />
