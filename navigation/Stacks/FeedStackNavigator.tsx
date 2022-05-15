@@ -6,13 +6,17 @@ import CommentsModalScreen from "../../screens/FeedGroup/CommentsModalScreen"
 /* import settings */
 import { FeedSettings } from "./settings"
 import { View } from "react-native"
-import { useNavigation } from "@react-navigation/native"
 
 /* COMPONENTS */
 import { CustomIconButton } from "../../components/IconButton"
 import CameraStackNavigator from "./CameraStackNavigator"
 import InboxScreen from "../../screens/InboxGroup/InboxScreen"
 import CreatePostStackNavigator from "./CreatePostStackNavigator"
+
+/* REDUX: */
+import { useAppDispatch } from "../../state/store"
+import { signOutThunk } from "../../state/reducers/authenticationReducer"
+import { useNavigation } from "@react-navigation/native"
 
 type RootStackParamList = {
   FeedScreen: undefined
@@ -25,6 +29,18 @@ type RootStackParamList = {
 const FeedStack = createNativeStackNavigator<RootStackParamList>()
 
 const FeedStackNavigator: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const navigation: any = useNavigation()
+
+  const signOutHandler = async () => {
+    try {
+      await dispatch(signOutThunk())
+      navigation.navigate("AuthStackNavigator")
+    } catch (error) {
+      console.log("dispatching the sign out went wrong")
+    }
+  }
+
   return (
     <FeedStack.Navigator>
       <FeedStack.Screen
@@ -48,6 +64,13 @@ const FeedStackNavigator: React.FC = () => {
           ),
           headerRight: () => (
             <View style={{ flexDirection: "row" }}>
+              <CustomIconButton
+                style={{ marginRight: 10 }}
+                iconName={"log-out"}
+                size={25}
+                color={"white"}
+                onPress={() => signOutHandler()}
+              />
               <CustomIconButton
                 style={{ marginRight: 10 }}
                 iconName={"ios-add-circle-outline"}

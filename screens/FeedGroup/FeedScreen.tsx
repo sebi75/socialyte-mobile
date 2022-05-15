@@ -1,6 +1,8 @@
 import { View, FlatList, StyleSheet } from "react-native"
 import FeedPost from "../../components/FeedPost"
 
+import { useEffect } from "react"
+
 import DUMMY from "../../data/dummy"
 import Colors from "../../constants/Colors"
 
@@ -10,6 +12,11 @@ import { RootState } from "../../state/store"
 const FeedScreen: React.FC = () => {
   const user = useSelector((state: RootState) => state.user)
   console.log("current user: ", user)
+
+  useEffect(() => {
+    console.log("feed screen rendered")
+  }, [])
+
   return (
     <View style={styles.screen}>
       <FlatList

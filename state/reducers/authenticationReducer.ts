@@ -8,6 +8,8 @@ import { UserState } from "../types/User"
 import { createUserDocumentAtSignup } from "../../firebase/database/createUser"
 import { SignUpWithEmailResult } from "../../firebase/authentication/signUpWithEmail"
 
+import AsyncStorage from "@react-native-async-storage/async-storage"
+
 const userInitialState: UserState = {
   isAuthenticated: false,
   isLoading: false,
@@ -39,7 +41,18 @@ const userSlice = createSlice({
     clearError: (state) => {
       state.error = undefined
     },
+
+    clearUserState: (state) => {
+      state.isAuthenticated = false
+      state.isLoading = false
+      state.profilePicture = undefined
+      state.username = undefined
+      state.error = undefined
+      state.email = undefined
+      state.uid = undefined
+    },
   },
+
   extraReducers: (builder) => {
     builder.addCase(signUpWithEmailThunk.pending, (state, action) => {
       state.isLoading = true
@@ -54,12 +67,24 @@ const userSlice = createSlice({
   },
 })
 
-export const { setUser, clearError } = userSlice.actions
+export const { setUser, clearError, clearUserState } = userSlice.actions
 
 //to be known:
 // the createAsykcthunk doens't return only the value you return in it
 // it returns a bigger object with the arguments sent, status and the thing
 //you return is in the response.payload
+export const signOutThunk = createAsyncThunk(
+  "user/signOut",
+  async (_, { dispatch }) => {
+    try {
+      await AsyncStorage.removeItem("userData")
+      dispatch(clearUserState())
+    } catch (error) {
+      console.log("error in removing userData from the AsyncStorage")
+    }
+  }
+)
+
 export const signUpWithEmailThunk = createAsyncThunk(
   "auth/signUpWithEmail",
   async (
