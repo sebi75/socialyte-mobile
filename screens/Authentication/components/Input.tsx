@@ -101,6 +101,7 @@ export const Input: React.FC<InputProps> = (props) => {
         {...props}
         style={styles.input}
         value={inputState.value}
+        placeholderTextColor="#aaa"
         onBlur={lostFocusHandler}
         onChangeText={textChangeHandler}
       />
@@ -130,6 +131,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     width: width * 0.7,
     height: 30,
+    color: "#fff",
   },
 
   errorContainer: {

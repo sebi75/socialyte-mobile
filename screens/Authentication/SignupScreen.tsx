@@ -151,7 +151,11 @@ const SignupScreen: React.FC = () => {
           </View>
         )}
         {isLoading ? (
-          <ActivityIndicator size={"small"} color={"red"} />
+          <ActivityIndicator
+            size={"small"}
+            color={"red"}
+            style={{ marginTop: 25 }}
+          />
         ) : (
           <CustomButton
             title="Signup"
