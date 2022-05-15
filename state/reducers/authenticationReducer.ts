@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-import { signUpWithEmail } from "../../firebase/authentication/signUpWithEmail"
-
 import { UserState } from "../types/User"
 
 /* thunks import */
@@ -9,6 +7,7 @@ import { signUpWithEmailThunk } from "../thunks/authentication/signupWithEmailTh
 import { signInWithEmailThunk } from "../thunks/authentication/signinWithEmailThunk"
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { signOut } from "../../firebase/authentication/signOut."
 
 const userInitialState: UserState = {
   isAuthenticated: false,
@@ -90,10 +89,13 @@ export const signOutThunk = createAsyncThunk(
   "user/signOut",
   async (_, { dispatch }) => {
     try {
+      await signOut()
       await AsyncStorage.removeItem("userData")
       dispatch(clearUserState())
     } catch (error) {
-      console.log("error in removing userData from the AsyncStorage")
+      console.log(
+        "error in removing userData from the AsyncStorage or in signOut from firebase"
+      )
     }
   }
 )
