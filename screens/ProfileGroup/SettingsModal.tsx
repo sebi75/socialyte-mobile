@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet } from "react-native"
+import { View, StyleSheet } from "react-native"
 
-import SettingItem from "./components/SettingItem"
+import SettingItem from "./components/Settings/SettingItem"
 
 import Colors from "../../constants/Colors"
 

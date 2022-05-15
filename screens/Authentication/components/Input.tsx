@@ -114,16 +114,19 @@ export const Input: React.FC<InputProps> = (props) => {
 }
 
 const styles = StyleSheet.create({
-  formControl: {},
+  formControl: {
+    marginTop: 15,
+  },
   label: {
     fontWeight: "bold",
     marginVertical: 5,
+    color: "rgba(255,255,255,0.85)",
   },
   input: {
     paddingHorizontal: 2,
     paddingVertical: 5,
     borderWidth: 1,
-    borderColor: "rgba(0,0,0,0.3)",
+    borderColor: "rgba(255,255,255,0.2)",
     borderRadius: 7,
     width: width * 0.7,
     height: 30,

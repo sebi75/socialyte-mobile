@@ -8,7 +8,13 @@ const StartupStack = createNativeStackNavigator()
 
 const StartupStackNavigator: React.FC = () => {
   return (
-    <StartupStack.Navigator>
+    <StartupStack.Navigator
+      screenOptions={{
+        //disable swipe to go back from the main application
+        //to the authstack when users are already logged in
+        gestureEnabled: false,
+      }}
+    >
       <StartupStack.Screen
         name="StartupScreen"
         component={StartupScreen}

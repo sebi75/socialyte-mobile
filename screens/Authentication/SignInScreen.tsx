@@ -35,7 +35,7 @@ const SigninScreen: React.FC = () => {
   const [formState, formDispatch] = useReducer(formReducer, initialFormState)
 
   const { isLoading, error, isAuthenticated } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.auth
   )
 
   const dispatch = useAppDispatch()
@@ -144,7 +144,7 @@ const SigninScreen: React.FC = () => {
             buttonStyle={{
               width: width * 0.5,
               alignSelf: "center",
-              marginTop: 15,
+              marginTop: 25,
             }}
           />
         )}
@@ -156,9 +156,10 @@ const SigninScreen: React.FC = () => {
 const styles = StyleSheet.create({
   screen: {
     width,
-    height,
+    height: "100%",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: Colors.dark,
   },
   inputContainer: {
     width: width * 0.8,
