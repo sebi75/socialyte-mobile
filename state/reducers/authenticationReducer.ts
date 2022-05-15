@@ -13,7 +13,6 @@ import { signOut } from "../../firebase/authentication/signOut."
 import { clearUserState } from "./userSlice"
 
 const authenticationInitialState: AuthenticationState = {
-  isAuthenticated: false,
   isLoading: false,
   error: undefined,
 }
@@ -45,7 +44,6 @@ const userSlice = createSlice({
       state.isLoading = true
     })
     builder.addCase(signInWithEmailThunk.fulfilled, (state, action) => {
-      state.isAuthenticated = true
       state.isLoading = false
     })
     builder.addCase(signInWithEmailThunk.rejected, (state, action) => {

@@ -42,13 +42,14 @@ const BottomTabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="DiscoverScreen"
+        name="DiscoverStackNavigator"
         component={DiscoverStackNavigator}
         options={{
           tabBarStyle: {
             position: "absolute",
           },
           tabBarShowLabel: false,
+          headerShown: false,
           tabBarIcon: ({ focused }) => {
             return <Feather name="search" size={25} color="white" />
           },

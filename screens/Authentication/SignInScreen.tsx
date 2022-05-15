@@ -34,9 +34,8 @@ const { width, height } = Dimensions.get("window")
 const SigninScreen: React.FC = () => {
   const [formState, formDispatch] = useReducer(formReducer, initialFormState)
 
-  const { isLoading, error, isAuthenticated } = useSelector(
-    (state: RootState) => state.auth
-  )
+  const { isLoading, error } = useSelector((state: RootState) => state.auth)
+  const { isAuthenticated } = useSelector((state: RootState) => state.user)
 
   const dispatch = useAppDispatch()
   const navigation: any = useNavigation()
