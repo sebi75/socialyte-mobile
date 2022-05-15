@@ -21,10 +21,9 @@ import { useAppDispatch } from "../../state/store"
 import { useSelector } from "react-redux"
 import { RootState } from "../../state/store"
 
-import {
-  signUpWithEmailThunk,
-  clearError,
-} from "../../state/reducers/authenticationReducer"
+import { clearError } from "../../state/reducers/authenticationReducer"
+import { signUpWithEmailThunk } from "../../state/thunks/authentication/signupWithEmailThunk"
+
 import { useNavigation } from "@react-navigation/native"
 
 const FORM_UPDATE = "FORM_UPDATE"
