@@ -5,6 +5,7 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useReducer, useCallback } from "react"
@@ -22,7 +23,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../state/store"
 
 import { clearError } from "../../state/reducers/authenticationReducer"
-import { signUpWithEmailThunk } from "../../state/thunks/authentication/signupWithEmailThunk"
+import { signUpWithEmailThunk } from "../../state/thunks/authentication/signUpWithEmailThunk"
 
 import { useNavigation } from "@react-navigation/native"
 
@@ -40,7 +41,7 @@ const SignupScreen: React.FC = () => {
   const dispatch = useAppDispatch()
   const navigation: any = useNavigation()
 
-  const signupHandler = async () => {
+  const signUpHandler = async () => {
     try {
       if (formState?.isFormValid) {
         const response = await dispatch(
@@ -98,7 +99,7 @@ const SignupScreen: React.FC = () => {
     >
       {/* FORM */}
       <View style={styles.inputContainer}>
-        <Text style={styles.mainTextLabelStyle}>Signup</Text>
+        <Text style={styles.mainTextLabelStyle}>Sign Up</Text>
         <Input
           id={"username"}
           label={"Username: "}
@@ -130,11 +131,11 @@ const SignupScreen: React.FC = () => {
           initialValue={""}
           onInputChange={inputChangeHandler}
         />
-        <View>
+        <TouchableOpacity onPress={() => navigation.navigate("LoginScreen")}>
           <Text style={styles.redirectToSigninStyle}>
             Already have an account?
           </Text>
-        </View>
+        </TouchableOpacity>
         {error && (
           <View style={styles.errorContainer}>
             <Ionicons name="warning" size={24} color="red" />
@@ -146,7 +147,7 @@ const SignupScreen: React.FC = () => {
         ) : (
           <CustomButton
             title="Signup"
-            onPress={signupHandler}
+            onPress={signUpHandler}
             buttonStyle={{
               width: width * 0.5,
               alignSelf: "center",

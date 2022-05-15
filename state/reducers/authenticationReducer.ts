@@ -3,8 +3,8 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { UserState } from "../types/User"
 
 /* thunks import */
-import { signUpWithEmailThunk } from "../thunks/authentication/signupWithEmailThunk"
-import { signInWithEmailThunk } from "../thunks/authentication/signinWithEmailThunk"
+import { signUpWithEmailThunk } from "../thunks/authentication/signUpWithEmailThunk"
+import { signInWithEmailThunk } from "../thunks/authentication/signInWithEmailThunk"
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { signOut } from "../../firebase/authentication/signOut."

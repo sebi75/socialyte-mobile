@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import SignupScreen from "../../screens/Authentication/SignupScreen"
+import SignupScreen from "../../screens/Authentication/SignUpScreen"
 import SigninScreen from "../../screens/Authentication/SignInScreen"
 
 import { CustomIconButton } from "../../components/IconButton"
