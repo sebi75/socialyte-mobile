@@ -19,7 +19,7 @@ export const getUserPosts = async (
     querySnapshot.forEach((doc) => {
       //same as the post
       const post = doc.data()
-      post.createdAt = new Date(post.createdAt).getSeconds().toString()
+      post.createdAt = post.createdAt.toDate()
 
       posts.push(post as Post)
     })

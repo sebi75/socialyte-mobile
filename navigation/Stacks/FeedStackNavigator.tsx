@@ -34,6 +34,7 @@ const FeedStack = createNativeStackNavigator<RootStackParamList>()
 
 const FeedStackNavigator: React.FC = () => {
   const { uid } = useSelector((state: RootState) => state.user)
+  console.log(uid)
   const dispatch = useAppDispatch()
 
   return (
