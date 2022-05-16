@@ -1,6 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { Post } from "../../types/Post"
 
-const initialState = {
+interface UserPostsState {
+  posts: Array<Post>
+}
+
+const initialState: UserPostsState = {
   posts: [],
 }
 
@@ -8,12 +13,15 @@ const userProfilePosts = createSlice({
   name: "userProfilePosts",
   initialState: initialState,
   reducers: {
-    setPosts: (state, action) => {
+    setUserPosts: (state, action: PayloadAction<Array<Post>>) => {
+      console.log("setting user posts")
+      console.log("the payload is: ")
+      console.log(action.payload)
       state.posts = action.payload
     },
   },
   extraReducers: {},
 })
 
-export const { setPosts } = userProfilePosts.actions
+export const { setUserPosts } = userProfilePosts.actions
 export default userProfilePosts.reducer

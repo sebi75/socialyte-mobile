@@ -3,17 +3,27 @@ import PostPreview from "./PostPreview"
 
 import dummy from "../../../../data/dummy"
 
+/* REDUX */
+import { useSelector } from "react-redux"
+import { RootState } from "../../../../state/store"
+import { useEffect } from "react"
+
 const { width, height } = Dimensions.get("window")
 const ProfilePosts: React.FC = () => {
+  const { posts } = useSelector((state: RootState) => state.userPosts)
+
+  useEffect(() => {
+    console.log(posts)
+  }, [])
+
   return (
     <SafeAreaView style={styles.screen}>
       <FlatList
         numColumns={3}
-        data={dummy}
+        data={posts}
         renderItem={({ item }) => {
-          const { avatar, first_name, id, image, last_name, username } = item
-          console.log(image)
-          return <PostPreview imageURL={image} />
+          const { mediaReference, description } = item
+          return <PostPreview key={description} imageURL={mediaReference} />
         }}
       />
     </SafeAreaView>
@@ -23,8 +33,6 @@ const ProfilePosts: React.FC = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
 })
 

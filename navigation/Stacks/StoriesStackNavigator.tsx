@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import StoriesScreen from "../../screens/StoriesGroup/StoriesScreen"
+import StoriesScreen from "../../screens/Stories/StoriesScreen"
 
 const StoriesStack = createNativeStackNavigator()
 

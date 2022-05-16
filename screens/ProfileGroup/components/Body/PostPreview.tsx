@@ -6,17 +6,18 @@ import {
   TouchableOpacity,
 } from "react-native"
 
-const { width, height } = Dimensions.get("window")
+const { width } = Dimensions.get("window")
 
 interface PostPreviewPeops {
   imageURL: string
 }
 
 const PostPreview: React.FC<PostPreviewPeops> = ({ imageURL }) => {
+  console.log(imageURL)
   return (
     <TouchableOpacity style={styles.container}>
       {/* @ts-ignore */}
-      <Image style={styles.imageStyle} source={imageURL} />
+      <Image style={styles.imageStyle} source={{ uri: imageURL }} />
     </TouchableOpacity>
   )
 }

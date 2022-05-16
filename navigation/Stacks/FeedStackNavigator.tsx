@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
-import FeedScreen from "../../screens/FeedGroup/FeedScreen"
-import CommentsModalScreen from "../../screens/FeedGroup/CommentsModalScreen"
+import FeedScreen from "../../screens/Feed/FeedScreen"
+import CommentsModalScreen from "../../screens/Feed/CommentsModalScreen"
 
 /* import settings */
 import { FeedSettings } from "./settings"
@@ -10,7 +10,7 @@ import { View } from "react-native"
 /* COMPONENTS */
 import { CustomIconButton } from "../../components/IconButton"
 import CameraStackNavigator from "./CameraStackNavigator"
-import InboxScreen from "../../screens/InboxGroup/InboxScreen"
+import InboxScreen from "../../screens/Inbox/InboxScreen"
 import CreatePostStackNavigator from "./CreatePostStackNavigator"
 
 /* REDUX: */
@@ -20,7 +20,7 @@ import { useNavigation } from "@react-navigation/native"
 import { useSelector } from "react-redux"
 import { RootState } from "../../state/store"
 
-import { getUserPosts } from "../../firebase/database/post/getUserPosts"
+import { getUserPostsThunk } from "../../state/thunks/userPosts/getUserPostsThunk"
 
 type RootStackParamList = {
   FeedScreen: undefined
@@ -34,6 +34,7 @@ const FeedStack = createNativeStackNavigator<RootStackParamList>()
 
 const FeedStackNavigator: React.FC = () => {
   const { uid } = useSelector((state: RootState) => state.user)
+  const dispatch = useAppDispatch()
 
   return (
     <FeedStack.Navigator>
@@ -63,7 +64,9 @@ const FeedStackNavigator: React.FC = () => {
                 iconName={"search"}
                 size={25}
                 color={"white"}
-                onPress={() => getUserPosts(uid as string)}
+                onPress={() =>
+                  dispatch(getUserPostsThunk({ uid: uid as string }))
+                }
               />
               <CustomIconButton
                 style={{ marginRight: 10 }}

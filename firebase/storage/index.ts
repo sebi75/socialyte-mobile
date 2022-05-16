@@ -15,12 +15,11 @@ export const uploadImage = async (uploadUri: any, fileName: string) => {
 }
 
 /* Logic to get the media Google storage url for using in the app */
-export const getImageUrl = async () => {
+export const getImageUrl = async (mediaReference: string): Promise<string> => {
   //const startDate = performance.now()
-  const imageName = "qh152o8efl2nayul7dbrk"
-  const imageRef = ref(storage, `images/${imageName}`)
+  const imageRef = ref(storage, `images/${mediaReference}`)
 
-  let imageUrl
+  let imageUrl = ""
   try {
     const downloadURL = await getDownloadURL(imageRef)
 

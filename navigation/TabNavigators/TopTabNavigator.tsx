@@ -1,8 +1,8 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 
 import FeedStackNavigator from "../Stacks/FeedStackNavigator"
-import InboxScreen from "../../screens/InboxGroup/InboxScreen"
-import CameraScreen from "../../screens/CameraGroup/CameraScreen"
+import InboxScreen from "../../screens/Inbox/InboxScreen"
+import CameraScreen from "../../screens/Camera/CameraScreen"
 import BottomTabNavigator from "./BottomTabNavigator"
 
 /* 
