@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { Post } from "../../types/Post"
+import { Post } from "../../firebase/database/post/types/Post"
 
 interface UserPostsState {
   posts: Array<Post>

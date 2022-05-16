@@ -8,6 +8,8 @@ import {
 import FollowButton from "./FollowButton"
 import { CustomButton } from "../../../../components/CustomButton"
 
+import { useNavigation } from "@react-navigation/native"
+
 interface ProfileHeaderProps {
   numberOfPosts: number
   numberOfFollowers: number
@@ -20,6 +22,8 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   numberOfFollowing,
   numberOfPosts,
 }) => {
+  const navigation: any = useNavigation()
+
   return (
     <View style={styles.outerHeaderSection}>
       <View style={styles.lineOne}>
@@ -55,7 +59,6 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           buttonStyle={{ backgroundColor: "rgba(255,255,255,0.5)", flex: 1 }}
           textStyle={{ color: "rgba(0,0,0,0.4)" }}
         />
-        {/* <FollowButton title={"Follow"} onPress={() => console.log("clicker")} /> */}
       </View>
 
       <View>
@@ -63,7 +66,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         <View style={styles.editProfileButton}>
           <CustomButton
             title={"Edit"}
-            onPress={() => console.log("Proceed to edit")}
+            onPress={() => navigation.navigate("EditScreen")}
           />
         </View>
       </View>

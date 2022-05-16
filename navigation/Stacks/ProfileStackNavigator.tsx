@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
 import ProfileScreen from "../../screens/ProfileGroup/ProfileScreen"
 import SettingsModal from "../../screens/ProfileGroup/SettingsModal"
+import EditScreen from "../../screens/ProfileGroup/EditScreen/EditScreen"
 
 import { ProfileSettings } from "./settings"
 
@@ -50,6 +51,19 @@ const ProfileStackNavigator: React.FC = () => {
           }}
         />
       </ProfileStack.Group>
+      <ProfileStack.Screen
+        name="EditScreen"
+        component={EditScreen}
+        options={{
+          title: "Edit Profile",
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          headerTitleStyle: {
+            color: "white",
+          },
+        }}
+      />
     </ProfileStack.Navigator>
   )
 }

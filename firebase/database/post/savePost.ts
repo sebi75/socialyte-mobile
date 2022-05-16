@@ -1,7 +1,7 @@
 import { db } from "../../firebaseConfig"
 import { addDoc, collection } from "firebase/firestore"
 
-import { Post } from "../../../types/Post"
+import { Post } from "./types/Post"
 
 export const savePost = async (post: Post) => {
   const collectionRef = collection(db, "media")
