@@ -13,7 +13,6 @@ interface PostPreviewPeops {
 }
 
 const PostPreview: React.FC<PostPreviewPeops> = ({ imageURL }) => {
-  console.log(imageURL)
   return (
     <TouchableOpacity style={styles.container}>
       {/* @ts-ignore */}

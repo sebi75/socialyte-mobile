@@ -1,7 +1,7 @@
 export interface Post {
   createdAt: Object
   description: string
-  mediaReference: string
+  mediaURL: string
   mediaType: string
   postOwner: string
   username: string

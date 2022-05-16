@@ -1,29 +1,16 @@
 import { db } from "../../firebaseConfig"
-import { doc, setDoc, addDoc, collection } from "firebase/firestore"
+import { addDoc, collection } from "firebase/firestore"
 
-interface PostInterface {
-  mediaReference: string
-  description: string
-  mediaType: string
-  username: string
-  createdAt: Date
-  postOwner: string
-}
+import { Post } from "../../../types/Post"
 
-export const savePost = async (post: PostInterface) => {
+export const savePost = async (post: Post) => {
   const collectionRef = collection(db, "media")
-  const {
-    mediaReference,
-    description,
-    mediaType,
-    username,
-    createdAt,
-    postOwner,
-  } = post
+  const { mediaURL, description, mediaType, username, createdAt, postOwner } =
+    post
 
-  const postData = {
+  const postData: Post = {
     postOwner: postOwner,
-    mediaReference: mediaReference,
+    mediaURL: mediaURL,
     description: description,
     mediaType: mediaType,
     username: username,
@@ -33,6 +20,7 @@ export const savePost = async (post: PostInterface) => {
   try {
     const postPost = await addDoc(collectionRef, postData)
   } catch (error: any) {
+    console.log("Error in saving the post")
     console.log("error: ", error.message)
   }
 }

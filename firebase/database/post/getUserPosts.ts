@@ -1,15 +1,7 @@
 import { db } from "../../firebaseConfig"
-import {
-  getDocs,
-  updateDoc,
-  doc,
-  collection,
-  where,
-  query,
-} from "firebase/firestore"
+import { getDocs, collection, where, query } from "firebase/firestore"
 
 import { Post } from "../../../types/Post"
-import { getImageUrl } from "../../../firebase/storage/index"
 
 type GetUserPostsResult = Array<Post>
 
@@ -27,7 +19,7 @@ export const getUserPosts = async (
     querySnapshot.forEach((doc) => {
       //same as the post
       const post = doc.data()
-      post.createdAt = new Date(post.createdAt).toString()
+      post.createdAt = new Date(post.createdAt).getSeconds().toString()
 
       posts.push(post as Post)
     })
@@ -36,15 +28,6 @@ export const getUserPosts = async (
       "error in getting the posts from the database with error: ",
       error
     )
-  }
-
-  try {
-    for (let i = 0; i < posts.length; i++) {
-      const mediaUrl = await getImageUrl(posts[i].mediaReference)
-      posts[i].mediaReference = mediaUrl
-    }
-  } catch (error) {
-    throw Error("error in getting the url from the mediaReference")
   }
 
   console.log(posts)

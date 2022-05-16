@@ -1,8 +1,6 @@
 import { SafeAreaView, FlatList, StyleSheet, Dimensions } from "react-native"
 import PostPreview from "./PostPreview"
 
-import dummy from "../../../../data/dummy"
-
 /* REDUX */
 import { useSelector } from "react-redux"
 import { RootState } from "../../../../state/store"
@@ -21,9 +19,10 @@ const ProfilePosts: React.FC = () => {
       <FlatList
         numColumns={3}
         data={posts}
+        keyExtractor={(item) => item.description}
         renderItem={({ item }) => {
-          const { mediaReference, description } = item
-          return <PostPreview key={description} imageURL={mediaReference} />
+          const { mediaURL, description } = item
+          return <PostPreview imageURL={mediaURL} />
         }}
       />
     </SafeAreaView>

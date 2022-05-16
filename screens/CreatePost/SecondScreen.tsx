@@ -26,7 +26,6 @@ const SecondScreen: React.FC = () => {
     dispatch(setCaption(text))
   }
 
-  console.log("rerendered")
   if (isLoading) {
     return (
       <View

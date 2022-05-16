@@ -8,7 +8,6 @@ export const getUserPostsThunk = createAsyncThunk(
   "userPosts/getUserPosts",
   async ({ uid }: { uid: string }, thunkAPI): Promise<any> => {
     const { dispatch } = thunkAPI
-    console.log("getting in the thunk")
 
     try {
       const response: Array<Post> = await getUserPosts(uid)

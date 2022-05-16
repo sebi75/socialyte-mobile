@@ -13,14 +13,16 @@ export const sharePost = async () => {
 
   const remoteImageLocation = uuidv()
 
+  let mediaUrl
   try {
-    await uploadImage(imageUri, remoteImageLocation)
+    //upload the image to firebase storage
+    mediaUrl = await uploadImage(imageUri, remoteImageLocation)
   } catch (error: any) {
     throw new Error(error.message)
   }
 
   const post = {
-    mediaReference: remoteImageLocation,
+    mediaURL: mediaUrl,
     description: caption as string,
     mediaType: "image/jpeg",
     username: user.username == undefined ? dummyUser.username : user.username,
