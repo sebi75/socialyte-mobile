@@ -5,7 +5,7 @@ import { BlurView } from "expo-blur"
 
 import FeedStackNavigator from "../Stacks/FeedStackNavigator"
 import StoriesStackNavigator from "../Stacks/StoriesStackNavigator"
-import DiscoverStackNavigator from "../Stacks/DiscoverStackNAvigator"
+import DiscoverStackNavigator from "../Stacks/DiscoverStackNavigator"
 import ProfileStackNavigator from "../Stacks/ProfileStackNavigator"
 
 const Tab = createBottomTabNavigator()

@@ -7,6 +7,8 @@ import { savePost } from "../../../firebase/database/post/savePost"
 
 export const sharePost = async () => {
   const { postData } = store.getState()
+  const { user } = store.getState()
+
   const { caption, imageUri } = postData
 
   const remoteImageLocation = uuidv()
@@ -21,9 +23,9 @@ export const sharePost = async () => {
     mediaReference: remoteImageLocation,
     description: caption as string,
     mediaType: "image/jpeg",
-    username: dummyUser.username,
+    username: user.username == undefined ? dummyUser.username : user.username,
     createdAt: new Date(),
-    postOwner: dummyUser.userId,
+    postOwner: user.uid as string,
   }
 
   try {

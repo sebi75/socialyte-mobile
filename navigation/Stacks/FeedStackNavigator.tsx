@@ -17,6 +17,10 @@ import CreatePostStackNavigator from "./CreatePostStackNavigator"
 import { useAppDispatch } from "../../state/store"
 import { signOutThunk } from "../../state/reducers/authenticationReducer"
 import { useNavigation } from "@react-navigation/native"
+import { useSelector } from "react-redux"
+import { RootState } from "../../state/store"
+
+import { getUserPosts } from "../../firebase/database/post/getUserPosts"
 
 type RootStackParamList = {
   FeedScreen: undefined
@@ -29,17 +33,7 @@ type RootStackParamList = {
 const FeedStack = createNativeStackNavigator<RootStackParamList>()
 
 const FeedStackNavigator: React.FC = () => {
-  const dispatch = useAppDispatch()
-  const navigation: any = useNavigation()
-
-  const signOutHandler = async () => {
-    try {
-      await dispatch(signOutThunk())
-      navigation.navigate("AuthStackNavigator")
-    } catch (error) {
-      console.log("dispatching the sign out went wrong")
-    }
-  }
+  const { uid } = useSelector((state: RootState) => state.user)
 
   return (
     <FeedStack.Navigator>
@@ -64,6 +58,13 @@ const FeedStackNavigator: React.FC = () => {
           ),
           headerRight: () => (
             <View style={{ flexDirection: "row" }}>
+              <CustomIconButton
+                style={{ marginRight: 10 }}
+                iconName={"search"}
+                size={25}
+                color={"white"}
+                onPress={() => getUserPosts(uid as string)}
+              />
               <CustomIconButton
                 style={{ marginRight: 10 }}
                 iconName={"ios-add-circle-outline"}

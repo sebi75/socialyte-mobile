@@ -1,4 +1,10 @@
-import { View, Image, StyleSheet, Dimensions } from "react-native"
+import {
+  View,
+  Image,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native"
 
 const { width, height } = Dimensions.get("window")
 
@@ -8,17 +14,16 @@ interface PostPreviewPeops {
 
 const PostPreview: React.FC<PostPreviewPeops> = ({ imageURL }) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       {/* @ts-ignore */}
       <Image style={styles.imageStyle} source={imageURL} />
-    </View>
+    </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    borderColor: "green",
     width: width * 0.33,
     height: width * 0.33,
     backgroundColor: "red",

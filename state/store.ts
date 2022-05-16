@@ -4,9 +4,11 @@ import { useDispatch } from "react-redux"
 import createPostReducer from "./reducers/createPostReducer"
 import authenticationReducer from "./reducers/authenticationReducer"
 import userReducer from "./reducers/userSlice"
+import userProfilePostsReducer from "./reducers/userProfilePosts"
 
 const store = configureStore({
   reducer: {
+    userPosts: userProfilePostsReducer,
     postData: createPostReducer,
     auth: authenticationReducer,
     user: userReducer,
