@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     borderColor: "rgba(255,255,255,0.2)",
     borderRadius: 7,
     width: width * 0.7,
-    height: 30,
+    height: 40,
     color: "#fff",
   },
 
