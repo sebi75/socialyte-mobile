@@ -2,7 +2,7 @@ import { storage } from "../firebaseConfig"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 
 //BIG TODO:
-//support more media than just images
+//support more than just images
 
 //upload image function will upload the image to firebase storage and return
 //the remote url to store it as the mediaUrl in the "media" collection posts
