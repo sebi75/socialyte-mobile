@@ -7,6 +7,7 @@ import EditScreen from "../../screens/ProfileGroup/EditScreen/EditScreen"
 import { ProfileSettings } from "./settings"
 
 import { CustomIconButton } from "../../components/IconButton"
+import { Platform } from "react-native"
 
 const ProfileStack = createNativeStackNavigator()
 
@@ -45,6 +46,7 @@ const ProfileStackNavigator: React.FC = () => {
             headerStyle: {
               backgroundColor: "black",
             },
+            headerTintColor: Platform.OS === "android" ? "white" : "black",
             headerTitleStyle: {
               color: "white",
             },
@@ -56,6 +58,7 @@ const ProfileStackNavigator: React.FC = () => {
         component={EditScreen}
         options={{
           title: "Edit Profile",
+          headerTintColor: Platform.OS === "android" ? "white" : "black",
           headerStyle: {
             backgroundColor: "black",
           },
