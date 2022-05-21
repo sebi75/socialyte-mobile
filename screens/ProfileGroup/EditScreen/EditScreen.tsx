@@ -1,15 +1,13 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  Dimensions,
-} from "react-native"
+import { View, Text, StyleSheet, TextInput, Dimensions } from "react-native"
 
 import Colors from "../../../constants/Colors"
 import CustomButton from "../../Authentication/components/CustomButton"
 import HideKeyboard from "../../../components/HideKeyboard"
+
+/* REDUX */
+import { useSelector } from "react-redux"
+import { useAppDispatch } from "../../../state/store"
+import { RootState } from "../../../state/store"
 
 const { width, height } = Dimensions.get("window")
 const EditScreen: React.FC = () => {

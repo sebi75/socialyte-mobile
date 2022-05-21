@@ -5,9 +5,11 @@ import createPostReducer from "./reducers/createPostReducer"
 import authenticationReducer from "./reducers/authenticationReducer"
 import userReducer from "./reducers/userSlice"
 import userProfilePostsReducer from "./reducers/userProfilePosts"
+import editProfileReducer from "./reducers/editProfileReducer"
 
 const store = configureStore({
   reducer: {
+    editProfile: editProfileReducer,
     userPosts: userProfilePostsReducer,
     postData: createPostReducer,
     auth: authenticationReducer,
