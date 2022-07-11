@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import ProfileScreen from "../../screens/ProfileGroup/ProfileScreen"
 import SettingsModal from "../../screens/ProfileGroup/SettingsModal"
 import EditScreen from "../../screens/ProfileGroup/EditScreen/EditScreen"
+import PostScreen from "../../screens/ProfileGroup/Post/PostScreen"
 
 import { ProfileSettings } from "./settings"
 
@@ -66,6 +67,20 @@ const ProfileStackNavigator: React.FC = () => {
             color: "white",
           },
         }}
+      />
+      <ProfileStack.Screen
+        name="PostScreen"
+        component={PostScreen}
+        options={({ navigation, route }: { navigation: any; route: any }) => ({
+          title: route.params.title,
+          headerTintColor: Platform.OS === "android" ? "white" : "black",
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          headerTitleStyle: {
+            color: "white",
+          },
+        })}
       />
     </ProfileStack.Navigator>
   )

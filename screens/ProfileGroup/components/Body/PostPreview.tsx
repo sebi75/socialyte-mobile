@@ -1,3 +1,4 @@
+import { NavigationContainer } from "@react-navigation/native"
 import {
   View,
   Image,
@@ -5,6 +6,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native"
+import { useNavigation } from "@react-navigation/native"
 
 const { width } = Dimensions.get("window")
 
@@ -13,8 +15,14 @@ interface PostPreviewPeops {
 }
 
 const PostPreview: React.FC<PostPreviewPeops> = ({ imageURL }) => {
+  const navigation: any = useNavigation()
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() =>
+        navigation.navigate("PostScreen", { title: "Sebastian Semeniuc" })
+      }
+    >
       {/* @ts-ignore */}
       <Image style={styles.imageStyle} source={{ uri: imageURL }} />
     </TouchableOpacity>
