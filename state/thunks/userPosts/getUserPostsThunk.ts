@@ -11,18 +11,12 @@ export const getUserPostsThunk = createAsyncThunk(
 
     try {
       const response: Array<Post> = await getUserPosts(uid)
-      console.log("getting here in the thunk")
       dispatch(setUserPosts(response))
-
-      return response
     } catch (error: any) {
-      const errorMessage = error.message
-      const errorCode = error.code
-      console.log(
-        "Error in getting user posts with following errorMessage and code: "
-      )
-      console.log(errorMessage)
-      console.log(errorCode)
+      console.log(error.code)
+      console.log("Error in getting user posts: ")
+      console.log(error.message)
+      throw new Error("Error in getting user posts")
     }
   }
 )

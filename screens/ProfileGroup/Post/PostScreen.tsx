@@ -1,13 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-  ScrollView,
-} from "react-native"
-import { useEffect } from "react"
+import { StyleSheet, Dimensions, ScrollView } from "react-native"
 import Colors from "../../../constants/Colors"
 import { useNavigation } from "@react-navigation/native"
 
