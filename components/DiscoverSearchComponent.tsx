@@ -1,20 +1,18 @@
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native"
+import { View, TextInput, StyleSheet, Dimensions } from "react-native"
 
-const { width, height } = Dimensions.get("window")
-const DiscoverSearchComponent: React.FC = () => {
+import { useNavigation } from "@react-navigation/native"
+
+const DiscoverSearchComponent: React.FC<{ width: number }> = ({
+  width,
+}: {
+  width: number
+}) => {
+  const navigation: any = useNavigation()
+
   return (
-    <View style={styles.discoverSearchInputStyle}>
+    <View style={[styles.discoverSearchInputStyle, { width: width }]}>
       <TextInput
+        onPressIn={() => navigation.navigate("DiscoverSearchScreen")}
         style={styles.input}
         placeholder="place your search..."
         keyboardType="default"
@@ -27,7 +25,6 @@ const DiscoverSearchComponent: React.FC = () => {
 
 const styles = StyleSheet.create({
   discoverSearchInputStyle: {
-    width: width * 0.6,
     height: 35,
   },
   input: {

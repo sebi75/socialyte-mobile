@@ -3,10 +3,10 @@ import { TouchableOpacity, Text, StyleSheet, Dimensions } from "react-native"
 interface CustomButtonProps {
   title: string
   onPress: () => void
+  styles?: Object
 }
 
-const { width, height } = Dimensions.get("window")
-
+const { width } = Dimensions.get("window")
 export const CustomButton: React.FC<CustomButtonProps> = ({
   title,
   onPress,

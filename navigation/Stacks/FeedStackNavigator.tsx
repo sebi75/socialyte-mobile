@@ -63,9 +63,7 @@ const FeedStackNavigator: React.FC = () => {
                 iconName={"search"}
                 size={25}
                 color={"white"}
-                onPress={() =>
-                  dispatch(getUserPostsThunk({ uid: uid as string }))
-                }
+                onPress={() => dispatch(getUserPostsThunk())}
               />
               <CustomIconButton
                 style={{ marginRight: 10 }}
