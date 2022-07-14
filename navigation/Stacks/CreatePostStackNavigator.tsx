@@ -35,6 +35,7 @@ const CreatePostStackNavigator = ({
       dispatch(setIsLoading(false))
       dispatch(clearCaption())
       dispatch(clearImageUri())
+      //after the post is shared and state cleared, navigate back to the feed
       navigation.navigate("FeedScreen")
     } catch (error: any) {
       dispatch(
@@ -65,7 +66,11 @@ const CreatePostStackNavigator = ({
                 iconName={"arrow-back"}
                 color={"white"}
                 size={30}
-                onPress={() => navigation.goBack()}
+                onPress={() => {
+                  dispatch(clearCaption())
+                  dispatch(clearImageUri())
+                  navigation.navigate("FeedScreen")
+                }}
               />
             )
           },
