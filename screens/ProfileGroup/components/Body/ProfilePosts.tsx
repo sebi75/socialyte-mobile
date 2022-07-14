@@ -1,18 +1,32 @@
-import { SafeAreaView, FlatList, StyleSheet, Dimensions } from "react-native"
+import {
+  SafeAreaView,
+  FlatList,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+} from "react-native"
 import PostPreview from "./PostPreview"
 
 /* REDUX */
 import { useSelector } from "react-redux"
 import { RootState } from "../../../../state/store"
-import { useEffect } from "react"
 
-const { width, height } = Dimensions.get("window")
 const ProfilePosts: React.FC = () => {
-  const posts = useSelector((state: RootState) => state.userPosts.posts)
+  const { posts, isLoading } = useSelector(
+    (state: RootState) => state.userPosts
+  )
 
-  useEffect(() => {
-    console.log(posts)
-  }, [])
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator
+          size={"small"}
+          color={"red"}
+          style={{ marginTop: 25 }}
+        />
+      </View>
+    )
+  }
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -32,6 +46,11 @@ const ProfilePosts: React.FC = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 })
 

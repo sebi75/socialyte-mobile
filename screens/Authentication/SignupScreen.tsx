@@ -68,7 +68,7 @@ const SignupScreen: React.FC = () => {
 
           navigation.navigate("BottomTabNavigator")
         } catch (error) {
-          console.log("failed when storing in async storage")
+          throw new Error("Error while saving user data in the async storage")
         }
       }
     } catch (error) {
@@ -96,7 +96,7 @@ const SignupScreen: React.FC = () => {
     if (isAuthenticated) {
       navigation.navigate("BottomTabNavigator")
     }
-  }, [])
+  }, [isAuthenticated])
 
   return (
     <KeyboardAvoidingView

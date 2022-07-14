@@ -47,6 +47,8 @@ const ProfileScreen: React.FC = () => {
   return (
     <View style={styles.screen}>
       <FlatList
+        onRefresh={getUserPosts}
+        refreshing={false}
         data={null}
         renderItem={() => null}
         ListHeaderComponent={getHeader}

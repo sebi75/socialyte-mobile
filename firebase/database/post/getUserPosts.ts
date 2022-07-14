@@ -6,7 +6,7 @@ import { formatDate } from "../../../utils/formatDate"
 
 type GetUserPostsResult = Array<Post>
 
-//this function creates the post in the
+//this function creates the post in the state
 export const getUserPosts = async (
   uid: string
 ): Promise<GetUserPostsResult> => {
@@ -20,8 +20,6 @@ export const getUserPosts = async (
     querySnapshot.forEach((doc) => {
       //same as the post
       const post = doc.data()
-      // need to figure this out
-      /* post.createdAt = new Date(post.createdAt.toDate()).toDateString() */
       post.createdAt = formatDate(new Date(post.createdAt.toDate()))
       posts.push(post as Post)
     })
