@@ -14,6 +14,7 @@ import {
   clearCaption,
   clearImageUri,
 } from "../../state/reducers/createPostReducer"
+import { setGlobalAlertData } from "../../state/reducers/globalAlertReducer"
 
 const CreatePostStack = createNativeStackNavigator()
 
@@ -26,7 +27,7 @@ const CreatePostStackNavigator = ({
 }) => {
   const dispatch = useAppDispatch()
 
-  const sharePostPrototype = async () => {
+  const sharePostHandler = async () => {
     dispatch(setIsLoading(true))
     try {
       await sharePost()
@@ -34,7 +35,14 @@ const CreatePostStackNavigator = ({
       dispatch(clearCaption())
       dispatch(clearImageUri())
     } catch (error: any) {
-      throw new Error(error.message)
+      dispatch(
+        setGlobalAlertData({
+          isVisible: true,
+          title: error.code,
+          subtitle: "Something went wrong creating your post",
+        })
+      )
+      dispatch(setIsLoading(false))
     }
   }
 
@@ -90,7 +98,7 @@ const CreatePostStackNavigator = ({
           },
           headerRight: () => {
             return (
-              <CustomButton title={"Share Post"} onPress={sharePostPrototype} />
+              <CustomButton title={"Share Post"} onPress={sharePostHandler} />
             )
           },
         })}
