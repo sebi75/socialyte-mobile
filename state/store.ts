@@ -7,8 +7,12 @@ import userReducer from "./reducers/userSlice"
 import userProfilePostsReducer from "./reducers/userProfilePosts"
 import editProfileReducer from "./reducers/editProfileReducer"
 
+/* utils */
+import globalAlertReducer from "./reducers/globalAlertReducer"
+
 const store = configureStore({
   reducer: {
+    globalAlert: globalAlertReducer,
     editProfile: editProfileReducer,
     userPosts: userProfilePostsReducer,
     postData: createPostReducer,

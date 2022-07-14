@@ -16,7 +16,7 @@ import { useSelector } from "react-redux"
 
 const { width, height } = Dimensions.get("window")
 const FirstScreen: React.FC = () => {
-  const { pickImageAsync, source } = useCreatePostProcess(width, height)
+  const { pickImageAsync, source } = useCreatePostProcess(800, 800)
   const { isLoading } = useSelector((state: any) => state.postData)
 
   return (

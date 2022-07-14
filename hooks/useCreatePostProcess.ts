@@ -10,7 +10,8 @@ import {
   setIsLoading,
 } from "../state/action-creators/createPostActions"
 
-export const useCreatePostProcess = (width: any, height: any) => {
+//the width and height parameters will represent the size of the image in pixels
+export const useCreatePostProcess = (width: number, height: number) => {
   const [source, setSource] = useState<any>(undefined)
   const dispatch = useAppDispatch()
 

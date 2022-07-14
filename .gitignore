@@ -2,7 +2,9 @@
 /node_modules
 /.firebase
 /.pnp
+
 firebase/firebaseConfig.ts
+
 .pnp.js
 .firebaserc
 firebase.json

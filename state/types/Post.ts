@@ -1,5 +1,11 @@
 import { checkPossibleType, checkType } from "../../utils/type-utils"
 
+//
+//
+/* FILE MAYBE NEEDS REFACTRING AND BETTER LOGIC */
+//
+//
+
 export interface Post {
   id: string
   postOwner: string
@@ -11,7 +17,9 @@ export interface Post {
 }
 
 export function isPost(obj: any): obj is Post {
-  return (
+  //this should check for all the must have properties of a post
+  const validFields = mustRequiredFields.every((field) => field in obj)
+  const validTypes =
     checkPossibleType(obj, "object") &&
     checkType(obj.id, "string") &&
     checkType(obj.createdAt, "object") &&
@@ -20,7 +28,8 @@ export function isPost(obj: any): obj is Post {
     checkType(obj.mediaType, "string") &&
     checkType(obj.postOwner, "string") &&
     checkType(obj.username, "string")
-  )
+
+  return validFields && validTypes
 }
 
 export function isPartialPost(obj: any): obj is Partial<Post> {
@@ -37,6 +46,15 @@ export function isPartialPost(obj: any): obj is Partial<Post> {
 
   return fieldsValid && hasCorrectType
 }
+
+const mustRequiredFields = [
+  "description",
+  "mediaURL",
+  "mediaType",
+  "postOwner",
+  "createdAt",
+  "username",
+]
 
 const postFields = [
   "id",

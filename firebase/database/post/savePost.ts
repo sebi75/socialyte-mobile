@@ -9,8 +9,9 @@ export const savePost = async (post: Post) => {
   const { mediaURL, description, mediaType, username, createdAt, postOwner } =
     post
 
-  if (!isPartialPost(post)) {
-    throw new Error("Invalid post")
+  //check for the sending post to be a valid post
+  if (!isPost(post)) {
+    throw new Error("Error creating post")
   }
 
   const postData: Partial<Post> = {
@@ -24,8 +25,9 @@ export const savePost = async (post: Post) => {
 
   try {
     const postPost = await addDoc(collectionRef, postData)
+    console.log("success", postPost)
   } catch (error: any) {
     console.log("Error in saving the post")
-    console.log("error: ", error.message)
+    throw new Error("Error in saving the post")
   }
 }
