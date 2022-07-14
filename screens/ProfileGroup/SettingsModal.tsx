@@ -15,6 +15,7 @@ const SettingsModal: React.FC = () => {
   const signOutHandler = async () => {
     try {
       await dispatch(signOutThunk())
+      navigation.goBack()
       navigation.navigate("AuthStackNavigator")
     } catch (error: any) {
       throw Error(error)

@@ -7,15 +7,12 @@ import { useSelector } from "react-redux"
 import { RootState } from "../state/store"
 import { setGlobalAlertData } from "../state/reducers/globalAlertReducer"
 
-import { useNavigation } from "@react-navigation/native"
-
 const { width } = Dimensions.get("window")
 const GlobalAlert: React.FC = (): any => {
   const dispatch = useAppDispatch()
   const { isVisible, title, subtitle } = useSelector(
     (state: RootState) => state.globalAlert
   )
-  const navigation: any = useNavigation()
 
   return (
     <>
@@ -23,8 +20,7 @@ const GlobalAlert: React.FC = (): any => {
         <View style={styles.absolute}>
           <View style={styles.modalElementsContainer}>
             <CloseButton
-              onPress={() => {
-                navigation.goBack()
+              onPress={() =>
                 dispatch(
                   setGlobalAlertData({
                     isVisible: false,
@@ -32,7 +28,7 @@ const GlobalAlert: React.FC = (): any => {
                     subtitle: "",
                   })
                 )
-              }}
+              }
             />
             <View
               style={{
@@ -75,10 +71,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     textAlign: "center",
     width: width * 0.9,
+    height: width,
   },
 })
 
-const CloseButton = (onPress: any) => {
+const CloseButton = ({ onPress }: { onPress: any }) => {
   return (
     <CustomIconButton
       iconName={"close"}

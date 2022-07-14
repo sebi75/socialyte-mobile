@@ -33,6 +33,7 @@ export const sharePost = async () => {
   try {
     await savePost(post)
   } catch (error: any) {
+    console.log(error)
     throw new Error(error.message)
   }
 }

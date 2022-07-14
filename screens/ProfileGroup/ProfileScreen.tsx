@@ -21,7 +21,7 @@ const ProfileScreen: React.FC = () => {
     return (
       <ProfileHeader
         numberOfPosts={5}
-        numberOfFollowers={120}
+        numberOfFollowers={115}
         numberOfFollowing={55}
       />
     )

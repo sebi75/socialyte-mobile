@@ -40,7 +40,7 @@ const CreatePostStackNavigator = ({
         setGlobalAlertData({
           isVisible: true,
           title: error.code,
-          subtitle: "Something went wrong creating your post",
+          subtitle: "something went wrong",
         })
       )
       dispatch(setIsLoading(false))
