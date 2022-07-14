@@ -16,13 +16,12 @@ const StartupScreen: React.FC = () => {
       const userDataJson = await AsyncStorage.getItem("userData")
 
       if (!userDataJson) {
-        console.log("no user found --> navigating client to authentication")
         navigation.navigate("AuthStackNavigator")
         return
       }
 
       const parsedUserData = JSON.parse(userDataJson)
-      const { token, uid, email, username } = parsedUserData
+      const { uid, email, username } = parsedUserData
       dispatch(setUser({ uid, email, username }))
 
       navigation.navigate("BottomTabNavigator")

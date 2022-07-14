@@ -1,7 +1,8 @@
 import { db } from "../../firebaseConfig"
 import { getDocs, collection, where, query } from "firebase/firestore"
 
-import { Post } from "./types/Post"
+import { Post } from "../../../state/types/Post"
+import { formatDate } from "../../../utils/formatDate"
 
 type GetUserPostsResult = Array<Post>
 
@@ -21,7 +22,7 @@ export const getUserPosts = async (
       const post = doc.data()
       // need to figure this out
       /* post.createdAt = new Date(post.createdAt.toDate()).toDateString() */
-      post.createdAt = new Date(post.createdAt.toDate())
+      post.createdAt = formatDate(new Date(post.createdAt.toDate()))
       posts.push(post as Post)
     })
   } catch (error: any) {

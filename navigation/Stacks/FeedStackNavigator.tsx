@@ -15,8 +15,6 @@ import CreatePostStackNavigator from "./CreatePostStackNavigator"
 
 /* REDUX: */
 import { useAppDispatch } from "../../state/store"
-import { signOutThunk } from "../../state/reducers/authenticationReducer"
-import { useNavigation } from "@react-navigation/native"
 import { useSelector } from "react-redux"
 import { RootState } from "../../state/store"
 

@@ -25,8 +25,7 @@ export const savePost = async (post: Partial<Post>) => {
   }
 
   try {
-    const postPost = await addDoc(collectionRef, postData)
-    console.log("success", postPost)
+    await addDoc(collectionRef, postData)
   } catch (error: any) {
     console.log("Error in saving the post")
     throw new Error("Error in saving the post")

@@ -1,7 +1,7 @@
 export interface UserState {
   isAuthenticated: boolean
-  email: string
-  uid: string
+  email: string | undefined
+  uid: string | undefined
   username: string | undefined
   profilePicture: string | undefined
 }

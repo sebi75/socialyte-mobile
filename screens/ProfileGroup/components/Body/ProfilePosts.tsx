@@ -8,7 +8,7 @@ import { useEffect } from "react"
 
 const { width, height } = Dimensions.get("window")
 const ProfilePosts: React.FC = () => {
-  const { posts } = useSelector((state: RootState) => state.userPosts)
+  const posts = useSelector((state: RootState) => state.userPosts.posts)
 
   useEffect(() => {
     console.log(posts)

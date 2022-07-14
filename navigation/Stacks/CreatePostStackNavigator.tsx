@@ -19,13 +19,7 @@ import { setGlobalAlertData } from "../../state/reducers/globalAlertReducer"
 
 const CreatePostStack = createNativeStackNavigator()
 
-const CreatePostStackNavigator = ({
-  navigation,
-  route,
-}: {
-  navigation: any
-  route: any
-}) => {
+const CreatePostStackNavigator = ({ navigation }: { navigation: any }) => {
   const dispatch = useAppDispatch()
 
   const sharePostHandler = async () => {

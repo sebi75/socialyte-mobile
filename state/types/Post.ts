@@ -19,7 +19,6 @@ export function isPost(obj: any): obj is Post {
   //this should check for all the must have properties of a post
   const validFields = mustRequiredFields.every((field) => field in obj)
   const validTypes =
-    checkPossibleType(obj, "object") &&
     checkType(obj.id, "string") &&
     checkType(obj.createdAt, "object") &&
     checkType(obj.description, "string") &&
