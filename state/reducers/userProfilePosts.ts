@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { Post } from "../../firebase/database/post/types/Post"
+import { Post } from "../types/Post"
 
 /* THUNKS */
 import { getUserPostsThunk } from "../thunks/userPosts/getUserPostsThunk"
