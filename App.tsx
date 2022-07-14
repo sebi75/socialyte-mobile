@@ -2,6 +2,7 @@ import { NavigationContainer } from "@react-navigation/native"
 import { StatusBar } from "expo-status-bar"
 
 import StartupStackNavigator from "./navigation/Stacks/start/StartupStack"
+import GlobalAlert from "./components/GlobalAlert"
 
 import { enableScreens } from "react-native-screens"
 import { LogBox } from "react-native"
@@ -26,6 +27,7 @@ export default function App() {
       <NavigationContainer>
         <StartupStackNavigator />
       </NavigationContainer>
+      <GlobalAlert />
     </Provider>
   )
 }
