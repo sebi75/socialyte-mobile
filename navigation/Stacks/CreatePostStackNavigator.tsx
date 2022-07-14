@@ -35,12 +35,13 @@ const CreatePostStackNavigator = ({
       dispatch(setIsLoading(false))
       dispatch(clearCaption())
       dispatch(clearImageUri())
+      navigation.navigate("FeedScreen")
     } catch (error: any) {
       dispatch(
         setGlobalAlertData({
           isVisible: true,
-          title: error.code,
-          subtitle: "something went wrong",
+          title: "Oops,",
+          subtitle: "Something went wrong",
         })
       )
       dispatch(setIsLoading(false))

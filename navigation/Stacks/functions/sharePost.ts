@@ -1,5 +1,4 @@
 import store from "../../../state/store"
-import dummyUser from "../../../data/user"
 import { uuidv } from "../../../utils/uuidv"
 
 import { uploadImage } from "../../../firebase/storage"

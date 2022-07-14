@@ -20,7 +20,7 @@ const GlobalAlert: React.FC = (): any => {
         <View style={styles.absolute}>
           <View style={styles.modalElementsContainer}>
             <CloseButton
-              onPress={() =>
+              onPress={() => {
                 dispatch(
                   setGlobalAlertData({
                     isVisible: false,
@@ -28,7 +28,7 @@ const GlobalAlert: React.FC = (): any => {
                     subtitle: "",
                   })
                 )
-              }
+              }}
             />
             <View
               style={{

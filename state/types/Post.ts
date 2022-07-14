@@ -7,7 +7,6 @@ import { checkPossibleType, checkType } from "../../utils/type-utils"
 //
 
 export interface Post {
-  id: string
   postOwner: string
   username: string
   description: string

@@ -10,8 +10,10 @@ import {
 import { CustomButton } from "../../components/CustomButton"
 
 import Colors from "../../constants/Colors"
+import { useEffect } from "react"
 
 import { useCreatePostProcess } from "../../hooks/useCreatePostProcess"
+/* REDUX */
 import { useSelector } from "react-redux"
 
 const { width, height } = Dimensions.get("window")
