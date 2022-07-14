@@ -14,6 +14,7 @@ import {
   clearCaption,
   clearImageUri,
 } from "../../state/reducers/createPostReducer"
+
 import { setGlobalAlertData } from "../../state/reducers/globalAlertReducer"
 
 const CreatePostStack = createNativeStackNavigator()

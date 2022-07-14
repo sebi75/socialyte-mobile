@@ -4,7 +4,7 @@ import { addDoc, collection } from "firebase/firestore"
 import { Post } from "../../../state/types/Post"
 import { isPost, isPartialPost } from "../../../state/types/Post"
 
-export const savePost = async (post: Post) => {
+export const savePost = async (post: Partial<Post>) => {
   const collectionRef = collection(db, "media")
   const { mediaURL, description, mediaType, username, createdAt, postOwner } =
     post

@@ -25,9 +25,9 @@ export const sharePost = async () => {
     mediaURL: mediaUrl,
     description: caption as string,
     mediaType: "image/jpeg",
-    username: user.username == undefined ? dummyUser.username : user.username,
+    username: user.username,
     createdAt: new Date(),
-    postOwner: user.uid as string,
+    postOwner: user.uid,
   }
 
   try {
