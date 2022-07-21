@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { TextInput, Dimensions } from "react-native"
+import { Dimensions } from "react-native"
 import { CustomButton } from "../../components/CustomButton"
 
 import MainDiscoverScreen from "../../screens/Discover/MainDiscoverScreen"

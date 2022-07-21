@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import { getUserPosts } from "../../../firebase/database/post/getUserPosts"
 
 import { setUserPosts } from "../../reducers/userProfilePosts"
-import { RootState } from "../../store"
 import { Post } from "../../types/Post"
 
 export const getUserPostsThunk = createAsyncThunk(
@@ -11,7 +10,6 @@ export const getUserPostsThunk = createAsyncThunk(
     const { dispatch } = thunkAPI
     const currentState: any = thunkAPI.getState()
     const uid = currentState.user.uid
-    console.log("uid", uid)
 
     try {
       const response: Array<Post> = await getUserPosts(uid)

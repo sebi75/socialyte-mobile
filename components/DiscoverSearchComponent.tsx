@@ -1,25 +1,34 @@
-import { View, TextInput, StyleSheet, Dimensions } from "react-native"
+import {
+  TouchableOpacity,
+  TextInput,
+  StyleSheet,
+  Dimensions,
+} from "react-native"
 
 import { useNavigation } from "@react-navigation/native"
 
-const DiscoverSearchComponent: React.FC<{ width: number }> = ({
-  width,
-}: {
+interface DiscoverSearchComponentProps {
   width: number
+}
+
+const DiscoverSearchComponent: React.FC<DiscoverSearchComponentProps> = ({
+  width,
 }) => {
   const navigation: any = useNavigation()
 
   return (
-    <View style={[styles.discoverSearchInputStyle, { width: width }]}>
+    <TouchableOpacity
+      style={[styles.discoverSearchInputStyle, { width }]}
+      onPress={() => console.log("clicked")}
+    >
       <TextInput
-        onPressIn={() => navigation.navigate("DiscoverSearchScreen")}
         style={styles.input}
         placeholder="place your search..."
         keyboardType="default"
         autoCapitalize="none"
         autoCorrect={false}
       />
-    </View>
+    </TouchableOpacity>
   )
 }
 
