@@ -60,13 +60,6 @@ const FeedStackNavigator: React.FC = () => {
             <View style={{ flexDirection: "row" }}>
               <CustomIconButton
                 style={{ marginRight: 10 }}
-                iconName={"search"}
-                size={25}
-                color={"white"}
-                onPress={() => dispatch(getUserPostsThunk())}
-              />
-              <CustomIconButton
-                style={{ marginRight: 10 }}
                 iconName={"ios-add-circle-outline"}
                 size={25}
                 color={"white"}

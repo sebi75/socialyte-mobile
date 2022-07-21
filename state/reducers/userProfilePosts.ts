@@ -28,9 +28,13 @@ const userProfilePosts = createSlice({
     builder.addCase(getUserPostsThunk.pending, (state, action) => {
       state.isLoading = true
     })
-    builder.addCase(getUserPostsThunk.fulfilled, (state, action) => {
-      state.isLoading = false
-    })
+    builder.addCase(
+      getUserPostsThunk.fulfilled,
+      (state, action: PayloadAction<Array<Post>>) => {
+        state.isLoading = false
+        state.posts = action.payload
+      }
+    )
     builder.addCase(getUserPostsThunk.rejected, (state, action: any) => {
       state.isLoading = false
       state.error = action.payload
