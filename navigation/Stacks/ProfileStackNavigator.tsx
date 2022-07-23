@@ -5,10 +5,9 @@ import SettingsModal from "../../screens/ProfileGroup/SettingsModal"
 import EditScreen from "../../screens/ProfileGroup/EditScreen/EditScreen"
 import PostScreen from "../../screens/ProfileGroup/Post/PostScreen"
 
-import { ProfileSettings } from "./settings"
-
 import { CustomIconButton } from "../../components/IconButton"
 import { Platform } from "react-native"
+import Colors from "../../constants/Colors"
 
 const ProfileStack = createNativeStackNavigator()
 
@@ -84,6 +83,16 @@ const ProfileStackNavigator: React.FC = () => {
       />
     </ProfileStack.Navigator>
   )
+}
+
+interface ProfileSettingsType {
+  backgroundColor: string
+  titleColor: string
+}
+
+export const ProfileSettings: ProfileSettingsType = {
+  backgroundColor: Platform.OS === "ios" ? Colors.dark : Colors.dark,
+  titleColor: "white",
 }
 
 export default ProfileStackNavigator

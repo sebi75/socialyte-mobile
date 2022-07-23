@@ -3,9 +3,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import FeedScreen from "../../screens/Feed/FeedScreen"
 import CommentsModalScreen from "../../screens/Feed/CommentsModalScreen"
 
-/* import settings */
-import { FeedSettings } from "./settings"
-import { View } from "react-native"
+import { View, Platform } from "react-native"
+import Colors from "../../constants/Colors"
 
 /* COMPONENTS */
 import { CustomIconButton } from "../../components/IconButton"
@@ -129,6 +128,18 @@ const FeedStackNavigator: React.FC = () => {
       />
     </FeedStack.Navigator>
   )
+}
+
+interface FeedSettingsType {
+  title: string
+  backgroundColor: string
+  titleColor: string
+}
+
+export const FeedSettings: FeedSettingsType = {
+  title: "Socialyte",
+  backgroundColor: Platform.OS === "ios" ? Colors.dark : Colors.dark,
+  titleColor: "white",
 }
 
 export default FeedStackNavigator
