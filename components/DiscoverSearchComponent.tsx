@@ -9,10 +9,12 @@ import { useNavigation } from "@react-navigation/native"
 
 interface DiscoverSearchComponentProps {
   width: number
+  autoFocus?: boolean
 }
 
 const DiscoverSearchComponent: React.FC<DiscoverSearchComponentProps> = ({
   width,
+  autoFocus = false,
 }) => {
   const navigation: any = useNavigation()
 
@@ -22,6 +24,7 @@ const DiscoverSearchComponent: React.FC<DiscoverSearchComponentProps> = ({
       onPress={() => console.log("clicked")}
     >
       <TextInput
+        autoFocus={autoFocus}
         style={styles.input}
         placeholder="place your search..."
         keyboardType="default"

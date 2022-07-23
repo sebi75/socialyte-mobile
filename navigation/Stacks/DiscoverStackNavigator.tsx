@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { Dimensions, Text } from "react-native"
+import { Dimensions, Text, StyleSheet } from "react-native"
 import { CustomButton } from "../../components/CustomButton"
 
 import MainDiscoverScreen from "../../screens/Discover/MainDiscoverScreen"
@@ -10,35 +10,21 @@ import Colors from "../../constants/Colors"
 import { TouchableOpacity } from "react-native-gesture-handler"
 const DiscoverStack = createNativeStackNavigator()
 
-const { width, height } = Dimensions.get("window")
+const { width } = Dimensions.get("window")
 const DiscoverStackNavigator = () => {
   return (
     <DiscoverStack.Navigator>
       <DiscoverStack.Screen
         name="MainDiscoverScreen"
         component={MainDiscoverScreen}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           headerLeft: () => {
             return (
               <TouchableOpacity
                 onPress={() => navigation.navigate("DiscoverSearchScreen")}
-                style={{
-                  width: width * 0.9,
-                  height: "100%",
-                  backgroundColor: "rgba(255,255,255,0.15)",
-                  borderRadius: 7,
-                  paddingHorizontal: 10,
-                  paddingVertical: 5,
-                }}
+                style={styles.container}
               >
-                <Text
-                  style={{
-                    color: "rgba(255,255,255,0.85)",
-                    fontSize: 15,
-                  }}
-                >
-                  place your search...
-                </Text>
+                <Text style={styles.text}>place your search...</Text>
               </TouchableOpacity>
             )
           },
@@ -54,9 +40,9 @@ const DiscoverStackNavigator = () => {
       <DiscoverStack.Screen
         name="DiscoverSearchScreen"
         component={DiscoverSearchScreen}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           headerLeft: () => {
-            return <DiscoverSearchComponent width={width * 0.6} />
+            return <DiscoverSearchComponent width={width * 0.6} autoFocus />
           },
           headerRight: () => {
             return (
@@ -78,5 +64,20 @@ const DiscoverStackNavigator = () => {
     </DiscoverStack.Navigator>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: width * 0.9,
+    height: "100%",
+    backgroundColor: "rgba(255,255,255,0.15)",
+    borderRadius: 7,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  text: {
+    color: "rgba(255,255,255,0.85)",
+    fontSize: 15,
+  },
+})
 
 export default DiscoverStackNavigator

@@ -59,7 +59,7 @@ const ProfileStackNavigator: React.FC = () => {
         component={EditScreen}
         options={{
           title: "Edit Profile",
-          headerTintColor: Platform.OS === "android" ? "white" : "black",
+          headerTintColor: Platform.OS === "android" ? "black" : "white",
           headerStyle: {
             backgroundColor: "black",
           },
