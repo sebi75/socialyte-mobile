@@ -1,8 +1,8 @@
-import store from "../../../state/store"
-import { uuidv } from "../../../utils/uuidv"
+import store from "../../state/store"
+import { uuidv } from "../../utils/uuidv"
 
-import { uploadImage } from "../../../firebase/storage"
-import { savePost } from "../../../firebase/database/post/savePost"
+import { uploadImage } from "../storage"
+import { savePost } from "../database/post/savePost"
 
 export const sharePost = async () => {
   const { postData } = store.getState()

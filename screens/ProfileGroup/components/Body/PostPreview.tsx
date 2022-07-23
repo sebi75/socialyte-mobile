@@ -1,20 +1,12 @@
-import { NavigationContainer } from "@react-navigation/native"
-import {
-  View,
-  Image,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native"
+import { StyleSheet, Dimensions, TouchableOpacity, Image } from "react-native"
 import { useNavigation } from "@react-navigation/native"
-
 const { width } = Dimensions.get("window")
 
-interface PostPreviewPeops {
+interface PostPreviewProps {
   imageURL: string
 }
 
-const PostPreview: React.FC<PostPreviewPeops> = ({ imageURL }) => {
+const PostPreview: React.FC<PostPreviewProps> = ({ imageURL }) => {
   const navigation: any = useNavigation()
   return (
     <TouchableOpacity
@@ -23,7 +15,6 @@ const PostPreview: React.FC<PostPreviewPeops> = ({ imageURL }) => {
         navigation.navigate("PostScreen", { title: "Sebastian Semeniuc" })
       }
     >
-      {/* @ts-ignore */}
       <Image style={styles.imageStyle} source={{ uri: imageURL }} />
     </TouchableOpacity>
   )

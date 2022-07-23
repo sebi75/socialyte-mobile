@@ -10,7 +10,7 @@ interface FeedPostProps {
   avatarImage: string
 }
 
-const { width, height } = Dimensions.get("window")
+const { width } = Dimensions.get("window")
 
 const FeedPost: React.FC<FeedPostProps> = (props) => {
   const { username, caption, imageURL, avatarImage } = props

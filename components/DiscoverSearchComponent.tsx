@@ -19,10 +19,7 @@ const DiscoverSearchComponent: React.FC<DiscoverSearchComponentProps> = ({
   const navigation: any = useNavigation()
 
   return (
-    <TouchableOpacity
-      style={[styles.discoverSearchInputStyle, { width }]}
-      onPress={() => console.log("clicked")}
-    >
+    <TouchableOpacity style={[styles.discoverSearchInputStyle, { width }]}>
       <TextInput
         autoFocus={autoFocus}
         style={styles.input}

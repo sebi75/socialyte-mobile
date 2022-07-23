@@ -3,18 +3,19 @@ import { TouchableOpacity, Text, StyleSheet, Dimensions } from "react-native"
 interface CustomButtonProps {
   title: string
   onPress: () => void
-  styles?: Object
+  style?: Object
 }
 
 const { width } = Dimensions.get("window")
 export const CustomButton: React.FC<CustomButtonProps> = ({
   title,
   onPress,
+  style,
 }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      style={styles.buttonStyle}
+      style={[styles.buttonStyle, style]}
       onPress={onPress}
     >
       <Text style={styles.buttonText}>{title}</Text>

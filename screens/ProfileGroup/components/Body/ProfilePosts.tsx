@@ -19,11 +19,7 @@ const ProfilePosts: React.FC = () => {
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator
-          size={"small"}
-          color={"red"}
-          style={{ marginTop: 25 }}
-        />
+        <ActivityIndicator size={"small"} style={{ marginTop: 25 }} />
       </View>
     )
   }

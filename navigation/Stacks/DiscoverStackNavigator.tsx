@@ -10,6 +10,12 @@ import Colors from "../../constants/Colors"
 import { TouchableOpacity } from "react-native-gesture-handler"
 const DiscoverStack = createNativeStackNavigator()
 
+//
+//
+/* BUG: Funky behavior with the cancel button in the header in the Searching screen */
+//
+//
+
 const { width } = Dimensions.get("window")
 const DiscoverStackNavigator = () => {
   return (

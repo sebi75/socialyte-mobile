@@ -7,7 +7,7 @@ import SecondScreen from "../../screens/CreatePost/SecondScreen"
 import { CustomIconButton } from "../../components/IconButton"
 import { CustomButton } from "../../components/CustomButton"
 
-import { sharePost } from "./functions/sharePost"
+import { sharePost } from "../../firebase/utils/sharePost"
 import { useAppDispatch } from "../../state/store"
 import {
   setIsLoading,
