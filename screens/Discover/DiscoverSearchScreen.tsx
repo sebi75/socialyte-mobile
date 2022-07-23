@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Dimensions } from "react-native"
 
 import HideKeyboard from "../../components/HideKeyboard"
+import SkeletonLoading from "../../components/Skeletons/SkeletonSearch"
 
 //
 //
@@ -12,7 +13,9 @@ const DiscoverSearchScreen: React.FC = (props) => {
   return (
     <HideKeyboard>
       <View style={styles.screen}>
-        <Text>Test</Text>
+        <SkeletonLoading>
+          <Text>test results</Text>
+        </SkeletonLoading>
       </View>
     </HideKeyboard>
   )

@@ -6,6 +6,14 @@ import {
 } from "react-native"
 import { useCallback } from "react"
 
+/* REDUX */
+import { RootState } from "../state/store"
+import { useSelector } from "react-redux"
+import { useAppDispatch } from "../state/store"
+import { setIsLoading } from "../state/reducers/searchUsersReducer"
+import { getUsersSearchThunk } from "../state/thunks/getUsersSearchThunk"
+import { sendPasswordResetEmail } from "firebase/auth"
+
 interface DiscoverSearchComponentProps {
   width: number
   autoFocus?: boolean
@@ -16,10 +24,17 @@ const DiscoverSearchComponent: React.FC<DiscoverSearchComponentProps> = ({
   autoFocus = false,
 }) => {
   //we're using a debounce function to perform searches only after 1.5 seconds of typing inactivity
+  const dispatch: any = useAppDispatch()
+  //const {users, isLoading} = useSelector((state: RootState) => state.searchUsers)
+
   const simulateSearch = useCallback(
     debounce((text: string) => {
       if (text.length > 0) {
-        console.log("executing the function for:", text)
+        /* setTimeout(() => {
+          dispatch(setIsLoading(true))
+        }, 1500) */
+        dispatch(setIsLoading(true))
+        dispatch(getUsersSearchThunk(text))
       }
     }, 1000),
     []

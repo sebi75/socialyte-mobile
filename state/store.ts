@@ -6,17 +6,19 @@ import authenticationReducer from "./reducers/authenticationReducer"
 import userReducer from "./reducers/userSlice"
 import userProfilePostsReducer from "./reducers/userProfilePosts"
 import editProfileReducer from "./reducers/editProfileReducer"
+import searchUsersReducer from "./reducers/searchUsersReducer"
 
 /* utils */
 import globalAlertReducer from "./reducers/globalAlertReducer"
 
 const store = configureStore({
   reducer: {
+    userPosts: userProfilePostsReducer,
     globalAlert: globalAlertReducer,
     editProfile: editProfileReducer,
-    userPosts: userProfilePostsReducer,
-    postData: createPostReducer,
+    searchUsers: searchUsersReducer,
     auth: authenticationReducer,
+    postData: createPostReducer,
     user: userReducer,
   },
   devTools: process.env.NODE_ENV !== "production",
