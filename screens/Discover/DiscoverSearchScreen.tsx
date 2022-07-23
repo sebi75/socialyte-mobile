@@ -12,7 +12,7 @@ const DiscoverSearchScreen: React.FC = (props) => {
   return (
     <HideKeyboard>
       <View style={styles.screen}>
-        <Text>Discover</Text>
+        <Text>Test</Text>
       </View>
     </HideKeyboard>
   )
@@ -20,9 +20,8 @@ const DiscoverSearchScreen: React.FC = (props) => {
 
 const styles = StyleSheet.create({
   screen: {
-    height,
-    width,
-    backgroundColor: "blue",
+    flex: 1,
+    backgroundColor: "black",
   },
 })
 

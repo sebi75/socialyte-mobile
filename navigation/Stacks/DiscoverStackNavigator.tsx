@@ -30,7 +30,7 @@ const DiscoverStackNavigator = () => {
                 onPress={() => navigation.navigate("DiscoverSearchScreen")}
                 style={styles.container}
               >
-                <Text style={styles.text}>place your search...</Text>
+                <Text style={styles.text}>search for someone...</Text>
               </TouchableOpacity>
             )
           },
@@ -55,6 +55,7 @@ const DiscoverStackNavigator = () => {
               <CustomButton
                 onPress={() => navigation.goBack()}
                 title={"Cancel"}
+                style={styles.button}
               />
             )
           },
@@ -83,6 +84,11 @@ const styles = StyleSheet.create({
   text: {
     color: "rgba(255,255,255,0.85)",
     fontSize: 15,
+  },
+  button: {
+    width: width * 0.3,
+    position: "absolute",
+    right: 0,
   },
 })
 
