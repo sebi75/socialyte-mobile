@@ -9,26 +9,34 @@ import { CustomIconButton } from "../../components/IconButton"
 import { Platform } from "react-native"
 import Colors from "../../constants/Colors"
 
+/* REDUX */
+import { useSelector } from "react-redux"
+import { RootState } from "../../state/store"
+
 const ProfileStack = createNativeStackNavigator()
 
 const ProfileStackNavigator: React.FC = () => {
+  const user = useSelector((state: RootState) => state.user)
   return (
     <ProfileStack.Navigator>
       <ProfileStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={({ navigation, route }) => ({
+        initialParams={{ uid: user.uid, username: user.username }}
+        options={({ navigation, route }: { navigation: any; route: any }) => ({
           headerRight: () => {
-            return (
-              <CustomIconButton
-                iconName={"settings"}
-                color={"white"}
-                onPress={() => navigation.navigate("SettingsModal")}
-                size={25}
-              />
-            )
+            if (route.params.uid == user.uid) {
+              return (
+                <CustomIconButton
+                  iconName={"settings"}
+                  color={"white"}
+                  onPress={() => navigation.navigate("SettingsModal")}
+                  size={25}
+                />
+              )
+            }
           },
-          title: "Sebastian Semeniuc",
+          title: route.params.username,
           headerStyle: {
             backgroundColor: ProfileSettings.backgroundColor,
           },

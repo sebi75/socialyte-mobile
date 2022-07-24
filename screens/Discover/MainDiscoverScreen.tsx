@@ -1,14 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native"
+import { View, Text, StyleSheet, Dimensions } from "react-native"
 
 import HideKeyboard from "../../components/HideKeyboard"
 
@@ -26,7 +16,7 @@ const MainDiscoverScreen: React.FC = (props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "red",
+    backgroundColor: "black",
   },
 })
 

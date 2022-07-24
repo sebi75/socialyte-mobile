@@ -1,10 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { Dimensions, Text, StyleSheet } from "react-native"
+import { Dimensions, Text, StyleSheet, Platform } from "react-native"
 import { CustomButton } from "../../components/CustomButton"
 
 import MainDiscoverScreen from "../../screens/Discover/MainDiscoverScreen"
 import DiscoverSearchComponent from "../../components/DiscoverSearchComponent"
 import DiscoverSearchScreen from "../../screens/Discover/DiscoverSearchScreen"
+import ProfileScreen from "../../screens/ProfileGroup/ProfileScreen"
 
 import Colors from "../../constants/Colors"
 import { TouchableOpacity } from "react-native-gesture-handler"
@@ -68,8 +69,33 @@ const DiscoverStackNavigator = () => {
           },
         })}
       />
+      <DiscoverStack.Screen
+        name="ProfileScreenSearched"
+        component={ProfileScreen}
+        options={({ navigation, route }: { navigation: any; route: any }) => ({
+          title: route.params.username,
+          headerStyle: {
+            backgroundColor: ProfileSettings.backgroundColor,
+            headerTintColor:
+              Platform.OS === "android" ? Colors.primary : "white",
+          },
+          headerTitleStyle: {
+            color: ProfileSettings.titleColor,
+          },
+        })}
+      />
     </DiscoverStack.Navigator>
   )
+}
+
+interface ProfileSettingsType {
+  backgroundColor: string
+  titleColor: string
+}
+
+export const ProfileSettings: ProfileSettingsType = {
+  backgroundColor: Platform.OS === "ios" ? Colors.dark : Colors.dark,
+  titleColor: "white",
 }
 
 const styles = StyleSheet.create({

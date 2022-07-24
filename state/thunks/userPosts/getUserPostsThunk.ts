@@ -5,10 +5,7 @@ import { Post } from "../../types/Post"
 
 export const getUserPostsThunk = createAsyncThunk(
   "userPosts/getUserPosts",
-  async (_, thunkAPI): Promise<Array<Post>> => {
-    const currentState: any = thunkAPI.getState()
-    const uid = currentState.user.uid
-
+  async (uid: string, thunkAPI): Promise<Array<Post>> => {
     try {
       const response: Array<Post> = await getUserPosts(uid)
       return response

@@ -24,12 +24,21 @@ export const createUserDocumentAtSignup = async (
 ) => {
   const docRef = doc(db, "users", uid)
   const connectionsRef = doc(db, "connections", uid)
+  const searchHistoryRef = doc(db, "searchHistory", uid)
 
   try {
     await setDoc(docRef, {
       uid,
       email,
       username,
+      description: "",
+      profilePicture: "",
+      following: 0,
+      followers: 0,
+      name: "",
+    })
+    await setDoc(searchHistoryRef, {
+      users: [],
     })
 
     try {

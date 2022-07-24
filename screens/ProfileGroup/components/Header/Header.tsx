@@ -27,7 +27,10 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   return (
     <View style={styles.outerHeaderSection}>
       <View style={styles.lineOne}>
-        <View style={styles.avatar} />
+        <TouchableOpacity
+          style={styles.avatar}
+          onPress={() => navigation.navigate("EditScreen")}
+        />
 
         {/* FOLLOWERS & FOLLOWING display */}
         <View style={styles.followingCard}>

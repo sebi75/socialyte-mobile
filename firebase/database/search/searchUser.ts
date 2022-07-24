@@ -29,7 +29,9 @@ export const getUsersSearch = async (
 
     querySnapshot.forEach((doc) => {
       //same as the post
+      const userId = doc.id
       const user = doc.data()
+      user.uid = userId
       users.push(user as User)
     })
   } catch (error: any) {

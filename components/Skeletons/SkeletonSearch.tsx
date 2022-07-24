@@ -14,8 +14,8 @@ const Placeholder: React.FC<SkeletonProps> = ({ children }) => {
     <SkeletonContent
       containerStyle={{
         flex: 1,
-        width: width * 0.9,
-        marginHorizontal: 7,
+        alignItems: "center",
+        padding: 5,
       }}
       isLoading={isLoading}
       animationType="pulse"

@@ -31,7 +31,7 @@ export const signUpWithEmailThunk = createAsyncThunk(
           const { uid, email } = response
           await createUserDocumentAtSignup(uid, email, username)
 
-          dispatch(setUser({ email, uid: response.uid, username: "" }))
+          dispatch(setUser({ email, uid: response.uid, username }))
         }
       } catch (error) {
         throw Error(

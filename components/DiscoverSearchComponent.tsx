@@ -7,12 +7,9 @@ import {
 import { useCallback } from "react"
 
 /* REDUX */
-import { RootState } from "../state/store"
-import { useSelector } from "react-redux"
 import { useAppDispatch } from "../state/store"
 import { setIsLoading } from "../state/reducers/searchUsersReducer"
 import { getUsersSearchThunk } from "../state/thunks/getUsersSearchThunk"
-import { sendPasswordResetEmail } from "firebase/auth"
 
 interface DiscoverSearchComponentProps {
   width: number
