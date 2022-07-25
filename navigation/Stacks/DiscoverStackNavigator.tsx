@@ -79,7 +79,7 @@ const DiscoverStackNavigator = () => {
         name="ProfileScreenSearched"
         component={ProfileScreen}
         options={({ navigation, route }: { navigation: any; route: any }) => ({
-          title: route.params.username,
+          title: route.params.username || "Profile",
           headerStyle: {
             backgroundColor: ProfileSettings.backgroundColor,
             headerTintColor:

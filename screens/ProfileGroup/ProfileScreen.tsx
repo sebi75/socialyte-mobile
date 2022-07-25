@@ -42,6 +42,10 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ route }) => {
   const getHeader = () => {
     return (
       <ProfileHeader
+        uid={uidD}
+        username={route.params.username}
+        photoURL={route.params.photoURL}
+        description={route.params.description}
         numberOfPosts={5}
         numberOfFollowers={115}
         numberOfFollowing={55}

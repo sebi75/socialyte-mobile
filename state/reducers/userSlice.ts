@@ -1,9 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { UserState } from "../types/User"
+import { updateUserProfileThunk } from "../thunks/user/updateUserProfileThunk"
 
 const userInitialState: UserState = {
   isAuthenticated: false,
+  isUpdatingLoading: false,
   profilePicture: undefined,
+  description: undefined,
   username: undefined,
   email: undefined,
   uid: undefined,
@@ -13,6 +16,8 @@ interface SetUserProps {
   email: string
   uid: string
   username: string
+  description: string
+  profilePicture: string
 }
 
 export const userSlice = createSlice({
@@ -20,8 +25,10 @@ export const userSlice = createSlice({
   initialState: userInitialState,
   reducers: {
     setUser: (state, action: PayloadAction<SetUserProps>) => {
-      const { username, email, uid } = action.payload
-
+      const { username, email, uid, description, profilePicture } =
+        action.payload
+      state.description = description
+      state.profilePicture = profilePicture
       state.username = username
       state.email = email
       state.uid = uid
@@ -36,7 +43,21 @@ export const userSlice = createSlice({
       state.uid = undefined
     },
   },
-  extraReducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(updateUserProfileThunk.pending, (state, action) => {
+      state.isUpdatingLoading = true
+    }),
+      builder.addCase(updateUserProfileThunk.fulfilled, (state, action) => {
+        const { username, profilePicture, description } = action.payload
+        state.isUpdatingLoading = false
+        state.username = username
+        state.profilePicture = profilePicture
+        state.description = description
+      }),
+      builder.addCase(updateUserProfileThunk.rejected, (state, action) => {
+        state.isUpdatingLoading = false
+      })
+  },
 })
 
 export const { setUser, clearUserState } = userSlice.actions

@@ -11,7 +11,7 @@ import {
 } from "../state/action-creators/createPostActions"
 
 //the width and height parameters will represent the size of the image in pixels
-export const useCreatePostProcess = (width: number, height: number) => {
+export const useImagePicker = (width: number, height: number) => {
   const [source, setSource] = useState<any>(undefined)
   const dispatch = useAppDispatch()
 

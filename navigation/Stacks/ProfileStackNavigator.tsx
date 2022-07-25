@@ -22,7 +22,12 @@ const ProfileStackNavigator: React.FC = () => {
       <ProfileStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        initialParams={{ uid: user.uid, username: user.username }}
+        initialParams={{
+          uid: user.uid,
+          username: user.username,
+          description: user.description,
+          photoURL: user.profilePicture,
+        }}
         options={({ navigation, route }: { navigation: any; route: any }) => ({
           headerRight: () => {
             if (route.params.uid == user.uid) {

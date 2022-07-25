@@ -5,12 +5,19 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native"
+import { Avatar } from "react-native-paper"
 import FollowButton from "./FollowButton"
 import { CustomButton } from "../../../../components/CustomButton"
 
 import { useNavigation } from "@react-navigation/native"
+import { useSelector } from "react-redux"
+import { RootState } from "../../../../state/store"
 
 interface ProfileHeaderProps {
+  uid: string
+  username: string
+  photoURL: string
+  description: string
   numberOfPosts: number
   numberOfFollowers: number
   numberOfFollowing: number
@@ -18,11 +25,17 @@ interface ProfileHeaderProps {
 
 const { width, height } = Dimensions.get("window")
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({
+  uid,
+  username,
+  photoURL,
+  description,
   numberOfFollowers,
   numberOfFollowing,
   numberOfPosts,
 }) => {
   const navigation: any = useNavigation()
+  const user = useSelector((state: RootState) => state.user)
+  const isUsersProfile = uid === user.uid
 
   return (
     <View style={styles.outerHeaderSection}>
@@ -30,7 +43,11 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         <TouchableOpacity
           style={styles.avatar}
           onPress={() => navigation.navigate("EditScreen")}
-        />
+        >
+          {photoURL && (
+            <Avatar.Image size={width * 0.15} source={{ uri: photoURL }} />
+          )}
+        </TouchableOpacity>
 
         {/* FOLLOWERS & FOLLOWING display */}
         <View style={styles.followingCard}>
@@ -42,36 +59,42 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 
       <View style={styles.lineTwo}>
         {/* USERNAME */}
-        <Text style={styles.usernameStyle}>Sebastian Semeniuc</Text>
+        <Text style={styles.usernameStyle}>
+          {isUsersProfile ? user.username : username}
+        </Text>
         {/* BIO */}
         <Text style={styles.bioStyle}>
-          I am a software developer based in Bucharest, Romania.
+          {isUsersProfile ? user.description : description}
         </Text>
       </View>
 
       {/* FOLLOW BUTTONS */}
-      <View style={styles.followButtonsSection}>
-        <FollowButton
-          title={"Follow"}
-          onPress={() => console.log("clicker")}
-          buttonStyle={{ flex: 1 }}
-        />
-        <FollowButton
-          title={"Message"}
-          onPress={() => console.log("clicker")}
-          buttonStyle={{ backgroundColor: "rgba(255,255,255,0.5)", flex: 1 }}
-          textStyle={{ color: "rgba(0,0,0,0.4)" }}
-        />
-      </View>
+      {!isUsersProfile && (
+        <View style={styles.followButtonsSection}>
+          <FollowButton
+            title={"Follow"}
+            onPress={() => console.log("clicker")}
+            buttonStyle={{ flex: 1 }}
+          />
+          <FollowButton
+            title={"Message"}
+            onPress={() => console.log("clicker")}
+            buttonStyle={{ backgroundColor: "rgba(255,255,255,0.5)", flex: 1 }}
+            textStyle={{ color: "rgba(0,0,0,0.4)" }}
+          />
+        </View>
+      )}
 
       <View>
         {/* buttons section */}
-        <View style={styles.editProfileButton}>
-          <CustomButton
-            title={"Edit"}
-            onPress={() => navigation.navigate("EditScreen")}
-          />
-        </View>
+        {isUsersProfile && (
+          <View style={styles.editProfileButton}>
+            <CustomButton
+              title={"Edit"}
+              onPress={() => navigation.navigate("EditScreen")}
+            />
+          </View>
+        )}
       </View>
     </View>
   )
@@ -90,12 +113,14 @@ const styles = StyleSheet.create({
   },
   lineOne: {
     width: width * 0.9,
+    height: 64,
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
   },
   lineTwo: {
     marginVertical: 10,
+    marginLeft: width * 0.05,
+    alignSelf: "flex-start",
   },
   usernameStyle: {
     fontSize: 17,
@@ -109,10 +134,9 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   avatar: {
-    backgroundColor: "white",
     borderRadius: 100,
-    width: 64,
-    height: 64,
+    width: 48,
+    height: 48,
   },
   editProfileButton: {
     marginVertical: 5,

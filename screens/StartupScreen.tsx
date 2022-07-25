@@ -21,8 +21,9 @@ const StartupScreen: React.FC = () => {
       }
 
       const parsedUserData = JSON.parse(userDataJson)
-      const { uid, email, username } = parsedUserData
-      dispatch(setUser({ uid, email, username }))
+      const { uid, email, username, description, profilePicture } =
+        parsedUserData
+      dispatch(setUser({ uid, email, username, description, profilePicture }))
 
       navigation.navigate("BottomTabNavigator")
     } catch (error) {}

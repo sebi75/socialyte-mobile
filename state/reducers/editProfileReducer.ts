@@ -1,23 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-  displayName: "",
-  profilePicture: "",
+  username: "",
+  photoURL: "",
   description: "",
+  isLoading: false,
 }
 
 const editProfileSlice = createSlice({
   name: "editProfile",
   initialState: initialState,
   reducers: {
-    setDisplayName: (state, action) => {
-      state.displayName = action.payload
+    setUsername: (state, action) => {
+      state.username = action.payload
     },
     setDescription: (state, action) => {
       state.description = action.payload
     },
+    setImageUri: (state, action) => {
+      state.photoURL = action.payload
+    },
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload
+    },
   },
 })
 
-export const { setDisplayName, setDescription } = editProfileSlice.actions
+export const { setUsername, setDescription, setImageUri } =
+  editProfileSlice.actions
 export default editProfileSlice.reducer

@@ -34,6 +34,8 @@ const UserSearchResult: React.FC<UserSearchResultProps> = ({
     navigation.navigate("ProfileScreenSearched", {
       uid: uid,
       username: passName,
+      description: description,
+      photoURL: imageURL,
     })
   }
 
@@ -42,9 +44,6 @@ const UserSearchResult: React.FC<UserSearchResultProps> = ({
       <View style={styles.avatar} />
       <View style={styles.body}>
         <Text style={styles.username}>{username}</Text>
-        {/* {description && description.length > 1 && (
-          <Text style={styles.description}>{description}</Text>
-        )} */}
       </View>
     </TouchableOpacity>
   )

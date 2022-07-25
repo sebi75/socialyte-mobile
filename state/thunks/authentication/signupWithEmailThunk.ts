@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
 import { signUpWithEmail } from "../../../firebase/authentication/signUpWithEmail"
-import { createUserDocumentAtSignup } from "../../../firebase/database/createUser"
+import { createUserDocumentAtSignup } from "../../../firebase/database/user/createUser"
 
 import { SignUpWithEmailResult } from "../../../firebase/authentication/signUpWithEmail"
 import { setUser } from "../../reducers/userSlice"
