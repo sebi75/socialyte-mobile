@@ -13,6 +13,12 @@ import Colors from "../../constants/Colors"
 import { useSelector } from "react-redux"
 import { RootState } from "../../state/store"
 
+//
+//
+/* Because of the initialParams in ProfileScreen, there seems to be a little bug. */
+//
+//
+
 const ProfileStack = createNativeStackNavigator()
 
 const ProfileStackNavigator: React.FC = () => {

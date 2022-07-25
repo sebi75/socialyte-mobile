@@ -164,6 +164,7 @@ const EditScreen: React.FC = () => {
               <Text style={styles.label}>Description</Text>
               <TextInput
                 onChangeText={setDescriptionText}
+                value={user.description}
                 style={[
                   styles.input,
                   {

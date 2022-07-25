@@ -36,6 +36,9 @@ const userProfilePosts = createSlice({
         state.isLoading = false
         const uid = action.payload.uid
         const posts = action.payload.posts
+        if (posts.length == 0) {
+          state.users[uid] = []
+        }
         state.users[uid] = posts
       }
     )

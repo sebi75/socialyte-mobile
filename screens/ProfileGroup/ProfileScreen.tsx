@@ -5,7 +5,7 @@ import Colors from "../../constants/Colors"
 /* Components */
 import ProfileHeader from "./components/Header/Header"
 import ProfilePosts from "./components/Body/ProfilePosts"
-import { useEffect } from "react"
+import { useEffect, useCallback, useState } from "react"
 
 /* REDUX */
 import { getUserPostsThunk } from "../../state/thunks/userPosts/getUserPostsThunk"
@@ -19,33 +19,42 @@ interface ProfileScreenProps {
 const { width, height } = Dimensions.get("window")
 const ProfileScreen: React.FC<ProfileScreenProps> = ({ route }) => {
   const dispatch = useDispatch()
-  const uidD: string = route.params.uid
-  const { users } = useSelector((state: RootState) => state.userPosts)
-  const posts = users[uidD]
-  console.log("users:", users)
 
-  const getUserPosts = (uid: string) => {
-    if (!posts || !posts.length) {
+  const { uid: passedUid, username, description, photoURL } = route.params
+  console.log("uidD", passedUid)
+  const { users } = useSelector((state: RootState) => state.userPosts)
+  const user = useSelector((state: RootState) => state.user)
+  const posts = users[passedUid]
+
+  //conditions to check if userPosts are already in the state and if they are, don't fetch them again
+  const getUserPosts = useCallback((uid: string) => {
+    if (
+      (passedUid == user.uid &&
+        (users[user.uid as string] || users[user.uid as string] == [])) ||
+      posts == []
+    ) {
+      return
+    } else if (
+      passedUid != user.uid &&
+      (posts != undefined || posts != null || posts == [])
+    ) {
+      return
+    } else {
       dispatch(getUserPostsThunk(uid))
     }
-    return
-  }
+  }, [])
 
   useEffect(() => {
     getUserPosts(route.params.uid)
-
-    return () => {
-      console.log("unmounting")
-    }
   }, [])
 
   const getHeader = () => {
     return (
       <ProfileHeader
-        uid={uidD}
-        username={route.params.username}
-        photoURL={route.params.photoURL}
-        description={route.params.description}
+        uid={passedUid}
+        username={username}
+        photoURL={photoURL}
+        description={description}
         numberOfPosts={5}
         numberOfFollowers={115}
         numberOfFollowing={55}
@@ -53,7 +62,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ route }) => {
     )
   }
   const getBody = () => {
-    return <ProfilePosts uid={uidD} />
+    return <ProfilePosts uid={passedUid} />
   }
 
   return (

@@ -44,8 +44,10 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           style={styles.avatar}
           onPress={() => navigation.navigate("EditScreen")}
         >
-          {photoURL && (
+          {photoURL ? (
             <Avatar.Image size={width * 0.15} source={{ uri: photoURL }} />
+          ) : (
+            <Text></Text>
           )}
         </TouchableOpacity>
 

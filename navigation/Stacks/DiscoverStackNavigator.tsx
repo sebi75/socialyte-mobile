@@ -78,6 +78,11 @@ const DiscoverStackNavigator = () => {
       <DiscoverStack.Screen
         name="ProfileScreenSearched"
         component={ProfileScreen}
+        initialParams={{
+          uid: "",
+          username: "",
+          description: "",
+        }}
         options={({ navigation, route }: { navigation: any; route: any }) => ({
           title: route.params.username || "Profile",
           headerStyle: {

@@ -4,16 +4,16 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Image,
 } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { addToSearchHistory } from "../../../firebase/database/search/addToSearchHistory"
+import { Avatar } from "react-native-paper"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../state/store"
 
 interface UserSearchResultProps {
   username: string
-  imageURL: string
+  profilePicture: string
   description?: string
   uid: string
 }
@@ -21,27 +21,30 @@ interface UserSearchResultProps {
 const { width, height } = Dimensions.get("window")
 const UserSearchResult: React.FC<UserSearchResultProps> = ({
   username,
-  imageURL,
+  profilePicture,
   description,
   uid,
 }) => {
   const navigation: any = useNavigation()
-  const passName = username || "Sebastian Semeniuc"
   const currentUserUid = useSelector((state: RootState) => state.user.uid)
 
   const handlePress = () => {
     addToSearchHistory(currentUserUid as string, uid)
     navigation.navigate("ProfileScreenSearched", {
       uid: uid,
-      username: passName,
+      username: username,
       description: description,
-      photoURL: imageURL,
+      photoURL: profilePicture,
     })
   }
 
   return (
     <TouchableOpacity style={styles.screen} onPress={handlePress}>
-      <View style={styles.avatar} />
+      {profilePicture ? (
+        <Avatar.Image size={48} source={{ uri: profilePicture }} />
+      ) : (
+        <View style={styles.avatar} />
+      )}
       <View style={styles.body}>
         <Text style={styles.username}>{username}</Text>
       </View>

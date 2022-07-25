@@ -41,7 +41,7 @@ const DiscoverSearchScreen: React.FC = () => {
               <UserSearchResult
                 uid={item.uid}
                 username={item.username}
-                imageURL={item.profilePicture}
+                profilePicture={item.profilePicture}
                 description={item.description}
               />
             )}

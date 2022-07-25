@@ -27,7 +27,7 @@ export const getUsersSearchHistory = async (
     //construct the data we need to return
     returnedData = userDocsData.map((user: User) => ({
       uid: user.uid,
-      photoURL: user.profilePicture || "",
+      profilePicture: user.profilePicture || "",
       username: user.username || "",
       description: user.description || "",
     }))
@@ -42,7 +42,7 @@ export type UserSearchHistoryResults = UserResult[]
 
 interface UserResult {
   uid: string
-  photoURL: string
+  profilePicture: string
   username: string
   description: string
 }
