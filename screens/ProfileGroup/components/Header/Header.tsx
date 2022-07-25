@@ -47,7 +47,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           {photoURL ? (
             <Avatar.Image size={width * 0.15} source={{ uri: photoURL }} />
           ) : (
-            <Text></Text>
+            <Avatar.Image size={width * 0.15} source={{}} />
           )}
         </TouchableOpacity>
 

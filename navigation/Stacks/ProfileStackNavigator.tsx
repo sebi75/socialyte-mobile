@@ -32,7 +32,7 @@ const ProfileStackNavigator: React.FC = () => {
           uid: user.uid,
           username: user.username,
           description: user.description,
-          photoURL: user.profilePicture,
+          profilePicture: user.profilePicture,
         }}
         options={({ navigation, route }: { navigation: any; route: any }) => ({
           headerRight: () => {

@@ -52,23 +52,18 @@ const SignupScreen: React.FC = () => {
             username: formState.inputValues.username,
           })
         )
-        //getting the token from the returned object --> response.payload.token
-        //store the token in the async storage for keeping auth state
-        try {
-          const validResponse: any = response.payload
-          const userData = {
-            token: validResponse.token,
-            uid: validResponse.uid,
-            email: validResponse.email,
-            username: initialFormState.inputValues.username,
-          }
-          const jsonValue = JSON.stringify(userData)
 
-          await AsyncStorage.setItem("userData", jsonValue)
-
+        if (response) {
+          const responseData: any = response.payload
+          const setLoggedInUser = await AsyncStorage.setItem(
+            "loggedInUser",
+            JSON.stringify({ uid: responseData.uid })
+          )
+          const cacheInAsyncStorage = await AsyncStorage.setItem(
+            responseData.uid,
+            JSON.stringify(responseData)
+          )
           navigation.navigate("BottomTabNavigator")
-        } catch (error) {
-          throw new Error("Error while saving user data in the async storage")
         }
       }
     } catch (error) {

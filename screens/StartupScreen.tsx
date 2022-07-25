@@ -13,14 +13,21 @@ const StartupScreen: React.FC = () => {
 
   const tryLogin = async () => {
     try {
-      const userDataJson = await AsyncStorage.getItem("userData")
+      const loggedInUser = await AsyncStorage.getItem("loggedInUser")
+      if (!loggedInUser) {
+        navigation.navigate("AuthStackNavigator")
+        return
+      }
+      const parsedLoggedInUser = JSON.parse(loggedInUser)
+      const cachedUserData = await AsyncStorage.getItem(parsedLoggedInUser.uid)
 
-      if (!userDataJson) {
+      if (!cachedUserData) {
         navigation.navigate("AuthStackNavigator")
         return
       }
 
-      const parsedUserData = JSON.parse(userDataJson)
+      const parsedUserData = JSON.parse(cachedUserData)
+
       const { uid, email, username, description, profilePicture } =
         parsedUserData
       dispatch(setUser({ uid, email, username, description, profilePicture }))

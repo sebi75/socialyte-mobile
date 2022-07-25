@@ -20,8 +20,7 @@ const { width, height } = Dimensions.get("window")
 const ProfileScreen: React.FC<ProfileScreenProps> = ({ route }) => {
   const dispatch = useDispatch()
 
-  const { uid: passedUid, username, description, photoURL } = route.params
-  console.log("uidD", passedUid)
+  const { uid: passedUid, username, description, profilePicture } = route.params
   const { users } = useSelector((state: RootState) => state.userPosts)
   const user = useSelector((state: RootState) => state.user)
   const posts = users[passedUid]
@@ -53,7 +52,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ route }) => {
       <ProfileHeader
         uid={passedUid}
         username={username}
-        photoURL={photoURL}
+        photoURL={user.uid == passedUid ? user.profilePicture : profilePicture}
         description={description}
         numberOfPosts={5}
         numberOfFollowers={115}

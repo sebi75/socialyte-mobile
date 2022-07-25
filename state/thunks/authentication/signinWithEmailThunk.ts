@@ -1,35 +1,39 @@
 import { signInWithEmail } from "../../../firebase/authentication/signInWithEmail"
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
-import { SignInWithEmailResult } from "../../../firebase/authentication/signInWithEmail"
 import { setUser } from "../../reducers/userSlice"
+import { getUserData } from "../../../firebase/database/user/getUserData"
+import { User } from "../../../firebase/types/User"
 
 export const signInWithEmailThunk = createAsyncThunk(
   "auth/signInWithEmail",
   async (
     { email, password }: { email: string; password: string },
     thunkAPI
-  ): Promise<SignInWithEmailResult> => {
+  ): Promise<User | undefined> => {
     const { dispatch } = thunkAPI
 
     try {
-      const response: SignInWithEmailResult = await signInWithEmail(
-        email,
-        password
-      )
-      if (response) {
-        dispatch(setUser({ email, uid: response.uid, username: "" }))
-      }
+      const response: any = await signInWithEmail(email, password)
+      const userDocument = await getUserData(response.uid)
+      if (userDocument) {
+        dispatch(
+          setUser({
+            email,
+            uid: response.uid,
+            description: userDocument.description,
+            username: userDocument.username,
+            profilePicture: userDocument.profilePicture,
+          })
+        )
 
-      return response
+        return userDocument // return userDocumentData of type User
+      }
     } catch (error: any) {
-      const errorMessage = error.message
-      const errorCode = error.code
       console.log(
         "Error in authenticating with following errorMessage and code: "
       )
-      console.log(errorMessage)
-      console.log(errorCode)
+      console.log(error.message)
     }
   }
 )

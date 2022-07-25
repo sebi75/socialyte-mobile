@@ -27,6 +27,7 @@ import { clearError } from "../../state/reducers/authenticationReducer"
 import { signInWithEmailThunk } from "../../state/thunks/authentication/signInWithEmailThunk"
 
 import { useNavigation } from "@react-navigation/native"
+import { User } from "../../firebase/types/User"
 
 const FORM_UPDATE = "FORM_UPDATE"
 
@@ -49,26 +50,23 @@ const SigninScreen: React.FC = () => {
             password: formState.inputValues.password,
           })
         )
-        //getting the token from the returned object --> response.payload.token
-        //store the token in the async storage for keeping auth state
-        try {
-          const validResponse: any = response.payload
-          const userData = {
-            token: validResponse.token,
-            uid: validResponse.uid,
-            email: validResponse.email,
-          }
-          const jsonValue = JSON.stringify(userData)
-
-          await AsyncStorage.setItem("userData", jsonValue)
-
+        if (response) {
+          console.log(response)
+          const userData = response.payload as User
+          console.log(userData)
+          const setLoggedInUser = await AsyncStorage.setItem(
+            "loggedInUser",
+            JSON.stringify({ uid: userData.uid })
+          )
+          const cacheInAsyncStorage = await AsyncStorage.setItem(
+            userData.uid,
+            JSON.stringify(userData)
+          )
           navigation.navigate("BottomTabNavigator")
-        } catch (error) {
-          console.log("failed when storing in async storage")
         }
       }
     } catch (error) {
-      throw Error("Error in signing up")
+      throw Error("ERROR signing in")
     }
   }
 

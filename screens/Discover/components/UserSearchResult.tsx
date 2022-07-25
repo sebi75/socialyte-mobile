@@ -34,7 +34,7 @@ const UserSearchResult: React.FC<UserSearchResultProps> = ({
       uid: uid,
       username: username,
       description: description,
-      photoURL: profilePicture,
+      profilePicture: profilePicture,
     })
   }
 

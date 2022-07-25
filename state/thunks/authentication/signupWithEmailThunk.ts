@@ -24,18 +24,18 @@ export const signUpWithEmailThunk = createAsyncThunk(
         password
       )
 
-      try {
-        //create the user document in the db with first signup details
-        //get the permanent user id from the response and username from input
-        if (response != undefined) {
-          const { uid, email } = response
-          await createUserDocumentAtSignup(uid, email, username)
+      if (response) {
+        const { uid, email } = response
+        await createUserDocumentAtSignup(uid, email, username)
 
-          dispatch(setUser({ email, uid: response.uid, username }))
-        }
-      } catch (error) {
-        throw Error(
-          "An error occured when creating a new document for new signed up user"
+        dispatch(
+          setUser({
+            email,
+            uid: response.uid,
+            username,
+            profilePicture: "",
+            description: "",
+          })
         )
       }
 

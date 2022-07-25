@@ -39,6 +39,7 @@ export const userSlice = createSlice({
       state.isAuthenticated = false
       state.profilePicture = undefined
       state.username = undefined
+      state.description = undefined
       state.email = undefined
       state.uid = undefined
     },

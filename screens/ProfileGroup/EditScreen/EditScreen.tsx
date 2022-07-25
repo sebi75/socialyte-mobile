@@ -57,8 +57,8 @@ const EditScreen: React.FC = () => {
     dispatch(updateUserProfileThunk({ uid: user.uid as string, updatedFields }))
     //update the profile in the async storage
     try {
-      await AsyncStorage.setItem(
-        "userData",
+      await AsyncStorage.mergeItem(
+        user.uid as string,
         JSON.stringify({
           uid: user.uid as string,
           email: user.email as string,
@@ -152,7 +152,7 @@ const EditScreen: React.FC = () => {
                 <TextInput
                   onChangeText={setUsernameText}
                   style={styles.input}
-                  value={user.username}
+                  value={editProfileData.username}
                   placeholder={"type your display name..."}
                   placeholderTextColor={"rgba(255,255,255,0.5)"}
                 />
@@ -164,7 +164,7 @@ const EditScreen: React.FC = () => {
               <Text style={styles.label}>Description</Text>
               <TextInput
                 onChangeText={setDescriptionText}
-                value={user.description}
+                value={editProfileData.description}
                 style={[
                   styles.input,
                   {

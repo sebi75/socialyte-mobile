@@ -17,9 +17,7 @@ export const uploadImage = async (
   const blob = await response.blob()
 
   try {
-    await uploadBytes(imagesRef, blob).then((snapshot) => {
-      console.log("Uploaded a blob or file!")
-    })
+    await uploadBytes(imagesRef, blob).then((snapshot) => {})
   } catch (error) {
     console.log("error in uploading the image to the cloud storage: ", error)
   }
@@ -30,13 +28,11 @@ export const uploadImage = async (
     console.log("Error in getting the imageURL with error,", error)
   }
 
-  console.log("ready to return the imageURL:", imageUrl)
   return imageUrl
 }
 
 /* Logic to get the media Google storage url for using in the app */
 export const getImageUrl = async (mediaReference: string): Promise<string> => {
-  const startDate = performance.now()
   const imageRef = ref(storage, `images/${mediaReference}`)
 
   let imageUrl = ""
@@ -47,7 +43,5 @@ export const getImageUrl = async (mediaReference: string): Promise<string> => {
   } catch (error: any) {
     console.log("error encountered: ", error.message)
   }
-  const endDate = performance.now()
-  console.log("miliseconds taken to get image url: ", endDate - startDate)
   return imageUrl
 }

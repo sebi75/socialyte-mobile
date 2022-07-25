@@ -17,7 +17,7 @@ import { useAppDispatch } from "../../state/store"
 import { useSelector } from "react-redux"
 import { RootState } from "../../state/store"
 
-import { getUserPostsThunk } from "../../state/thunks/userPosts/getUserPostsThunk"
+import testAsync from "../../utils/testAsync"
 
 type RootStackParamList = {
   FeedScreen: undefined
@@ -57,6 +57,13 @@ const FeedStackNavigator: React.FC = () => {
           ),
           headerRight: () => (
             <View style={{ flexDirection: "row" }}>
+              <CustomIconButton
+                style={{ marginRight: 10 }}
+                iconName={"ios-add-circle-outline"}
+                size={25}
+                color={"white"}
+                onPress={testAsync}
+              />
               <CustomIconButton
                 style={{ marginRight: 10 }}
                 iconName={"ios-add-circle-outline"}
