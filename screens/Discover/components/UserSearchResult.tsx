@@ -39,14 +39,12 @@ const UserSearchResult: React.FC<UserSearchResultProps> = ({
 
   return (
     <TouchableOpacity style={styles.screen} onPress={handlePress}>
-      {/* rounded avatar image */}
       <View style={styles.avatar} />
-      {/* <Image source={{uri: imageURL}} style={styles.image} /> */}
       <View style={styles.body}>
         <Text style={styles.username}>{username}</Text>
-        {description && description.length > 1 && (
+        {/* {description && description.length > 1 && (
           <Text style={styles.description}>{description}</Text>
-        )}
+        )} */}
       </View>
     </TouchableOpacity>
   )

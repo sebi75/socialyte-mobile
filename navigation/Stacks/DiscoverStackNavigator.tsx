@@ -9,6 +9,8 @@ import ProfileScreen from "../../screens/ProfileGroup/ProfileScreen"
 
 import Colors from "../../constants/Colors"
 import { TouchableOpacity } from "react-native-gesture-handler"
+import { useAppDispatch } from "../../state/store"
+import { setUsersSearch } from "../../state/reducers/searchUsersReducer"
 const DiscoverStack = createNativeStackNavigator()
 
 //
@@ -19,6 +21,7 @@ const DiscoverStack = createNativeStackNavigator()
 
 const { width } = Dimensions.get("window")
 const DiscoverStackNavigator = () => {
+  const dispatch = useAppDispatch()
   return (
     <DiscoverStack.Navigator>
       <DiscoverStack.Screen
@@ -54,7 +57,10 @@ const DiscoverStackNavigator = () => {
           headerRight: () => {
             return (
               <CustomButton
-                onPress={() => navigation.goBack()}
+                onPress={() => {
+                  navigation.goBack()
+                  dispatch(setUsersSearch([]))
+                }}
                 title={"Cancel"}
                 style={styles.button}
               />

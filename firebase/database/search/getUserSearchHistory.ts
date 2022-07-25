@@ -38,7 +38,7 @@ export const getUsersSearchHistory = async (
   return returnedData
 }
 
-type UserSearchHistoryResults = UserResult[]
+export type UserSearchHistoryResults = UserResult[]
 
 interface UserResult {
   uid: string
