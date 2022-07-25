@@ -5,13 +5,13 @@ import { Post } from "../types/Post"
 import { getUserPostsThunk } from "../thunks/userPosts/getUserPostsThunk"
 
 interface UserPostsState {
-  posts: Array<Post>
+  users: { [key: string]: Array<Post> }
   isLoading: boolean
   error: string | undefined
 }
 
 const initialState: UserPostsState = {
-  posts: [],
+  users: {},
   isLoading: false,
   error: undefined,
 }
@@ -20,8 +20,10 @@ const userProfilePosts = createSlice({
   name: "userProfilePosts",
   initialState: initialState,
   reducers: {
-    setUserPosts: (state, action: PayloadAction<Array<Post>>) => {
-      state.posts = action.payload
+    setUserPosts: (state, action: PayloadAction<UserPostsAction>) => {
+      const uid = action.payload.uid
+      const posts = action.payload.posts
+      state.users[uid] = posts
     },
   },
   extraReducers: (builder) => {
@@ -30,9 +32,11 @@ const userProfilePosts = createSlice({
     })
     builder.addCase(
       getUserPostsThunk.fulfilled,
-      (state, action: PayloadAction<Array<Post>>) => {
+      (state, action: PayloadAction<UserPostsAction>) => {
         state.isLoading = false
-        state.posts = action.payload
+        const uid = action.payload.uid
+        const posts = action.payload.posts
+        state.users[uid] = posts
       }
     )
     builder.addCase(getUserPostsThunk.rejected, (state, action: any) => {
@@ -41,6 +45,11 @@ const userProfilePosts = createSlice({
     })
   },
 })
+
+interface UserPostsAction {
+  uid: string
+  posts: Array<Post>
+}
 
 export const { setUserPosts } = userProfilePosts.actions
 export default userProfilePosts.reducer

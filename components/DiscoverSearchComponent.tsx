@@ -5,9 +5,12 @@ import {
   Dimensions,
 } from "react-native"
 import { useCallback } from "react"
+import { getUsersSearchHistory } from "../firebase/database/search/getUserSearchHistory"
+import { useEffect } from "react"
 
 /* REDUX */
-import { useAppDispatch } from "../state/store"
+import { useSelector } from "react-redux"
+import { RootState, useAppDispatch } from "../state/store"
 import { setIsLoading } from "../state/reducers/searchUsersReducer"
 import { getUsersSearchThunk } from "../state/thunks/getUsersSearchThunk"
 
@@ -23,7 +26,7 @@ const DiscoverSearchComponent: React.FC<DiscoverSearchComponentProps> = ({
   //we're using a debounce function to perform searches only after 1.5 seconds of typing inactivity
   const dispatch: any = useAppDispatch()
   //const {users, isLoading} = useSelector((state: RootState) => state.searchUsers)
-
+  const { uid } = useSelector((state: RootState) => state.user)
   const simulateSearch = useCallback(
     debounce((text: string) => {
       if (text.length > 0) {
@@ -36,6 +39,10 @@ const DiscoverSearchComponent: React.FC<DiscoverSearchComponentProps> = ({
     }, 1000),
     []
   )
+
+  useEffect(() => {
+    getUsersSearchHistory(uid as string)
+  }, [])
 
   return (
     <TouchableOpacity style={[styles.discoverSearchInputStyle, { width }]}>

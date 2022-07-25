@@ -33,6 +33,7 @@ export const createUserDocumentAtSignup = async (
       username,
       description: "",
       profilePicture: "",
+      posts: 0,
       following: 0,
       followers: 0,
       name: "",
@@ -40,12 +41,7 @@ export const createUserDocumentAtSignup = async (
     await setDoc(searchHistoryRef, {
       users: [],
     })
-
-    try {
-      await setDoc(connectionsRef, initialConnectionsDocumentState)
-    } catch (error) {
-      throw new Error("Failed when creating the connections document")
-    }
+    await setDoc(connectionsRef, initialConnectionsDocumentState)
   } catch (error) {
     throw Error(
       "An error occured when creating a new document for new signed up user"

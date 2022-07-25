@@ -5,10 +5,16 @@ import { Post } from "../../types/Post"
 
 export const getUserPostsThunk = createAsyncThunk(
   "userPosts/getUserPosts",
-  async (uid: string, thunkAPI): Promise<Array<Post>> => {
+  async (
+    uid: string,
+    thunkAPI
+  ): Promise<{ posts: Array<Post>; uid: string }> => {
     try {
       const response: Array<Post> = await getUserPosts(uid)
-      return response
+      return {
+        posts: response,
+        uid: uid,
+      }
     } catch (error: any) {
       console.log(error.code)
       console.log("Error in getting user posts: ")

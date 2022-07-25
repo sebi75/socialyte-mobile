@@ -11,10 +11,15 @@ import PostPreview from "./PostPreview"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../../state/store"
 
-const ProfilePosts: React.FC = () => {
-  const { posts, isLoading } = useSelector(
+interface ProfilePostsProps {
+  uid: string
+}
+
+const ProfilePosts: React.FC<ProfilePostsProps> = ({ uid }) => {
+  const { isLoading, users } = useSelector(
     (state: RootState) => state.userPosts
   )
+  const posts = users[uid as string]
 
   if (isLoading) {
     return (
