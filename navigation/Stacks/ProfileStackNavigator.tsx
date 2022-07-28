@@ -1,17 +1,17 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
-import ProfileScreen from "src/screens/ProfileGroup/ProfileScreen"
-import SettingsModal from "src/screens/ProfileGroup/SettingsModal"
-import EditScreen from "src/screens/ProfileGroup/EditScreen/EditScreen"
-import PostScreen from "src/screens/ProfileGroup/Post/PostScreen"
+import ProfileScreen from "../../screens/ProfileGroup/ProfileScreen"
+import SettingsModal from "../../screens/ProfileGroup/SettingsModal"
+import EditScreen from "../../screens/ProfileGroup/EditScreen/EditScreen"
+import PostScreen from "../../screens/ProfileGroup/Post/PostScreen"
 
-import { CustomIconButton } from "components/IconButton"
+import { CustomIconButton } from "../../components/IconButton"
 import { Platform } from "react-native"
-import Colors from "constants/Colors"
+import Colors from "../../constants/Colors"
 
 /* REDUX */
 import { useSelector } from "react-redux"
-import { RootState } from "state/store"
+import { RootState } from "../../state/store"
 
 //
 //
