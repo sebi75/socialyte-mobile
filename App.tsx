@@ -1,5 +1,4 @@
 import { NavigationContainer } from "@react-navigation/native"
-import { StatusBar } from "expo-status-bar"
 
 import StartupStackNavigator from "./navigation/Stacks/start/StartupStack"
 import GlobalAlert from "./components/GlobalAlert"
