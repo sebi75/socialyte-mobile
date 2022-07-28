@@ -13,11 +13,7 @@
   <td align="Center" width="30%">
       <a href="https://nodejs.org/en/" target="_blank" rel="noreferrer"><img src="https://cdn.cdnlogo.com/logos/f/48/firebase.svg" width="36" height="36" alt="Firebase" /></a>
     <br>Firebase
-    </td>   
-    <td align="Center" width="30%">  
-<a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/mongodb-colored.svg" width="36" height="36" alt="MongoDB" /></a>
-    <br>MongoDB
-    </td>     
+    </td>       
       </tr>
 </tbody>
   </table>
@@ -31,7 +27,7 @@
      <br>Redux/toolkit
     </td>    
      <td align="Center" width="30%">   
-<a href="https://socket.io/" target="_blank" rel="noreferrer"><img src="https://reactnavigation.org/img/spiro.svg" width="36" height="36" alt="SocketIo">
+<a href="https://socket.io/" target="_blank" rel="noreferrer"><img src="https://reactnavigation.org/img/spiro.svg" width="36" height="36" alt="SocketIo"></a>
      <br>React navigation
     </td>
     <td align="Center" width="30%">      
