@@ -29,9 +29,6 @@ import { useNavigation } from "@react-navigation/native"
 
 const FORM_UPDATE = "FORM_UPDATE"
 
-//signup logic will inject uid, email and token in the async store
-//next time user will be still logged in
-
 const { width, height } = Dimensions.get("window")
 const SignupScreen: React.FC = () => {
   const [formState, formDispatch] = useReducer(formReducer, initialFormState)
@@ -57,11 +54,11 @@ const SignupScreen: React.FC = () => {
           console.log(response)
           const responseData: any = response.payload
           responseData.description = ""
-          const setLoggedInUser = await AsyncStorage.setItem(
+          await AsyncStorage.setItem(
             "loggedInUser",
             JSON.stringify({ uid: responseData.uid })
           )
-          const cacheInAsyncStorage = await AsyncStorage.setItem(
+          await AsyncStorage.setItem(
             responseData.uid,
             JSON.stringify(responseData)
           )

@@ -5,6 +5,7 @@ import { createUserDocumentAtSignup } from "../../../firebase/database/user/crea
 
 import { SignUpWithEmailResult } from "../../../firebase/authentication/signUpWithEmail"
 import { setUser } from "../../reducers/userSlice"
+import { User } from "../../../firebase/types/User"
 
 import { getUserData } from "../../../firebase/database/user/getUserData"
 
@@ -17,7 +18,7 @@ export const signUpWithEmailThunk = createAsyncThunk(
       username,
     }: { email: string; password: string; username: string },
     thunkAPI
-  ): Promise<SignUpWithEmailResult> => {
+  ): Promise<User | undefined> => {
     try {
       const response: SignUpWithEmailResult = await signUpWithEmail(
         email,
@@ -38,9 +39,9 @@ export const signUpWithEmailThunk = createAsyncThunk(
             profilePicture: userDocument.profilePicture,
           })
         }
-      }
 
-      return response
+        return userDocument
+      }
     } catch (error) {
       throw Error("User with that email already exists!")
     }
