@@ -64,7 +64,6 @@ export const signOutThunk = createAsyncThunk(
   async (_, { dispatch }) => {
     try {
       await signOut()
-      AsyncStorage.removeItem("userData")
       dispatch(clearUserState())
     } catch (error) {
       console.log(
