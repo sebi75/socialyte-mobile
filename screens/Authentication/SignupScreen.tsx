@@ -23,6 +23,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../state/store"
 
 import { clearError } from "../../state/reducers/authenticationReducer"
+import { setUser } from "../../state/reducers/userSlice"
 import { signUpWithEmailThunk } from "../../state/thunks/authentication/signUpWithEmailThunk"
 
 import { useNavigation } from "@react-navigation/native"
@@ -54,6 +55,15 @@ const SignupScreen: React.FC = () => {
           console.log(response)
           const responseData: any = response.payload
           responseData.description = ""
+          dispatch(
+            setUser({
+              uid: responseData.uid,
+              email: responseData.email,
+              username: responseData.username,
+              description: responseData.description,
+              profilePicture: responseData.profilePicture,
+            })
+          )
           await AsyncStorage.setItem(
             "loggedInUser",
             JSON.stringify({ uid: responseData.uid })
