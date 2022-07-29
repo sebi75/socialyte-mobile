@@ -54,7 +54,9 @@ const SignupScreen: React.FC = () => {
         )
 
         if (response) {
+          console.log(response)
           const responseData: any = response.payload
+          responseData.description = ""
           const setLoggedInUser = await AsyncStorage.setItem(
             "loggedInUser",
             JSON.stringify({ uid: responseData.uid })

@@ -6,6 +6,8 @@ import { createUserDocumentAtSignup } from "../../../firebase/database/user/crea
 import { SignUpWithEmailResult } from "../../../firebase/authentication/signUpWithEmail"
 import { setUser } from "../../reducers/userSlice"
 
+import { getUserData } from "../../../firebase/database/user/getUserData"
+
 export const signUpWithEmailThunk = createAsyncThunk(
   "auth/signUpWithEmail",
   async (
@@ -16,8 +18,6 @@ export const signUpWithEmailThunk = createAsyncThunk(
     }: { email: string; password: string; username: string },
     thunkAPI
   ): Promise<SignUpWithEmailResult> => {
-    const { dispatch } = thunkAPI
-
     try {
       const response: SignUpWithEmailResult = await signUpWithEmail(
         email,
@@ -28,15 +28,16 @@ export const signUpWithEmailThunk = createAsyncThunk(
         const { uid, email } = response
         await createUserDocumentAtSignup(uid, email, username)
 
-        dispatch(
+        const userDocument = await getUserData(response.uid)
+        if (userDocument) {
           setUser({
             email,
             uid: response.uid,
-            username,
-            profilePicture: "",
-            description: "",
+            description: userDocument.description,
+            username: userDocument.username,
+            profilePicture: userDocument.profilePicture,
           })
-        )
+        }
       }
 
       return response

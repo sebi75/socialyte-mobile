@@ -14,12 +14,15 @@ const StartupScreen: React.FC = () => {
   const tryLogin = async () => {
     try {
       const loggedInUser = await AsyncStorage.getItem("loggedInUser")
+      console.log("loggedInUser", loggedInUser)
+
       if (!loggedInUser) {
         navigation.navigate("AuthStackNavigator")
         return
       }
       const parsedLoggedInUser = JSON.parse(loggedInUser)
       const cachedUserData = await AsyncStorage.getItem(parsedLoggedInUser.uid)
+      console.log("cachedUserData", cachedUserData)
 
       if (!cachedUserData) {
         navigation.navigate("AuthStackNavigator")
