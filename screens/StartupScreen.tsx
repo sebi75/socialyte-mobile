@@ -22,6 +22,7 @@ const StartupScreen: React.FC = () => {
       }
       const parsedLoggedInUser = JSON.parse(loggedInUser)
       const cachedUserData = await AsyncStorage.getItem(parsedLoggedInUser.uid)
+      
       console.log("cachedUserData", cachedUserData)
 
       if (!cachedUserData) {

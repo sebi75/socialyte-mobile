@@ -5,15 +5,9 @@ import {
   StyleSheet,
   TextInput,
   Dimensions,
-  Platform,
-  Alert,
 } from "react-native"
 import React, { useEffect } from "react"
 import { Avatar } from "react-native-paper"
-import AsyncStorage from "@react-native-async-storage/async-storage"
-
-import * as ImagePicker from "expo-image-picker"
-import * as ImageManipulator from "expo-image-manipulator"
 
 import Colors from "../../../constants/Colors"
 import CustomButton from "../../Authentication/components/CustomButton"
@@ -29,17 +23,14 @@ import {
   setDescription,
 } from "../../../state/reducers/editProfileReducer"
 import { useCallback } from "react"
-import { setIsLoading } from "../../../state/reducers/createPostReducer"
-import { updateUserProfileThunk } from "../../../state/thunks/user/updateUserProfileThunk"
-import { setGlobalAlertData } from "../../../state/reducers/globalAlertReducer"
 
-const { width, height } = Dimensions.get("window")
+import { updateProfile, pickImageAsync } from "./logic/index"
+
+const { width } = Dimensions.get("window")
 const EditScreen: React.FC = () => {
   const editProfileData = useSelector((state: RootState) => state.editProfile)
   const user = useSelector((state: RootState) => state.user)
-  const isLoading = useSelector(
-    (state: RootState) => state.user.isUpdatingLoading
-  )
+
   const dispatch = useAppDispatch()
   const setUsernameText = useCallback((text: string) => {
     dispatch(setUsername(text))
@@ -48,81 +39,32 @@ const EditScreen: React.FC = () => {
     dispatch(setDescription(text))
   }, [])
 
-  const updateProfile = useCallback(async () => {
-    const updatedFields = {
-      username: editProfileData.username,
-      description: editProfileData.description,
-      profilePicture: editProfileData.photoURL,
-    }
-    dispatch(updateUserProfileThunk({ uid: user.uid as string, updatedFields }))
-    //update the profile in the async storage
+  const updateProfileHandler = useCallback(async () => {
     try {
-      await AsyncStorage.mergeItem(
-        user.uid as string,
-        JSON.stringify({
-          uid: user.uid as string,
-          email: user.email as string,
-          username: editProfileData.username,
-          description: editProfileData.description,
-          profilePicture: editProfileData.photoURL,
-        })
-      )
-      dispatch(
-        setGlobalAlertData({
-          isVisible: true,
-          title: "Success",
-          subtitle: "Profile updated successfully",
-        })
-      )
+      updateProfile(dispatch, editProfileData, user)
     } catch (error) {
-      throw new Error("Error updating the profile")
+      console.log(error)
+      throw Error("Error updating the profile")
     }
-  }, [editProfileData, user.uid])
+  }, [dispatch, editProfileData, user])
 
-  const pickImageAsync = async () => {
-    dispatch(setImageUri(""))
-    dispatch(setIsLoading(true))
-    let permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync()
-    if (permissionResult.granted === false) {
-      Alert.alert(
-        "Error",
-        "Please allow access to media library in settings.",
-        [{ text: "OK" }]
-      )
-    }
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    })
-
-    if (!result.cancelled) {
-      try {
-        const compressedImage = await compressImage(result.uri)
-        dispatch(setImageUri(compressedImage))
-        dispatch(setIsLoading(false))
-      } catch (error) {
-        console.log("error in compressing the image")
-        console.log("error: ", error)
-      } finally {
-        dispatch(setIsLoading(false))
-      }
-    }
-  }
+  const pickImageHandler = useCallback(async () => {
+    await pickImageAsync(dispatch)
+  }, [])
 
   useEffect(() => {
-    console.log(user)
+    console.log("user: ", user)
     dispatch(setUsername(user.username))
     dispatch(setDescription(user.description))
     dispatch(setImageUri(user.profilePicture))
+
+    console.log("editProfileData: ", editProfileData)
   }, [])
 
   return (
     <HideKeyboard>
       <View style={containers.screen}>
-        {isLoading ? (
+        {user.isUpdatingLoading ? (
           <ActivityIndicator size="large" />
         ) : (
           <View style={containers.layoutContainer}>
@@ -140,7 +82,7 @@ const EditScreen: React.FC = () => {
                 )}
                 <CustomButton
                   title={"Change"}
-                  onPress={pickImageAsync}
+                  onPress={pickImageHandler}
                   buttonStyle={{ width: 100, height: 35, marginTop: 15 }}
                 />
               </View>
@@ -184,7 +126,7 @@ const EditScreen: React.FC = () => {
             <CustomButton
               title={"Update Profile"}
               buttonStyle={{ marginTop: 50 }}
-              onPress={updateProfile}
+              onPress={updateProfileHandler}
             />
           </View>
         )}
@@ -246,20 +188,5 @@ const containers = StyleSheet.create({
     width: width * 0.5,
   },
 })
-
-const compressImage = async (uri: string) => {
-  const manipResult = await ImageManipulator.manipulateAsync(
-    uri,
-    [{ resize: { width: 800, height: 800 } }],
-    { compress: 0.8, format: ImageManipulator.SaveFormat.JPEG }
-  )
-
-  const uploadUri =
-    Platform.OS === "ios"
-      ? manipResult.uri.replace("file://", "")
-      : manipResult.uri
-
-  return uploadUri
-}
 
 export default EditScreen

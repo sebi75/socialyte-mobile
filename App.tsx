@@ -9,7 +9,7 @@ import { Provider } from "react-redux"
 import store from "./state/store"
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { useEffect } from "react"
+import { useEffect, useCallback } from "react"
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
@@ -23,16 +23,17 @@ LogBox.ignoreLogs(["Setting a timer"])
 
 enableScreens()
 
-const asyncFetchUserData = async () => {
-  try {
-    const userdata = await fetchUserFromAsyncStorage()
-    console.log(userdata)
-  } catch (error) {
-    console.log("error in fethching user data", error)
-  }
-}
-
 export default function App() {
+  const asyncFetchUserData = useCallback(async () => {
+    try {
+      console.log("fething the user data from the async storage")
+      const userdata = await fetchUserFromAsyncStorage()
+      console.log(userdata)
+    } catch (error) {
+      console.log("error in fethching user data", error)
+    }
+  }, [])
+
   useEffect(() => {
     asyncFetchUserData()
     console.log("rendering app")
