@@ -5,7 +5,7 @@ import Colors from "../../constants/Colors"
 /* Components */
 import ProfileHeader from "./components/Header/Header"
 import ProfilePosts from "./components/Body/ProfilePosts"
-import { useEffect, useCallback, useState } from "react"
+import { useEffect, useCallback } from "react"
 
 /* REDUX */
 import { getUserPostsThunk } from "../../state/thunks/userPosts/getUserPostsThunk"

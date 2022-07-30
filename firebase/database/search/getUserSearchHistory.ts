@@ -8,15 +8,22 @@ import {
   getDocs,
 } from "firebase/firestore"
 import { User } from "../../types/User"
+
 export const getUsersSearchHistory = async (
   uid: string
 ): Promise<UserSearchHistoryResults> => {
   const docRef = doc(db, "searchHistory", uid)
   const usersCollection = collection(db, "users")
-  let returnedData
+  let returnedData: UserSearchHistoryResults
   try {
     const userDoc = await getDoc(docRef)
     const userDocData = userDoc.data()
+
+    if (userDocData?.users.length == 0) {
+      returnedData = []
+      return returnedData
+    }
+
     const ids: Array<string> = userDocData?.users.map(
       (object: any) => object.uid
     )
@@ -38,7 +45,7 @@ export const getUsersSearchHistory = async (
   return returnedData
 }
 
-export type UserSearchHistoryResults = UserResult[]
+export type UserSearchHistoryResults = UserResult[] | []
 
 interface UserResult {
   uid: string
