@@ -10,16 +10,10 @@ import store from "../../../state/store"
 import { db } from "../../firebaseConfig"
 
 /* TYPES */
-import {
-  User,
-  UserFollowersArrayType,
-  UserFollowersPreviewType,
-} from "../../types"
+import { User, UserFollowArrayType, UserFollowPreviewType } from "../../types"
 
-export const getUserFollowers = async (
-  userId: string
-): Promise<UserFollowersArrayType> => {
-  const usersIds = store.getState().connections.followers
+export const getUserFollowers = async (): Promise<UserFollowArrayType> => {
+  const usersIds = store.getState().userConnections.followersIds
   if (usersIds.length == 0) {
     return []
   }
@@ -30,7 +24,7 @@ export const getUserFollowers = async (
   )
   const querySnapshot = await getDocs(q)
 
-  let userFollowersPreview: UserFollowersPreviewType[] = []
+  let userFollowersPreview: UserFollowPreviewType[] = []
   if (querySnapshot.empty) {
     return []
   } else {
@@ -44,7 +38,7 @@ export const getUserFollowers = async (
   return userFollowersPreview
 }
 
-const dataToReturnableUser = (userData: User): UserFollowersPreviewType => {
+const dataToReturnableUser = (userData: User): UserFollowPreviewType => {
   return {
     uid: userData.uid,
     profilePicture: userData.profilePicture,

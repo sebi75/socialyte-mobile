@@ -3,9 +3,9 @@ export type ConnectionsUserDocumentType = {
   following: string[]
 }
 
-export type UserFollowersArrayType = Array<UserFollowersPreviewType> | []
+export type UserFollowArrayType = Array<UserFollowPreviewType> | []
 
-export type UserFollowersPreviewType = {
+export type UserFollowPreviewType = {
   uid: string
   profilePicture: string
   username: string

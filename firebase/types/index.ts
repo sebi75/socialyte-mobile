@@ -2,6 +2,6 @@ export { User } from "./User"
 export { Post } from "./Post"
 export {
   ConnectionsUserDocumentType,
-  UserFollowersArrayType,
-  UserFollowersPreviewType,
+  UserFollowArrayType,
+  UserFollowPreviewType,
 } from "./Connections"
