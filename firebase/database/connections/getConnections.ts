@@ -1,19 +1,22 @@
-import {
-  collection,
-  doc,
-  getDocs,
-  query,
-  where,
-  limit,
-} from "firebase/firestore"
+import { collection, getDocs, query, where, limit } from "firebase/firestore"
 import store from "../../../state/store"
 import { db } from "../../firebaseConfig"
 
 /* TYPES */
 import { User, UserFollowArrayType, UserFollowPreviewType } from "../../types"
 
-export const getUserFollowers = async (): Promise<UserFollowArrayType> => {
-  const usersIds = store.getState().userConnections.followersIds
+type ConnectionsType = "followers" | "following"
+
+export const getConnections = async (
+  type: ConnectionsType
+): Promise<UserFollowArrayType> => {
+  let usersIds: string[]
+  if (type === "followers") {
+    usersIds = store.getState().userConnections.followersIds
+  } else {
+    usersIds = store.getState().userConnections.followingIds
+  }
+
   if (usersIds.length == 0) {
     return []
   }
@@ -34,8 +37,8 @@ export const getUserFollowers = async (): Promise<UserFollowArrayType> => {
       const userPreview = dataToReturnableUser(userData as User)
       userFollowersPreview.push(userPreview)
     })
+    return userFollowersPreview
   }
-  return userFollowersPreview
 }
 
 const dataToReturnableUser = (userData: User): UserFollowPreviewType => {
