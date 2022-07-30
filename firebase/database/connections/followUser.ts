@@ -1,13 +1,4 @@
-import {
-  addDoc,
-  collection,
-  updateDoc,
-  doc,
-  getDoc,
-  DocumentData,
-  DocumentSnapshot,
-} from "firebase/firestore"
-
+import { updateDoc, doc, getDoc } from "firebase/firestore"
 import { db } from "../../firebaseConfig"
 /* 
 TODOS:
@@ -45,10 +36,7 @@ export const followUser = async (userId: string, userToFollowId: string) => {
         }
       }
     }
-  } catch (error) {}
-}
-
-type UserConnectionsTypeResult = {
-  following: Array<string>
-  followers: Array<string>
+  } catch (error: any) {
+    throw new Error("error following user", error)
+  }
 }

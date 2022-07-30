@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { updateUserProfileThunk } from "../thunks/user/updateUserProfileThunk"
-
 import {
   UserFollowArrayType,
   UserFollowPreviewType,
