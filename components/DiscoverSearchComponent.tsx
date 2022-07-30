@@ -12,7 +12,7 @@ import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { RootState, useAppDispatch } from "../state/store"
 import { setIsLoading } from "../state/reducers/searchUsersReducer"
-import { getUsersSearchThunk } from "../state/thunks/getUsersSearchThunk"
+import { getUsersSearchThunk } from "../state/thunks/search/getUsersSearchThunk"
 
 interface DiscoverSearchComponentProps {
   width: number

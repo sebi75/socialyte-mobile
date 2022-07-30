@@ -1,7 +1,7 @@
 import { doc, getDoc } from "firebase/firestore"
 import { db } from "../../firebaseConfig"
 
-type UserConnectionType = "following" | "followers"
+export type UserConnectionType = "following" | "followers"
 
 /* 
 LOGIC: when someone visits profile we need to know if the user is following or not
@@ -12,15 +12,19 @@ and can display buttons properly (follow/unfollow)
 export const getUserFollowIds = async (
   userId: string,
   type: UserConnectionType
-) => {
+): Promise<string[]> => {
   const docRef = doc(db, "connections", userId)
   try {
     const response = await getDoc(docRef)
     const documentResponseData = response.data()
     if (documentResponseData) {
+      if (documentResponseData[type].length == 0) {
+        return []
+      }
       return documentResponseData[type]
     }
   } catch (error) {
     console.log("error in getting the user document from the db")
   }
+  return []
 }

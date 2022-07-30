@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import {
   getUsersSearchHistory,
   UserSearchHistoryResults,
-} from "../../firebase/database/search/getUserSearchHistory"
+} from "../../../firebase/database/search/getUserSearchHistory"
 
 export const getUsersSearchHistoryThunk = createAsyncThunk(
   "userSearchHistory/getUserSearchHistory",

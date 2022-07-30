@@ -4,6 +4,11 @@ import {
   UserFollowPreviewType,
 } from "../../firebase/types"
 
+import {
+  getUserConnectionsIdsThunk,
+  UserConnectionsReturnResult,
+} from "../thunks/user-connections/getUserConnectionIdsThunk"
+
 /* Let's see how we need to design the connections state:
         1. We need to have both the arrays with the uids of followers and following so we can display well UI in the application.
 
@@ -20,11 +25,25 @@ import {
             }
 */
 
+/* 
+DETAIL: retrieving the user's followers and following ids should happen
+        when the user loggs in and then we can't neccessarily save it in the
+        client cache, because the list needs to always be up to date.
+
+        so the solution is having it in the state and only getting them again
+        if the state is cleared, to pupulate it again
+
+        another solution would be connecting users through websockets and then
+        getting updates when a user follows, unfollows etc and update in real time
+        but I think firebase only lets us do this through cloud functions
+*/
+
 interface UserConnectionsState {
   followersIds: string[]
   followingIds: string[]
   followersPreview: UserFollowArrayType
   followingPreview: UserFollowArrayType
+  isLoading: boolean
 }
 
 const userConnectionsInitialState: UserConnectionsState = {
@@ -32,13 +51,25 @@ const userConnectionsInitialState: UserConnectionsState = {
   followingIds: [],
   followersPreview: [],
   followingPreview: [],
+  isLoading: false,
 }
 
 export const userConnectionsSlice = createSlice({
   name: "userConnections",
   initialState: userConnectionsInitialState,
   reducers: {},
-  extraReducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(
+      getUserConnectionsIdsThunk.fulfilled,
+      (state, action: PayloadAction<UserConnectionsReturnResult>) => {
+        if (action.payload.type === "followers") {
+          state.followersIds = action.payload.ids
+        } else {
+          state.followingIds = action.payload.ids
+        }
+      }
+    )
+  },
 })
 
 export default userConnectionsSlice.reducer

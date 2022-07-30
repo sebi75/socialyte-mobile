@@ -8,7 +8,7 @@ import UserSearchResult from "./components/UserSearchResult"
 import { useSelector } from "react-redux"
 import { RootState } from "../../state/store"
 import { useAppDispatch } from "../../state/store"
-import { getUsersSearchHistoryThunk } from "../../state/thunks/getUsersSearchHistoryThunk"
+import { getUsersSearchHistoryThunk } from "../../state/thunks/search/getUsersSearchHistoryThunk"
 //
 //
 /* this screen should render results with user profiles from searches */

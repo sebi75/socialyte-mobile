@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { useDispatch } from "react-redux"
 
+/* reducers */
 import createPostReducer from "./reducers/createPostReducer"
 import authenticationReducer from "./reducers/authenticationReducer"
 import userReducer from "./reducers/userSlice"
@@ -9,7 +10,7 @@ import editProfileReducer from "./reducers/editProfileReducer"
 import searchUsersReducer from "./reducers/searchUsersReducer"
 import userConnectionsReducer from "./reducers/userConnectionsSlice"
 
-/* utils */
+/* state that controls the global custom alert popup */
 import globalAlertReducer from "./reducers/globalAlertReducer"
 
 const store = configureStore({

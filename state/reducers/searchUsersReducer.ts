@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { User } from "../../firebase/types/User"
 
 /* THUNKS */
-import { getUsersSearchThunk } from "../thunks/getUsersSearchThunk"
-import { getUsersSearchHistoryThunk } from "../thunks/getUsersSearchHistoryThunk"
+import { getUsersSearchThunk } from "../thunks/search/getUsersSearchThunk"
+import { getUsersSearchHistoryThunk } from "../thunks/search/getUsersSearchHistoryThunk"
 import { UserSearchHistoryResults } from "../../firebase/database/search/getUserSearchHistory"
 
 interface SearchUsersState {

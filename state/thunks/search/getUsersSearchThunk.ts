@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
-import { getUsersSearch as getUsersSearchHandler } from "../../firebase/database/search/searchUser"
+import { getUsersSearch as getUsersSearchHandler } from "../../../firebase/database/search/searchUser"
 
-import { User } from "../../firebase/types/User"
+import { User } from "../../../firebase/types/User"
 
 export const getUsersSearchThunk = createAsyncThunk(
   "usersSearch/getUsersSearch",
