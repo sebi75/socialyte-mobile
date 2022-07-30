@@ -7,7 +7,6 @@ import {
   DocumentData,
   DocumentSnapshot,
 } from "firebase/firestore"
-import { User } from "../../types/User"
 
 import { db } from "../../firebaseConfig"
 /* 
@@ -29,6 +28,21 @@ export const followUser = async (userId: string, userToFollowId: string) => {
       if (currentUserDocData.following.includes(userToFollowId)) {
         throw new Error("User already followed")
       } else {
+        //add the user to the following list of the current user
+        //and the current user is added to the followers list of the user
+        await updateDoc(currentUserDocRef, {
+          following: [...currentUserDocData.following, userToFollowId],
+        })
+
+        const userToFollowDoc = await getDoc(userToFollowDocRef)
+        const userToFollowDocData = userToFollowDoc.data()
+        if (userToFollowDocData) {
+          await updateDoc(userToFollowDocRef, {
+            followers: [...userToFollowDocData.followers, userId],
+          })
+        } else {
+          throw new Error("User to follow doesn't exist")
+        }
       }
     }
   } catch (error) {}
