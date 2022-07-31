@@ -1,6 +1,8 @@
 import { FlatList, StyleSheet, View } from "react-native"
 import SkeletonLoading from "../../../components/Skeletons/SkeletonSearch"
 import { UserFollowArrayType } from "../../../firebase/types"
+import { RootState } from "../../../state/store"
+import { useSelector } from "react-redux"
 import UserSearchResult from "../../Discover/components/UserSearchResult"
 
 interface FollowersScreenBody {
@@ -12,11 +14,16 @@ const FollowersScreenBody: React.FC<FollowersScreenBody> = ({
   isLoading,
   data,
 }) => {
+  const arbitraryData = useSelector(
+    (state: RootState) => state.userConnections.arbitrarySearch
+  )
+  const displayData = arbitraryData ? arbitraryData : data
   return (
     <View style={styles.screen}>
       <SkeletonLoading isLoading={isLoading}>
         <FlatList
-          data={data}
+          /* @ts-ignore */
+          data={displayData}
           keyExtractor={(item) => item.uid}
           renderItem={(userPreview) => {
             const { uid, description, profilePicture, username } =

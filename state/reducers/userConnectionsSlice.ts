@@ -1,5 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { UserFollowArrayType } from "../../firebase/types"
+import {
+  UserFollowArrayType,
+  UserFollowPreviewType,
+} from "../../firebase/types"
 
 import {
   getUserConnectionsIdsThunk,
@@ -46,6 +49,7 @@ interface UserConnectionsState {
   followingPreview: UserFollowArrayType
   temporaryFollowersPreview: UserFollowArrayType
   temporaryFollowingPreview: UserFollowArrayType
+  arbitrarySearch: UserFollowPreviewType | UserFollowArrayType | undefined
   isLoading: boolean
   fetchedAtStartup: boolean
 }
@@ -57,6 +61,7 @@ const userConnectionsInitialState: UserConnectionsState = {
   followingPreview: [],
   temporaryFollowersPreview: [],
   temporaryFollowingPreview: [],
+  arbitrarySearch: undefined,
   isLoading: false,
   fetchedAtStartup: false,
 }
@@ -75,6 +80,14 @@ export const userConnectionsSlice = createSlice({
       state.followingIds = state.followingIds.filter(
         (id) => id != action.payload
       )
+    },
+    setArbitrarySearchResult: (
+      state,
+      action: PayloadAction<
+        UserFollowPreviewType | UserFollowArrayType | undefined
+      >
+    ) => {
+      state.arbitrarySearch = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -114,6 +127,10 @@ export const userConnectionsSlice = createSlice({
   },
 })
 
-export const { setUnfollowUser, setFollowUser, setIsLoading } =
-  userConnectionsSlice.actions
+export const {
+  setUnfollowUser,
+  setFollowUser,
+  setIsLoading,
+  setArbitrarySearchResult,
+} = userConnectionsSlice.actions
 export default userConnectionsSlice.reducer

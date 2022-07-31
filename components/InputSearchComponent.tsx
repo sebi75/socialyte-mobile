@@ -1,24 +1,20 @@
 import { TouchableOpacity, TextInput, StyleSheet } from "react-native"
 import { useCallback } from "react"
-import { getUsersSearchHistory } from "../firebase/database/search/getUserSearchHistory"
+/* import { getUsersSearchHistory } from "../firebase/database/search/getUserSearchHistory" */
 
 /* REDUX */
-import { useSelector } from "react-redux"
-import { RootState, useAppDispatch } from "../state/store"
+import { useAppDispatch } from "../state/store"
 import { setIsLoading } from "../state/reducers/searchUsersReducer"
 import { getUsersSearchThunk } from "../state/thunks/search/getUsersSearchThunk"
 
-type InputSearchType = "discover" | "profile"
 interface InputSearchComponentProps {
   width: number
   autoFocus?: boolean
-  type: InputSearchType
 }
 
 const InputSearchComponent: React.FC<InputSearchComponentProps> = ({
   width,
   autoFocus = false,
-  type,
 }) => {
   const dispatch: any = useAppDispatch()
   //const {users, isLoading} = useSelector((state: RootState) => state.searchUsers)

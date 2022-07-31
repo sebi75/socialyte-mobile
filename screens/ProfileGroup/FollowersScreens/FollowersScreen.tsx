@@ -5,21 +5,17 @@ import { RootState } from "../../../state/store"
 import { useSelector } from "react-redux"
 import { useAppDispatch } from "../../../state/store"
 import { getUserConnectionsThunk } from "../../../state/thunks/user-connections/getUserConnectionsThunk"
+import { setArbitrarySearchResult } from "../../../state/reducers/userConnectionsSlice"
 
 import FollowersScreenHeader from "./FollowersScreenHeader"
 import FollowersScreenBody from "./FollowersScreenBody"
 
 const { width, height } = Dimensions.get("window")
-const FollowersScreen: React.FC<any> = ({
-  navigation,
-  route,
-}: {
-  navigation: any
-  route: any
-}) => {
+const FollowersScreen: React.FC<any> = ({ route }: { route: any }) => {
   const followersPreview = useSelector(
     (state: RootState) => state.userConnections.followersPreview
   )
+
   const isLoading = useSelector(
     (state: RootState) => state.userConnections.isLoading
   )
@@ -37,8 +33,11 @@ const FollowersScreen: React.FC<any> = ({
   const getFollowingBody = () => {
     return <FollowersScreenBody isLoading={isLoading} data={followingPreview} />
   }
-  const getHeader = () => {
-    return <FollowersScreenHeader />
+  const getFollowingHeader = () => {
+    return <FollowersScreenHeader type={"following"} />
+  }
+  const getFollowersHeader = () => {
+    return <FollowersScreenHeader type={"followers"} />
   }
 
   useEffect(() => {
@@ -53,19 +52,24 @@ const FollowersScreen: React.FC<any> = ({
     } else {
       dispatch(getUserConnectionsThunk({ uid, type: "following" }))
     }
+    //clean the arbitrary result so the next time the users visits the screen
+    //the proper data is displayed instead of the temporary data
+    return () => {
+      dispatch(setArbitrarySearchResult(undefined))
+    }
   }, [])
   return (
     <View style={styles.screen}>
       {type == "followers" ? (
         <FlatList
-          ListHeaderComponent={getHeader}
+          ListHeaderComponent={getFollowersHeader}
           ListFooterComponent={getFollowersBody}
           data={null}
           renderItem={() => null}
         />
       ) : (
         <FlatList
-          ListHeaderComponent={getHeader}
+          ListHeaderComponent={getFollowingHeader}
           ListFooterComponent={getFollowingBody}
           data={null}
           renderItem={() => null}
