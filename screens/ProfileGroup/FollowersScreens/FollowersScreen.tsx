@@ -1,30 +1,45 @@
 import { View, FlatList, StyleSheet, Dimensions } from "react-native"
 import { useEffect } from "react"
 
-import UserSearchResult from "../../Discover/components/UserSearchResult"
-import { default as InputSearchComponent } from "../../../components/DiscoverSearchComponent"
-import SkeletonLoading from "../../../components/Skeletons/SkeletonSearch"
-
-import { ScrollView } from "react-native-gesture-handler"
 import { RootState } from "../../../state/store"
 import { useSelector } from "react-redux"
 import { useAppDispatch } from "../../../state/store"
 import { getUserConnectionsThunk } from "../../../state/thunks/user-connections/getUserConnectionsThunk"
 
-interface FollowersScreenProps {
-  uid: string
-  type: "followers" | "following"
-}
+import FollowersScreenHeader from "./FollowersScreenHeader"
+import FollowersScreenBody from "./FollowersScreenBody"
 
 const { width, height } = Dimensions.get("window")
-const FollowersScreen: React.FC<FollowersScreenProps> = ({ uid, type }) => {
+const FollowersScreen: React.FC<any> = ({
+  navigation,
+  route,
+}: {
+  navigation: any
+  route: any
+}) => {
   const followersPreview = useSelector(
     (state: RootState) => state.userConnections.followersPreview
+  )
+  const isLoading = useSelector(
+    (state: RootState) => state.userConnections.isLoading
   )
   const followingPreview = useSelector(
     (state: RootState) => state.userConnections.followingPreview
   )
   const dispatch = useAppDispatch()
+
+  const uid = route.params.uid
+  const type = route.params.type
+
+  const getFollowersBody = () => {
+    return <FollowersScreenBody isLoading={isLoading} data={followersPreview} />
+  }
+  const getFollowingBody = () => {
+    return <FollowersScreenBody isLoading={isLoading} data={followingPreview} />
+  }
+  const getHeader = () => {
+    return <FollowersScreenHeader />
+  }
 
   useEffect(() => {
     //get the users preview: followers / following
@@ -40,60 +55,32 @@ const FollowersScreen: React.FC<FollowersScreenProps> = ({ uid, type }) => {
     }
   }, [])
   return (
-    <ScrollView>
-      <InputSearchComponent width={width * 0.8} />
-      <View style={{ marginTop: "0.7rem" }}>
-        {/* we need to render the items in FlatLists */}
-        {type == "followers" ? (
-          <SkeletonLoading>
-            <FlatList
-              data={followersPreview}
-              keyExtractor={(item) => item.uid}
-              renderItem={(userPreview) => {
-                const { uid, description, profilePicture, username } =
-                  userPreview.item
-                return (
-                  <UserSearchResult
-                    uid={uid}
-                    description={description}
-                    profilePicture={profilePicture}
-                    username={username}
-                  />
-                )
-              }}
-            />
-          </SkeletonLoading>
-        ) : (
-          <SkeletonLoading>
-            <FlatList
-              data={followingPreview}
-              keyExtractor={(item) => item.uid}
-              renderItem={(userPreview) => {
-                const { uid, description, profilePicture, username } =
-                  userPreview.item
-                return (
-                  <UserSearchResult
-                    uid={uid}
-                    description={description}
-                    profilePicture={profilePicture}
-                    username={username}
-                  />
-                )
-              }}
-            />
-          </SkeletonLoading>
-        )}
-      </View>
-    </ScrollView>
+    <View style={styles.screen}>
+      {type == "followers" ? (
+        <FlatList
+          ListHeaderComponent={getHeader}
+          ListFooterComponent={getFollowersBody}
+          data={null}
+          renderItem={() => null}
+        />
+      ) : (
+        <FlatList
+          ListHeaderComponent={getHeader}
+          ListFooterComponent={getFollowingBody}
+          data={null}
+          renderItem={() => null}
+        />
+      )}
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1,
+    width: width,
+    height: height,
+    padding: 5,
     backgroundColor: "black",
-    alignItems: "center",
-    justifyContent: "center",
   },
 })
 

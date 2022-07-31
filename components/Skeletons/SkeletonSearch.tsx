@@ -1,15 +1,12 @@
 import SkeletonContent from "react-native-skeleton-content"
 import { Dimensions } from "react-native"
 
-import { RootState } from "../../state/store"
-import { useSelector } from "react-redux"
-
 interface SkeletonProps {
   children: React.ReactNode
+  isLoading: boolean
 }
 const { width } = Dimensions.get("window")
-const Placeholder: React.FC<SkeletonProps> = ({ children }) => {
-  const { isLoading } = useSelector((state: RootState) => state.searchUsers)
+const Placeholder: React.FC<SkeletonProps> = ({ children, isLoading }) => {
   return (
     <SkeletonContent
       containerStyle={{

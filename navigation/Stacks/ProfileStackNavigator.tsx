@@ -104,13 +104,14 @@ const ProfileStackNavigator: React.FC = () => {
       <ProfileStack.Screen
         name="FollowersScreen"
         component={FollowersScreen}
+        initialParams={{ uid: user.uid, type: "followers" }}
         options={({ navigation, route }: { navigation: any; route: any }) => ({
           title: "Followers",
           headerStyle: {
             backgroundColor: ProfileSettings.backgroundColor,
-            headerTintColor:
-              Platform.OS === "android" ? ProfileSettings.titleColor : "white",
           },
+          headerTintColor:
+            Platform.OS === "android" ? ProfileSettings.titleColor : "white",
           headerTitleStyle: {
             color: ProfileSettings.titleColor,
           },
@@ -119,13 +120,14 @@ const ProfileStackNavigator: React.FC = () => {
       <ProfileStack.Screen
         name="FollowingScreen"
         component={FollowersScreen}
+        initialParams={{ uid: user.uid, type: "following" }}
         options={({ navigation, route }: { navigation: any; route: any }) => ({
           title: "Following",
           headerStyle: {
             backgroundColor: ProfileSettings.backgroundColor,
-            headerTintColor:
-              Platform.OS === "android" ? ProfileSettings.titleColor : "white",
           },
+          headerTintColor:
+            Platform.OS === "android" ? ProfileSettings.titleColor : "white",
           headerTitleStyle: {
             color: ProfileSettings.titleColor,
           },

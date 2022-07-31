@@ -29,8 +29,6 @@ interface ProfileHeaderProps {
   photoURL: string
   description: string
   numberOfPosts: number
-  numberOfFollowers: number
-  numberOfFollowing: number
 }
 
 const { width, height } = Dimensions.get("window")
@@ -39,8 +37,6 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   username,
   photoURL,
   description,
-  numberOfFollowers,
-  numberOfFollowing,
   numberOfPosts,
 }) => {
   const navigation: any = useNavigation()
@@ -52,6 +48,9 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   const { followersIds, followingIds } = useSelector(
     (state: RootState) => state.userConnections
   )
+  const numberOfFollowers = followersIds.length
+  const numberOfFollowing = followingIds.length
+  console.log("followingIds: ", followingIds)
 
   const isFollowing = followingIds.includes(uid)
 
@@ -75,12 +74,12 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           <FollowType
             type="Followers"
             count={numberOfFollowers}
-            onClick={() => navigation.navigate("FollowersScreen")}
+            onClick={() => navigation.navigate("FollowersScreen", { uid })}
           />
           <FollowType
             type="Following"
             count={numberOfFollowing}
-            onClick={() => navigation.navigate("FollowingScreen")}
+            onClick={() => navigation.navigate("FollowingScreen", { uid })}
           />
         </View>
       </View>
@@ -208,9 +207,9 @@ interface FollowTypeProps {
   onClick?: () => void
 }
 
-const FollowType: React.FC<FollowTypeProps> = ({ type, count }) => {
+const FollowType: React.FC<FollowTypeProps> = ({ type, count, onClick }) => {
   return (
-    <TouchableOpacity style={styles.followTypeCard}>
+    <TouchableOpacity style={styles.followTypeCard} onPress={onClick}>
       <Text
         style={{
           fontSize: 18,

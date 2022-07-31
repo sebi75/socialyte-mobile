@@ -18,7 +18,9 @@ const { width } = Dimensions.get("window")
 const DiscoverSearchScreen: React.FC = () => {
   const { users } = useSelector((state: RootState) => state.searchUsers)
   const { uid } = useSelector((state: RootState) => state.user)
-  const { historyUsers } = useSelector((state: RootState) => state.searchUsers)
+  const { historyUsers, isLoading } = useSelector(
+    (state: RootState) => state.searchUsers
+  )
   const displayUsers: any = users.length ? users : historyUsers
   const dispatch = useAppDispatch()
 
@@ -31,7 +33,7 @@ const DiscoverSearchScreen: React.FC = () => {
   return (
     <HideKeyboard>
       <View style={styles.screen}>
-        <SkeletonLoading>
+        <SkeletonLoading isLoading={isLoading}>
           <FlatList
             data={displayUsers}
             keyExtractor={(item) => item.uid}
