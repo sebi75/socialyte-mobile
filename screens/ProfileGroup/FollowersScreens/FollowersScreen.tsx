@@ -3,6 +3,8 @@ import { useEffect } from "react"
 
 import UserSearchResult from "../../Discover/components/UserSearchResult"
 import { default as InputSearchComponent } from "../../../components/DiscoverSearchComponent"
+import SkeletonLoading from "../../../components/Skeletons/SkeletonSearch"
+
 import { ScrollView } from "react-native-gesture-handler"
 import { RootState } from "../../../state/store"
 import { useSelector } from "react-redux"
@@ -43,39 +45,43 @@ const FollowersScreen: React.FC<FollowersScreenProps> = ({ uid, type }) => {
       <View style={{ marginTop: "0.7rem" }}>
         {/* we need to render the items in FlatLists */}
         {type == "followers" ? (
-          <FlatList
-            data={followersPreview}
-            keyExtractor={(item) => item.uid}
-            renderItem={(userPreview) => {
-              const { uid, description, profilePicture, username } =
-                userPreview.item
-              return (
-                <UserSearchResult
-                  uid={uid}
-                  description={description}
-                  profilePicture={profilePicture}
-                  username={username}
-                />
-              )
-            }}
-          />
+          <SkeletonLoading>
+            <FlatList
+              data={followersPreview}
+              keyExtractor={(item) => item.uid}
+              renderItem={(userPreview) => {
+                const { uid, description, profilePicture, username } =
+                  userPreview.item
+                return (
+                  <UserSearchResult
+                    uid={uid}
+                    description={description}
+                    profilePicture={profilePicture}
+                    username={username}
+                  />
+                )
+              }}
+            />
+          </SkeletonLoading>
         ) : (
-          <FlatList
-            data={followingPreview}
-            keyExtractor={(item) => item.uid}
-            renderItem={(userPreview) => {
-              const { uid, description, profilePicture, username } =
-                userPreview.item
-              return (
-                <UserSearchResult
-                  uid={uid}
-                  description={description}
-                  profilePicture={profilePicture}
-                  username={username}
-                />
-              )
-            }}
-          />
+          <SkeletonLoading>
+            <FlatList
+              data={followingPreview}
+              keyExtractor={(item) => item.uid}
+              renderItem={(userPreview) => {
+                const { uid, description, profilePicture, username } =
+                  userPreview.item
+                return (
+                  <UserSearchResult
+                    uid={uid}
+                    description={description}
+                    profilePicture={profilePicture}
+                    username={username}
+                  />
+                )
+              }}
+            />
+          </SkeletonLoading>
         )}
       </View>
     </ScrollView>

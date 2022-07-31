@@ -10,8 +10,18 @@ import FollowButton from "./FollowButton"
 import { CustomButton } from "../../../../components/CustomButton"
 
 import { useNavigation } from "@react-navigation/native"
+/* REDUX */
 import { useSelector } from "react-redux"
 import { RootState } from "../../../../state/store"
+import { useAppDispatch } from "../../../../state/store"
+import {
+  setUnfollowUser,
+  setFollowUser,
+} from "../../../../state/reducers/userConnectionsSlice"
+
+/* firebase functions */
+import { followUser } from "../../../../firebase/database/connections/followUser"
+import { unfollowUser } from "../../../../firebase/database/connections/unfollowUser"
 
 interface ProfileHeaderProps {
   uid: string
@@ -34,6 +44,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   numberOfPosts,
 }) => {
   const navigation: any = useNavigation()
+  const dispatch = useAppDispatch()
   const user = useSelector((state: RootState) => state.user)
   const isUsersProfile = uid === user.uid
 
@@ -93,13 +104,19 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           {isFollowing ? (
             <FollowButton
               title={"Unfollow"}
-              onPress={() => console.log("clicker")}
+              onPress={() => {
+                unfollowUser(user.uid as string, uid)
+                dispatch(setUnfollowUser(uid))
+              }}
               buttonStyle={{ backgroundColor: "rgba(255,255,255,0.65)" }}
             />
           ) : (
             <FollowButton
               title={"Follow"}
-              onPress={() => console.log("clicker")}
+              onPress={() => {
+                followUser(user.uid as string, uid)
+                dispatch(setFollowUser(uid))
+              }}
               buttonStyle={{ flex: 1 }}
             />
           )}

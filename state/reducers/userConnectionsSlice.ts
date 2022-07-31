@@ -47,6 +47,7 @@ interface UserConnectionsState {
   temporaryFollowersPreview: UserFollowArrayType
   temporaryFollowingPreview: UserFollowArrayType
   isLoading: boolean
+  fetchedAtStartup: boolean
 }
 
 const userConnectionsInitialState: UserConnectionsState = {
@@ -57,6 +58,7 @@ const userConnectionsInitialState: UserConnectionsState = {
   temporaryFollowersPreview: [],
   temporaryFollowingPreview: [],
   isLoading: false,
+  fetchedAtStartup: false,
 }
 
 export const userConnectionsSlice = createSlice({
@@ -79,6 +81,7 @@ export const userConnectionsSlice = createSlice({
     builder.addCase(
       getUserConnectionsIdsThunk.fulfilled,
       (state, action: PayloadAction<UserConnectionsReturnResult>) => {
+        state.fetchedAtStartup = true
         if (action.payload.type === "followers") {
           state.followersIds = action.payload.ids
         } else {
@@ -86,9 +89,13 @@ export const userConnectionsSlice = createSlice({
         }
       }
     )
+    builder.addCase(getUserConnectionsThunk.pending, (state, action) => {
+      state.isLoading = true
+    })
     builder.addCase(
       getUserConnectionsThunk.fulfilled,
       (state, action: PayloadAction<UserConnectionsType>) => {
+        state.isLoading = false
         if (action.payload.type === "followers") {
           if (action.payload.temporary) {
             state.temporaryFollowersPreview = action.payload.response
@@ -107,4 +114,6 @@ export const userConnectionsSlice = createSlice({
   },
 })
 
+export const { setUnfollowUser, setFollowUser, setIsLoading } =
+  userConnectionsSlice.actions
 export default userConnectionsSlice.reducer
