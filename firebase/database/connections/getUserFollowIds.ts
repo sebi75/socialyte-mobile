@@ -17,10 +17,9 @@ export const getUserFollowIds = async (
   try {
     const response = await getDoc(docRef)
     const documentResponseData = response.data()
+    console.log("response in firebase function: ", documentResponseData)
     if (documentResponseData) {
-      if (documentResponseData[type].length == 0) {
-        return []
-      }
+      console.log("this is what we return: ", documentResponseData[type])
       return documentResponseData[type]
     }
   } catch (error) {

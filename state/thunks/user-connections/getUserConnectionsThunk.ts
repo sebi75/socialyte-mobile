@@ -12,7 +12,7 @@ The logic here checks if the request is made with the same uid as the one in the
 */
 
 export const getUserConnectionsThunk = createAsyncThunk(
-  "userSearchHistory/getUserSearchHistory",
+  "userConnections/getUserConnectionsThunk",
   async (
     { uid, type }: { uid: string; type: ConnectionsType },
     thunkAPI: any

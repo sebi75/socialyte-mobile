@@ -35,24 +35,33 @@ export default function App() {
     }
   }, [])
 
+  const logFollowingIds = useCallback(async () => {
+    const followingIds = store.getState().userConnections.followingIds
+
+    console.log("followingIds: ", followingIds)
+  }, [])
+
   useEffect(() => {
     asyncFetchUserData()
+    logFollowingIds()
 
-    if (!store.getState().userConnections.fetchedAtStartup) {
-      console.log("fetching the user connections ids at startup...")
-      store.dispatch(
-        getUserConnectionsIdsThunk({
-          uid: store.getState().user.uid as string,
-          type: "followers",
-        })
-      )
-      store.dispatch(
-        getUserConnectionsIdsThunk({
-          uid: store.getState().user.uid as string,
-          type: "following",
-        })
-      )
-    }
+    setTimeout(() => {
+      if (!store.getState().userConnections.fetchedAtStartup) {
+        console.log("fetching the user connections ids at startup...")
+        store.dispatch(
+          getUserConnectionsIdsThunk({
+            uid: store.getState().user.uid as string,
+            type: "followers",
+          })
+        )
+        store.dispatch(
+          getUserConnectionsIdsThunk({
+            uid: store.getState().user.uid as string,
+            type: "following",
+          })
+        )
+      }
+    }, 200)
   }, [])
 
   return (

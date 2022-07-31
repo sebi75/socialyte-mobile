@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import { followUser } from "../../../firebase/database/connections/followUser"
 
 export const followUserThunk = createAsyncThunk(
-  "userSearchHistory/getUserSearchHistory",
+  "userConnections/followUserThunk",
   async (
     { uid, userToFollowId }: { uid: string; userToFollowId: string },
     thunkAPI: any

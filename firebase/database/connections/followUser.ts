@@ -37,6 +37,7 @@ export const followUser = async (userId: string, userToFollowId: string) => {
       }
     }
   } catch (error: any) {
+    console.log(error.message)
     throw new Error("error following user", error)
   }
 }

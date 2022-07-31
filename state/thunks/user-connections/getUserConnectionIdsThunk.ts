@@ -7,13 +7,17 @@ import {
 //this thunk retrieves and returns an array of uids for both followers and following, based on what it is requested
 
 export const getUserConnectionsIdsThunk = createAsyncThunk(
-  "userSearchHistory/getUserSearchHistory",
+  "userConnections/getUserConnectionsIdsThunk",
   async (
     { uid, type }: { uid: string; type: UserConnectionType },
     thunkAPI
   ): Promise<UserConnectionsReturnResult> => {
+    console.log("calling the gettingUserConnectionsIdsThunk!!!!")
     try {
-      const response: string[] = await getUserFollowIds(uid, type)
+      let response: string[] = await getUserFollowIds(uid, type)
+      if (response == undefined) {
+        response = []
+      }
       return { type, ids: response }
     } catch (error: any) {
       console.log(error.message)

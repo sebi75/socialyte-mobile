@@ -49,12 +49,10 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   const isUsersProfile = uid === user.uid
 
   //check for other user profile if he's followed by the current user
-  const followersIds = useSelector(
-    (state: RootState) => state.userConnections.followersIds
+  const { followersIds, followingIds } = useSelector(
+    (state: RootState) => state.userConnections
   )
-  const followingIds = useSelector(
-    (state: RootState) => state.userConnections.followingIds
-  )
+
   const isFollowing = followingIds.includes(uid)
 
   return (
@@ -114,6 +112,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
             <FollowButton
               title={"Follow"}
               onPress={() => {
+                console.log(user.uid + "is following" + uid)
                 followUser(user.uid as string, uid)
                 dispatch(setFollowUser(uid))
               }}

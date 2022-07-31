@@ -85,7 +85,9 @@ export const userConnectionsSlice = createSlice({
         if (action.payload.type === "followers") {
           state.followersIds = action.payload.ids
         } else {
-          state.followingIds = action.payload.ids
+          console.log("only console logginf: ")
+          console.log(action.payload.ids)
+          console.log(action.payload.ids.length)
         }
       }
     )
