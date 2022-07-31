@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import {
-  UserFollowArrayType,
-  UserFollowPreviewType,
-} from "../../firebase/types"
+import { UserFollowArrayType } from "../../firebase/types"
 
 import {
   getUserConnectionsIdsThunk,
@@ -47,6 +44,8 @@ interface UserConnectionsState {
   followingIds: string[]
   followersPreview: UserFollowArrayType
   followingPreview: UserFollowArrayType
+  temporaryFollowersPreview: UserFollowArrayType
+  temporaryFollowingPreview: UserFollowArrayType
   isLoading: boolean
 }
 
@@ -55,6 +54,8 @@ const userConnectionsInitialState: UserConnectionsState = {
   followingIds: [],
   followersPreview: [],
   followingPreview: [],
+  temporaryFollowersPreview: [],
+  temporaryFollowingPreview: [],
   isLoading: false,
 }
 
@@ -89,9 +90,17 @@ export const userConnectionsSlice = createSlice({
       getUserConnectionsThunk.fulfilled,
       (state, action: PayloadAction<UserConnectionsType>) => {
         if (action.payload.type === "followers") {
-          state.followersPreview = action.payload.response
+          if (action.payload.temporary) {
+            state.temporaryFollowersPreview = action.payload.response
+          } else {
+            state.followersPreview = action.payload.response
+          }
         } else {
-          state.followingPreview = action.payload.response
+          if (action.payload.temporary) {
+            state.temporaryFollowingPreview = action.payload.response
+          } else {
+            state.followingPreview = action.payload.response
+          }
         }
       }
     )

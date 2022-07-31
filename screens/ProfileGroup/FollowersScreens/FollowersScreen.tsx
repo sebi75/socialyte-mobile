@@ -1,10 +1,4 @@
-import {
-  TouchableOpacity,
-  View,
-  FlatList,
-  StyleSheet,
-  Dimensions,
-} from "react-native"
+import { View, FlatList, StyleSheet, Dimensions } from "react-native"
 import { useEffect } from "react"
 
 import UserSearchResult from "../../Discover/components/UserSearchResult"
@@ -16,11 +10,12 @@ import { useAppDispatch } from "../../../state/store"
 import { getUserConnectionsThunk } from "../../../state/thunks/user-connections/getUserConnectionsThunk"
 
 interface FollowersScreenProps {
+  uid: string
   type: "followers" | "following"
 }
 
 const { width, height } = Dimensions.get("window")
-const FollowersScreen: React.FC<FollowersScreenProps> = ({ type }) => {
+const FollowersScreen: React.FC<FollowersScreenProps> = ({ uid, type }) => {
   const followersPreview = useSelector(
     (state: RootState) => state.userConnections.followersPreview
   )
@@ -32,9 +27,14 @@ const FollowersScreen: React.FC<FollowersScreenProps> = ({ type }) => {
   useEffect(() => {
     //get the users preview: followers / following
     if (type == "followers") {
-      dispatch(getUserConnectionsThunk("followers"))
+      //the way it is set up right now, when we want to see
+      //what people another user is following or followed by,
+      //we would put their data in the user's state
+      //so we need to check if we are looking for another user and
+      //have that data in a temporary state
+      dispatch(getUserConnectionsThunk({ uid, type: "followers" }))
     } else {
-      dispatch(getUserConnectionsThunk("following"))
+      dispatch(getUserConnectionsThunk({ uid, type: "following" }))
     }
   }, [])
   return (
