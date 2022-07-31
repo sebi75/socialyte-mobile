@@ -1,12 +1,6 @@
-import {
-  TouchableOpacity,
-  TextInput,
-  StyleSheet,
-  Dimensions,
-} from "react-native"
+import { TouchableOpacity, TextInput, StyleSheet } from "react-native"
 import { useCallback } from "react"
 import { getUsersSearchHistory } from "../firebase/database/search/getUserSearchHistory"
-import { useEffect } from "react"
 
 /* REDUX */
 import { useSelector } from "react-redux"
@@ -14,25 +8,25 @@ import { RootState, useAppDispatch } from "../state/store"
 import { setIsLoading } from "../state/reducers/searchUsersReducer"
 import { getUsersSearchThunk } from "../state/thunks/search/getUsersSearchThunk"
 
-interface DiscoverSearchComponentProps {
+type InputSearchType = "discover" | "profile"
+interface InputSearchComponentProps {
   width: number
   autoFocus?: boolean
+  type: InputSearchType
 }
 
-const DiscoverSearchComponent: React.FC<DiscoverSearchComponentProps> = ({
+const InputSearchComponent: React.FC<InputSearchComponentProps> = ({
   width,
   autoFocus = false,
+  type,
 }) => {
-  //we're using a debounce function to perform searches only after 1.5 seconds of typing inactivity
   const dispatch: any = useAppDispatch()
   //const {users, isLoading} = useSelector((state: RootState) => state.searchUsers)
-  const { uid } = useSelector((state: RootState) => state.user)
-  const simulateSearch = useCallback(
+  //const { uid } = useSelector((state: RootState) => state.user)
+
+  const debounceSearching = useCallback(
     debounce((text: string) => {
       if (text.length > 0) {
-        /* setTimeout(() => {
-          dispatch(setIsLoading(true))
-        }, 1500) */
         dispatch(setIsLoading(true))
         dispatch(getUsersSearchThunk(text))
       }
@@ -40,9 +34,10 @@ const DiscoverSearchComponent: React.FC<DiscoverSearchComponentProps> = ({
     []
   )
 
-  useEffect(() => {
+  //TODO: notice if commenting this affects the code. It shouldn't
+  /* useEffect(() => {
     getUsersSearchHistory(uid as string)
-  }, [])
+  }, []) */
 
   return (
     <TouchableOpacity style={[styles.discoverSearchInputStyle, { width }]}>
@@ -53,7 +48,7 @@ const DiscoverSearchComponent: React.FC<DiscoverSearchComponentProps> = ({
         keyboardType="default"
         autoCapitalize="none"
         autoCorrect={false}
-        onChangeText={(text) => simulateSearch(text)}
+        onChangeText={(text) => debounceSearching(text)}
       />
     </TouchableOpacity>
   )
@@ -85,4 +80,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default DiscoverSearchComponent
+export default InputSearchComponent

@@ -55,8 +55,6 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ route }) => {
         photoURL={user.uid == passedUid ? user.profilePicture : profilePicture}
         description={description}
         numberOfPosts={5}
-        numberOfFollowers={115}
-        numberOfFollowing={55}
       />
     )
   }

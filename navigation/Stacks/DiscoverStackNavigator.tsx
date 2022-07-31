@@ -3,7 +3,7 @@ import { Dimensions, Text, StyleSheet, Platform } from "react-native"
 import { CustomButton } from "../../components/CustomButton"
 
 import MainDiscoverScreen from "../../screens/Discover/MainDiscoverScreen"
-import DiscoverSearchComponent from "../../components/DiscoverSearchComponent"
+import DiscoverSearchComponent from "../../components/InputSearchComponent"
 import DiscoverSearchScreen from "../../screens/Discover/DiscoverSearchScreen"
 import ProfileScreen from "../../screens/ProfileGroup/ProfileScreen"
 

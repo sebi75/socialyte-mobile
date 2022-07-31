@@ -1,5 +1,5 @@
 import { View, StyleSheet, Dimensions } from "react-native"
-import { default as InputSearchComponent } from "../../../components/DiscoverSearchComponent"
+import InputSearchComponent from "../../../components/InputSearchComponent"
 
 const { width, height } = Dimensions.get("window")
 const FollowersScreenHeader: React.FC = () => {
@@ -12,8 +12,9 @@ const FollowersScreenHeader: React.FC = () => {
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1,
-    height: height * 0.1,
+    height: height * 0.06,
+    alignItems: "center",
+    justifyContent: "center",
   },
 })
 
