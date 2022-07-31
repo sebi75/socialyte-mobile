@@ -10,7 +10,7 @@ import { UserFollowArrayType } from "../../../firebase/types"
 export const getUserConnectionsThunk = createAsyncThunk(
   "userSearchHistory/getUserSearchHistory",
   async (
-    { uid, type }: { uid: string; type: ConnectionsType },
+    type: ConnectionsType,
     thunkAPI
   ): Promise<UserConnectionsReturnResult> => {
     try {
