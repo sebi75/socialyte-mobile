@@ -4,6 +4,7 @@ import ProfileScreen from "../../screens/ProfileGroup/ProfileScreen"
 import SettingsModal from "../../screens/ProfileGroup/SettingsModal"
 import EditScreen from "../../screens/ProfileGroup/EditScreen/EditScreen"
 import PostScreen from "../../screens/ProfileGroup/Post/PostScreen"
+import FollowersScreen from "../../screens/ProfileGroup/FollowersScreens/FollowersScreen"
 
 import { CustomIconButton } from "../../components/IconButton"
 import { Platform } from "react-native"
@@ -97,6 +98,36 @@ const ProfileStackNavigator: React.FC = () => {
           },
           headerTitleStyle: {
             color: "white",
+          },
+        })}
+      />
+      <ProfileStack.Screen
+        name="FollowersScreen"
+        component={FollowersScreen}
+        options={({ navigation, route }: { navigation: any; route: any }) => ({
+          title: "Followers",
+          headerStyle: {
+            backgroundColor: ProfileSettings.backgroundColor,
+            headerTintColor:
+              Platform.OS === "android" ? ProfileSettings.titleColor : "white",
+          },
+          headerTitleStyle: {
+            color: ProfileSettings.titleColor,
+          },
+        })}
+      />
+      <ProfileStack.Screen
+        name="FollowingScreen"
+        component={FollowersScreen}
+        options={({ navigation, route }: { navigation: any; route: any }) => ({
+          title: "Following",
+          headerStyle: {
+            backgroundColor: ProfileSettings.backgroundColor,
+            headerTintColor:
+              Platform.OS === "android" ? ProfileSettings.titleColor : "white",
+          },
+          headerTitleStyle: {
+            color: ProfileSettings.titleColor,
           },
         })}
       />

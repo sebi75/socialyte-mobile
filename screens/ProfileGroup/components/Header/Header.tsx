@@ -37,6 +37,15 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   const user = useSelector((state: RootState) => state.user)
   const isUsersProfile = uid === user.uid
 
+  //check for other user profile if he's followed by the current user
+  const followersIds = useSelector(
+    (state: RootState) => state.userConnections.followersIds
+  )
+  const followingIds = useSelector(
+    (state: RootState) => state.userConnections.followingIds
+  )
+  const isFollowing = followingIds.includes(uid)
+
   return (
     <View style={styles.outerHeaderSection}>
       <View style={styles.lineOne}>
@@ -54,8 +63,16 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         {/* FOLLOWERS & FOLLOWING display */}
         <View style={styles.followingCard}>
           <FollowType type="Posts" count={numberOfPosts} />
-          <FollowType type="Followers" count={numberOfFollowers} />
-          <FollowType type="Following" count={numberOfFollowing} />
+          <FollowType
+            type="Followers"
+            count={numberOfFollowers}
+            onClick={() => navigation.navigate("FollowersScreen")}
+          />
+          <FollowType
+            type="Following"
+            count={numberOfFollowing}
+            onClick={() => navigation.navigate("FollowingScreen")}
+          />
         </View>
       </View>
 
@@ -73,11 +90,19 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       {/* FOLLOW BUTTONS */}
       {!isUsersProfile && (
         <View style={styles.followButtonsSection}>
-          <FollowButton
-            title={"Follow"}
-            onPress={() => console.log("clicker")}
-            buttonStyle={{ flex: 1 }}
-          />
+          {isFollowing ? (
+            <FollowButton
+              title={"Unfollow"}
+              onPress={() => console.log("clicker")}
+              buttonStyle={{ backgroundColor: "rgba(255,255,255,0.65)" }}
+            />
+          ) : (
+            <FollowButton
+              title={"Follow"}
+              onPress={() => console.log("clicker")}
+              buttonStyle={{ flex: 1 }}
+            />
+          )}
           <FollowButton
             title={"Message"}
             onPress={() => console.log("clicker")}
@@ -164,6 +189,7 @@ const styles = StyleSheet.create({
 interface FollowTypeProps {
   type: string
   count: number
+  onClick?: () => void
 }
 
 const FollowType: React.FC<FollowTypeProps> = ({ type, count }) => {
