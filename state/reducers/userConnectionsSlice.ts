@@ -61,7 +61,19 @@ const userConnectionsInitialState: UserConnectionsState = {
 export const userConnectionsSlice = createSlice({
   name: "userConnections",
   initialState: userConnectionsInitialState,
-  reducers: {},
+  reducers: {
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload
+    },
+    setFollowUser: (state, action: PayloadAction<string>) => {
+      state.followingIds.push(action.payload)
+    },
+    setUnfollowUser: (state, action: PayloadAction<string>) => {
+      state.followingIds = state.followingIds.filter(
+        (id) => id != action.payload
+      )
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(
       getUserConnectionsIdsThunk.fulfilled,
