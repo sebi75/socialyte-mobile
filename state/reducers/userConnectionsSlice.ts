@@ -8,6 +8,10 @@ import {
   getUserConnectionsIdsThunk,
   UserConnectionsReturnResult,
 } from "../thunks/user-connections/getUserConnectionIdsThunk"
+import {
+  getUserConnectionsThunk,
+  UserConnectionsReturnResult as UserConnectionsType,
+} from "../thunks/user-connections/getUserConnectionsThunk"
 
 /* Let's see how we need to design the connections state:
         1. We need to have both the arrays with the uids of followers and following so we can display well UI in the application.
@@ -66,6 +70,16 @@ export const userConnectionsSlice = createSlice({
           state.followersIds = action.payload.ids
         } else {
           state.followingIds = action.payload.ids
+        }
+      }
+    )
+    builder.addCase(
+      getUserConnectionsThunk.fulfilled,
+      (state, action: PayloadAction<UserConnectionsType>) => {
+        if (action.payload.type === "followers") {
+          state.followersPreview = action.payload.response
+        } else {
+          state.followingPreview = action.payload.response
         }
       }
     )

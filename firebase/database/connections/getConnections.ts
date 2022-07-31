@@ -5,7 +5,7 @@ import { db } from "../../firebaseConfig"
 /* TYPES */
 import { User, UserFollowArrayType, UserFollowPreviewType } from "../../types"
 
-type ConnectionsType = "followers" | "following"
+export type ConnectionsType = "followers" | "following"
 
 export const getConnections = async (
   type: ConnectionsType
