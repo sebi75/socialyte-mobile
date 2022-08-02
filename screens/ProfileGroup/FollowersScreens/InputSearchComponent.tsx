@@ -3,7 +3,7 @@ import { useState } from "react"
 
 import { useAppDispatch, RootState } from "../../../state/store"
 import { useSelector } from "react-redux"
-import { setArbitrarySearchResult } from "../../../state/reducers/userConnectionsSlice"
+import { setArbitrarySearchResult } from "../../../state/reducers/userConnectionsReducer"
 /* 
 the logic and architecture is the same as in the one where you search for users
 in the discover component, but here we want do instantly filter and display them,

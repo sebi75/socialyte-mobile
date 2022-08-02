@@ -5,7 +5,7 @@ import { RootState } from "../../../state/store"
 import { useSelector } from "react-redux"
 import { useAppDispatch } from "../../../state/store"
 import { getUserConnectionsThunk } from "../../../state/thunks/user-connections/getUserConnectionsThunk"
-import { setArbitrarySearchResult } from "../../../state/reducers/userConnectionsSlice"
+import { setArbitrarySearchResult } from "../../../state/reducers/userConnectionsReducer"
 
 import FollowersScreenHeader from "./FollowersScreenHeader"
 import FollowersScreenBody from "./FollowersScreenBody"

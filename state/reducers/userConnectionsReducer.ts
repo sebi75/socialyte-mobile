@@ -1,14 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import {
-  UserFollowArrayType,
-  UserFollowPreviewType,
-} from "../../firebase/types"
 
 import {
   getUserConnectionsIdsThunk,
   UserConnectionsReturnResult,
 } from "../thunks/user-connections/getUserConnectionIdsThunk"
+
 import {
+  UserFollowArrayType,
+  UserFollowPreviewType,
   getUserConnectionsThunk,
   UserConnectionsReturnResult as UserConnectionsType,
 } from "../thunks/user-connections/getUserConnectionsThunk"

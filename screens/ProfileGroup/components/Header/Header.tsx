@@ -17,7 +17,7 @@ import { useAppDispatch } from "../../../../state/store"
 import {
   setUnfollowUser,
   setFollowUser,
-} from "../../../../state/reducers/userConnectionsSlice"
+} from "../../../../state/reducers/userConnectionsReducer"
 
 /* firebase functions */
 import { followUser } from "../../../../firebase/database/connections/followUser"

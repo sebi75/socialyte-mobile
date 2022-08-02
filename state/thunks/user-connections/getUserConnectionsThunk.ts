@@ -3,7 +3,10 @@ import {
   ConnectionsType,
   getConnections,
 } from "../../../firebase/database/connections/getConnections"
-import { UserFollowArrayType } from "../../../firebase/types"
+import {
+  UserFollowArrayType,
+  UserFollowPreviewType,
+} from "../../../firebase/types"
 
 //this thunk retrieves and returns the imported type: UserFollowArrayType
 
@@ -39,6 +42,10 @@ export const getUserConnectionsThunk = createAsyncThunk(
     }
   }
 )
+
+//export UserFollowArrayType,
+//  UserFollowPreviewType,
+export { UserFollowPreviewType, UserFollowArrayType }
 
 export type UserConnectionsReturnResult = {
   response: UserFollowArrayType

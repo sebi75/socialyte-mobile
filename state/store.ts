@@ -8,7 +8,7 @@ import userReducer from "./reducers/userSlice"
 import userProfilePostsReducer from "./reducers/userProfilePosts"
 import editProfileReducer from "./reducers/editProfileReducer"
 import searchUsersReducer from "./reducers/searchUsersReducer"
-import userConnectionsReducer from "./reducers/userConnectionsSlice"
+import userConnectionsReducer from "./reducers/userConnectionsReducer"
 
 /* state that controls the global custom alert popup */
 import globalAlertReducer from "./reducers/globalAlertReducer"
