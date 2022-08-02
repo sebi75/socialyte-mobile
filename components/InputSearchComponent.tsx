@@ -1,26 +1,22 @@
 import { TouchableOpacity, TextInput, StyleSheet } from "react-native"
 import { useCallback } from "react"
-/* import { getUsersSearchHistory } from "../firebase/database/search/getUserSearchHistory" */
 
 /* REDUX */
 import { useAppDispatch } from "../state/store"
 import { setIsLoading } from "../state/reducers/searchUsersReducer"
 import { getUsersSearchThunk } from "../state/thunks/search/getUsersSearchThunk"
 
-interface InputSearchComponentProps {
+interface DiscoverSearchComponentProps {
   width: number
   autoFocus?: boolean
 }
 
-const InputSearchComponent: React.FC<InputSearchComponentProps> = ({
+const InputSearchComponent: React.FC<DiscoverSearchComponentProps> = ({
   width,
   autoFocus = false,
 }) => {
   const dispatch: any = useAppDispatch()
-  //const {users, isLoading} = useSelector((state: RootState) => state.searchUsers)
-  //const { uid } = useSelector((state: RootState) => state.user)
-
-  const debounceSearching = useCallback(
+  const simulateSearch = useCallback(
     debounce((text: string) => {
       if (text.length > 0) {
         dispatch(setIsLoading(true))
@@ -29,11 +25,6 @@ const InputSearchComponent: React.FC<InputSearchComponentProps> = ({
     }, 1000),
     []
   )
-
-  //TODO: notice if commenting this affects the code. It shouldn't
-  /* useEffect(() => {
-    getUsersSearchHistory(uid as string)
-  }, []) */
 
   return (
     <TouchableOpacity style={[styles.discoverSearchInputStyle, { width }]}>
@@ -44,7 +35,7 @@ const InputSearchComponent: React.FC<InputSearchComponentProps> = ({
         keyboardType="default"
         autoCapitalize="none"
         autoCorrect={false}
-        onChangeText={(text) => debounceSearching(text)}
+        onChangeText={(text) => simulateSearch(text)}
       />
     </TouchableOpacity>
   )
