@@ -1,7 +1,6 @@
 import { collection, getDocs, query, where, limit } from "firebase/firestore"
 import store from "../../../state/store"
 import { db } from "../../firebaseConfig"
-import { getUserFollowIds } from "./getUserFollowIds"
 
 /* TYPES */
 import { User, UserFollowArrayType, UserFollowPreviewType } from "../../types"
@@ -15,13 +14,13 @@ export const getConnections = async (
   let usersIds: string[]
   if (type === "followers") {
     if (uid != store.getState().user.uid) {
-      usersIds = await getUserFollowIds(uid, "followers")
+      usersIds = store.getState().userConnections.temporaryFollowersIds
     } else {
       usersIds = store.getState().userConnections.followersIds
     }
   } else {
     if (uid != store.getState().user.uid) {
-      usersIds = await getUserFollowIds(uid, "following")
+      usersIds = store.getState().userConnections.temporaryFollowingIds
     } else {
       usersIds = store.getState().userConnections.followingIds
     }

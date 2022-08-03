@@ -45,11 +45,13 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   const isUsersProfile = uid === user.uid
 
   //check for other user profile if he's followed by the current user
-  const { followersIds, followingIds } = useSelector(
-    (state: RootState) => state.userConnections
-  )
-  const numberOfFollowers = followersIds.length
-  const numberOfFollowing = followingIds.length
+  const {
+    followingIds,
+    numberOfFollowers,
+    numberOfFollowings,
+    temporaryNumberOfFollowers,
+    temporaryNumberOfFollowings,
+  } = useSelector((state: RootState) => state.userConnections)
   console.log("followingIds: ", followingIds)
 
   const isFollowing = followingIds.includes(uid)
@@ -73,12 +75,16 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           <FollowType type="Posts" count={numberOfPosts} />
           <FollowType
             type="Followers"
-            count={numberOfFollowers}
+            count={
+              uid != user.uid ? temporaryNumberOfFollowers : numberOfFollowers
+            }
             onClick={() => navigation.navigate("FollowersScreen", { uid })}
           />
           <FollowType
             type="Following"
-            count={numberOfFollowing}
+            count={
+              uid != user.uid ? temporaryNumberOfFollowings : numberOfFollowings
+            }
             onClick={() => navigation.navigate("FollowingScreen", { uid })}
           />
         </View>
@@ -217,7 +223,7 @@ const FollowType: React.FC<FollowTypeProps> = ({ type, count, onClick }) => {
           color: "white",
         }}
       >
-        {count.toString()}
+        {count && count.toString()}
       </Text>
       <Text
         style={{

@@ -11,6 +11,8 @@ import { useEffect, useCallback } from "react"
 import { getUserPostsThunk } from "../../state/thunks/userPosts/getUserPostsThunk"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../state/store"
+import { getUserConnectionsIdsThunk } from "../../state/thunks/user-connections/getUserConnectionIdsThunk"
+import { clearTemporaryStoredData } from "../../state/reducers/userConnectionsReducer"
 
 interface ProfileScreenProps {
   route: any
@@ -45,6 +47,14 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ route }) => {
 
   useEffect(() => {
     getUserPosts(route.params.uid)
+    //if the profile visited isn't the current user, get the connections ids of the user
+    //and store them in the temporary storage state to be accessible for other actions
+    if (user.uid != route.params.uid) {
+      dispatch(getUserConnectionsIdsThunk(route.params.uid))
+    }
+    return () => {
+      dispatch(clearTemporaryStoredData())
+    }
   }, [])
 
   const getHeader = () => {

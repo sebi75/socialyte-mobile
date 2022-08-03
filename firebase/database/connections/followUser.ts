@@ -23,6 +23,7 @@ export const followUser = async (userId: string, userToFollowId: string) => {
         //and the current user is added to the followers list of the user
         await updateDoc(currentUserDocRef, {
           following: [...currentUserDocData.following, userToFollowId],
+          numberOfFollowings: currentUserDocData.numberOfFollowings + 1,
         })
 
         const userToFollowDoc = await getDoc(userToFollowDocRef)
@@ -30,6 +31,7 @@ export const followUser = async (userId: string, userToFollowId: string) => {
         if (userToFollowDocData) {
           await updateDoc(userToFollowDocRef, {
             followers: [...userToFollowDocData.followers, userId],
+            numberOfFollowers: userToFollowDocData.numberOfFollowers + 1,
           })
         } else {
           throw new Error("User to follow doesn't exist")

@@ -14,6 +14,7 @@ const FollowersScreenBody: React.FC<FollowersScreenBody> = ({
   isLoading,
   data,
 }) => {
+  console.log("data: ", data)
   const arbitraryData = useSelector(
     (state: RootState) => state.userConnections.arbitrarySearch
   )

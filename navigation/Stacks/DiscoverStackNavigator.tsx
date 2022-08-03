@@ -1,5 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { Dimensions, Text, StyleSheet, Platform } from "react-native"
+import {
+  Dimensions,
+  Text,
+  StyleSheet,
+  Platform,
+  TouchableOpacity,
+} from "react-native"
 import { CustomButton } from "../../components/CustomButton"
 
 import MainDiscoverScreen from "../../screens/Discover/MainDiscoverScreen"
@@ -8,7 +14,6 @@ import DiscoverSearchScreen from "../../screens/Discover/DiscoverSearchScreen"
 import ProfileScreen from "../../screens/ProfileGroup/ProfileScreen"
 
 import Colors from "../../constants/Colors"
-import { TouchableOpacity } from "react-native-gesture-handler"
 import { useAppDispatch } from "../../state/store"
 import { setUsersSearch } from "../../state/reducers/searchUsersReducer"
 const DiscoverStack = createNativeStackNavigator()
