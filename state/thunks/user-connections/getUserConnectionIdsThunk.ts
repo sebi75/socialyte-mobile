@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import {
   getUserFollowIds,
-  UserConnectionType,
+  GetUserFollowIdsResult,
 } from "../../../firebase/database/connections/getUserFollowIds"
 
 //this thunk retrieves and returns an array of uids for both followers and following, based on what it is requested
@@ -9,24 +9,27 @@ import {
 export const getUserConnectionsIdsThunk = createAsyncThunk(
   "userConnections/getUserConnectionsIdsThunk",
   async (
-    { uid, type }: { uid: string; type: UserConnectionType },
-    thunkAPI
-  ): Promise<UserConnectionsReturnResult> => {
-    console.log("calling the gettingUserConnectionsIdsThunk!!!!")
+    uid: string,
+    thunkAPI: any
+  ): Promise<GetUserConnectionsIdsThunkReturnResult> => {
     try {
-      let response: string[] = await getUserFollowIds(uid, type)
-      if (response == undefined) {
-        response = []
+      let response = await getUserFollowIds(uid)
+      if (uid != thunkAPI.getState().user.uid) {
+        return {
+          response: response,
+          temporary: true,
+        }
+      } else {
+        return { response: response, temporary: false }
       }
-      return { type, ids: response }
     } catch (error: any) {
       console.log(error.message)
-      throw new Error(`Error in getting the users ${type} ids`)
+      throw new Error(`Error in getting the users connection ids`)
     }
   }
 )
 
-export type UserConnectionsReturnResult = {
-  ids: string[]
-  type: UserConnectionType
+export type GetUserConnectionsIdsThunkReturnResult = {
+  response: GetUserFollowIdsResult
+  temporary: boolean
 }

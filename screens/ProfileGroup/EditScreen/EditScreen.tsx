@@ -6,7 +6,7 @@ import {
   TextInput,
   Dimensions,
 } from "react-native"
-import React, { useEffect } from "react"
+import React, { useEffect, useCallback } from "react"
 import { Avatar } from "react-native-paper"
 
 import Colors from "../../../constants/Colors"
@@ -22,7 +22,6 @@ import {
   setUsername,
   setDescription,
 } from "../../../state/reducers/editProfileReducer"
-import { useCallback } from "react"
 
 import { updateProfile, pickImageAsync } from "./logic/index"
 
@@ -53,12 +52,9 @@ const EditScreen: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    console.log("user: ", user)
     dispatch(setUsername(user.username))
     dispatch(setDescription(user.description))
     dispatch(setImageUri(user.profilePicture))
-
-    console.log("editProfileData: ", editProfileData)
   }, [])
 
   return (

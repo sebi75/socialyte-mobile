@@ -9,12 +9,17 @@ export const unfollowUser = async (id: string, userToUnfollowId: string) => {
   // and from the userToUnfollowDocRefData "followers" array
 
   try {
+    const currentUserDoc = await getDoc(userDocRef)
+    const currentUserDocData: any = currentUserDoc.data()
     await updateDoc(userDocRef, {
       following: arrayRemove(userToUnfollowId),
+      numberOfFollowings: currentUserDocData.numberOfFollowings - 1,
     })
-
+    const userToUnfollowDoc = await getDoc(userToUnfollowDocRef)
+    const userToUnfollowDocData: any = userToUnfollowDoc.data()
     await updateDoc(userToUnfollowDocRef, {
       followers: arrayRemove(id),
+      numberOfFollowers: userToUnfollowDocData.numberOfFollowers - 1,
     })
   } catch (error: any) {
     throw new Error("error in unfollowing the user")

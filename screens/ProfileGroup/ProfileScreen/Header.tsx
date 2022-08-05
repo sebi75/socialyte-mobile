@@ -6,51 +6,53 @@ import {
   TouchableOpacity,
 } from "react-native"
 import { Avatar } from "react-native-paper"
-import FollowButton from "./FollowButton"
-import { CustomButton } from "../../../../components/CustomButton"
+import { CustomButton } from "../../../components/CustomButton"
 
 import { useNavigation } from "@react-navigation/native"
 /* REDUX */
 import { useSelector } from "react-redux"
-import { RootState } from "../../../../state/store"
-import { useAppDispatch } from "../../../../state/store"
+import { RootState } from "../../../state/store"
+import { useAppDispatch } from "../../../state/store"
 import {
   setUnfollowUser,
   setFollowUser,
-} from "../../../../state/reducers/userConnectionsReducer"
+} from "../../../state/reducers/userConnectionsReducer"
 
 /* firebase functions */
-import { followUser } from "../../../../firebase/database/connections/followUser"
-import { unfollowUser } from "../../../../firebase/database/connections/unfollowUser"
+import { followUser } from "../../../firebase/database/connections/followUser"
+import { unfollowUser } from "../../../firebase/database/connections/unfollowUser"
 
 interface ProfileHeaderProps {
   uid: string
   username: string
-  photoURL: string
+  profilePicture: string
   description: string
   numberOfPosts: number
+  navigation: any
+  route: any
 }
 
 const { width, height } = Dimensions.get("window")
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   uid,
   username,
-  photoURL,
+  profilePicture,
   description,
   numberOfPosts,
+  navigation,
+  route,
 }) => {
-  const navigation: any = useNavigation()
   const dispatch = useAppDispatch()
   const user = useSelector((state: RootState) => state.user)
   const isUsersProfile = uid === user.uid
 
-  //check for other user profile if he's followed by the current user
-  const { followersIds, followingIds } = useSelector(
-    (state: RootState) => state.userConnections
-  )
-  const numberOfFollowers = followersIds.length
-  const numberOfFollowing = followingIds.length
-  console.log("followingIds: ", followingIds)
+  const {
+    followingIds,
+    numberOfFollowers,
+    numberOfFollowings,
+    temporaryNumberOfFollowers,
+    temporaryNumberOfFollowings,
+  } = useSelector((state: RootState) => state.userConnections)
 
   const isFollowing = followingIds.includes(uid)
 
@@ -61,25 +63,37 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           style={styles.avatar}
           onPress={() => navigation.navigate("EditScreen")}
         >
-          {photoURL ? (
-            <Avatar.Image size={width * 0.15} source={{ uri: photoURL }} />
+          {profilePicture ? (
+            <Avatar.Image
+              size={width * 0.15}
+              source={{ uri: profilePicture }}
+            />
           ) : (
-            <Avatar.Image size={width * 0.15} source={{}} />
+            <Avatar.Image
+              size={width * 0.15}
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/socialyte-baas.appspot.com/o/images%2Fdefault.png?alt=media&token=703d1382-8bb7-49e2-9dd0-8c7aeb8a8f74",
+              }}
+            />
           )}
         </TouchableOpacity>
 
         {/* FOLLOWERS & FOLLOWING display */}
         <View style={styles.followingCard}>
-          <FollowType type="Posts" count={numberOfPosts} />
-          <FollowType
+          <FieldType type="Posts" count={numberOfPosts} />
+          <FieldType
             type="Followers"
-            count={numberOfFollowers}
-            onClick={() => navigation.navigate("FollowersScreen", { uid })}
+            count={
+              uid != user.uid ? temporaryNumberOfFollowers : numberOfFollowers
+            }
+            onClick={() => navigation.push("FollowersScreen", { uid })}
           />
-          <FollowType
+          <FieldType
             type="Following"
-            count={numberOfFollowing}
-            onClick={() => navigation.navigate("FollowingScreen", { uid })}
+            count={
+              uid != user.uid ? temporaryNumberOfFollowings : numberOfFollowings
+            }
+            onClick={() => navigation.push("FollowingScreen", { uid })}
           />
         </View>
       </View>
@@ -99,30 +113,29 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       {!isUsersProfile && (
         <View style={styles.followButtonsSection}>
           {isFollowing ? (
-            <FollowButton
+            <CustomButton
               title={"Unfollow"}
               onPress={() => {
                 unfollowUser(user.uid as string, uid)
                 dispatch(setUnfollowUser(uid))
               }}
-              buttonStyle={{ backgroundColor: "rgba(255,255,255,0.65)" }}
+              buttonStyle={{ backgroundColor: "rgba(255,255,255,0.25)" }}
             />
           ) : (
-            <FollowButton
+            <CustomButton
               title={"Follow"}
               onPress={() => {
-                console.log(user.uid + "is following" + uid)
                 followUser(user.uid as string, uid)
                 dispatch(setFollowUser(uid))
               }}
-              buttonStyle={{ flex: 1 }}
+              buttonStyle={{ flex: 1, backgroundColor: "blue" }}
             />
           )}
-          <FollowButton
+          <CustomButton
             title={"Message"}
             onPress={() => console.log("clicker")}
-            buttonStyle={{ backgroundColor: "rgba(255,255,255,0.5)", flex: 1 }}
-            textStyle={{ color: "rgba(0,0,0,0.4)" }}
+            buttonStyle={{ backgroundColor: "rgba(255,255,255,0.1)", flex: 1 }}
+            textStyle={{ color: "white" }}
           />
         </View>
       )}
@@ -134,6 +147,10 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
             <CustomButton
               title={"Edit"}
               onPress={() => navigation.navigate("EditScreen")}
+              buttonStyle={{
+                backgroundColor: "rgba(255,255,255,0.1)",
+                width: width * 0.3,
+              }}
             />
           </View>
         )}
@@ -201,13 +218,13 @@ const styles = StyleSheet.create({
   },
 })
 
-interface FollowTypeProps {
+interface FieldTypeProps {
   type: string
   count: number
   onClick?: () => void
 }
 
-const FollowType: React.FC<FollowTypeProps> = ({ type, count, onClick }) => {
+const FieldType: React.FC<FieldTypeProps> = ({ type, count, onClick }) => {
   return (
     <TouchableOpacity style={styles.followTypeCard} onPress={onClick}>
       <Text
@@ -217,7 +234,7 @@ const FollowType: React.FC<FollowTypeProps> = ({ type, count, onClick }) => {
           color: "white",
         }}
       >
-        {count.toString()}
+        {count && count.toString()}
       </Text>
       <Text
         style={{

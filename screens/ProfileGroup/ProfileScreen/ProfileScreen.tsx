@@ -1,23 +1,26 @@
 import { View, FlatList, StyleSheet, Dimensions } from "react-native"
 
-import Colors from "../../constants/Colors"
+import Colors from "../../../constants/Colors"
 
 /* Components */
-import ProfileHeader from "./components/Header/Header"
-import ProfilePosts from "./components/Body/ProfilePosts"
+import ProfileHeader from "./Header"
+import ProfilePosts from "./ProfilePosts"
 import { useEffect, useCallback } from "react"
 
 /* REDUX */
-import { getUserPostsThunk } from "../../state/thunks/userPosts/getUserPostsThunk"
+import { getUserPostsThunk } from "../../../state/thunks/userPosts/getUserPostsThunk"
 import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../../state/store"
+import { RootState } from "../../../state/store"
+import { getUserConnectionsIdsThunk } from "../../../state/thunks/user-connections/getUserConnectionIdsThunk"
+import { clearTemporaryStoredData } from "../../../state/reducers/userConnectionsReducer"
 
 interface ProfileScreenProps {
+  navigation: any
   route: any
 }
 
 const { width, height } = Dimensions.get("window")
-const ProfileScreen: React.FC<ProfileScreenProps> = ({ route }) => {
+const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
   const dispatch = useDispatch()
 
   const { uid: passedUid, username, description, profilePicture } = route.params
@@ -45,6 +48,14 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ route }) => {
 
   useEffect(() => {
     getUserPosts(route.params.uid)
+    if (user.uid != route.params.uid) {
+      dispatch(getUserConnectionsIdsThunk(route.params.uid))
+    }
+    return () => {
+      //clear the temporary state whenever the screen is unmounted,
+      //even if it's the user's
+      dispatch(clearTemporaryStoredData())
+    }
   }, [])
 
   const getHeader = () => {
@@ -52,9 +63,13 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ route }) => {
       <ProfileHeader
         uid={passedUid}
         username={username}
-        photoURL={user.uid == passedUid ? user.profilePicture : profilePicture}
+        profilePicture={
+          user.uid == passedUid ? user.profilePicture : profilePicture
+        }
         description={description}
         numberOfPosts={1}
+        navigation={navigation}
+        route={route}
       />
     )
   }
@@ -82,5 +97,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.dark,
   },
 })
+
+const useFucntionality = () => {}
 
 export default ProfileScreen

@@ -2,53 +2,29 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 import {
   getUserConnectionsIdsThunk,
-  UserConnectionsReturnResult,
+  GetUserConnectionsIdsThunkReturnResult,
 } from "../thunks/user-connections/getUserConnectionIdsThunk"
 
 import {
   UserFollowArrayType,
-  UserFollowPreviewType,
   getUserConnectionsThunk,
   UserConnectionsReturnResult as UserConnectionsType,
 } from "../thunks/user-connections/getUserConnectionsThunk"
 
-/* Let's see how we need to design the connections state:
-        1. We need to have both the arrays with the uids of followers and following so we can display well UI in the application.
-
-        2. We need to get the preview of following / followers users depending which, when the user / someone clicks the buttons on the profile to display the lists
-
-        3. We will have some limiting to not make so many requests and then we will add some pagination to be able to load more users as the user scrolls down the list. 
-
-        4. So: The state will be:
-            {
-                followersIds: [],
-                followingIds: [],
-                followersPreview: [],
-                followingPreview: []
-            }
-*/
-
-/* 
-DETAIL: retrieving the user's followers and following ids should happen
-        when the user loggs in and then we can't neccessarily save it in the
-        client cache, because the list needs to always be up to date.
-
-        so the solution is having it in the state and only getting them again
-        if the state is cleared, to pupulate it again
-
-        another solution would be connecting users through websockets and then
-        getting updates when a user follows, unfollows etc and update in real time
-        but I think firebase only lets us do this through cloud functions
-*/
-
 interface UserConnectionsState {
   followersIds: string[]
   followingIds: string[]
+  numberOfFollowers: number
+  numberOfFollowings: number
+  temporaryFollowersIds: string[]
+  temporaryFollowingIds: string[]
+  temporaryNumberOfFollowers: number
+  temporaryNumberOfFollowings: number
   followersPreview: UserFollowArrayType
   followingPreview: UserFollowArrayType
   temporaryFollowersPreview: UserFollowArrayType
   temporaryFollowingPreview: UserFollowArrayType
-  arbitrarySearch: UserFollowPreviewType | UserFollowArrayType | undefined
+  arbitrarySearch: UserFollowArrayType | []
   isLoading: boolean
   fetchedAtStartup: boolean
 }
@@ -56,11 +32,17 @@ interface UserConnectionsState {
 const userConnectionsInitialState: UserConnectionsState = {
   followersIds: [],
   followingIds: [],
+  numberOfFollowers: 0,
+  numberOfFollowings: 0,
+  temporaryFollowersIds: [],
+  temporaryFollowingIds: [],
+  temporaryNumberOfFollowers: 0,
+  temporaryNumberOfFollowings: 0,
   followersPreview: [],
   followingPreview: [],
   temporaryFollowersPreview: [],
   temporaryFollowingPreview: [],
-  arbitrarySearch: undefined,
+  arbitrarySearch: [],
   isLoading: false,
   fetchedAtStartup: false,
 }
@@ -74,30 +56,58 @@ export const userConnectionsSlice = createSlice({
     },
     setFollowUser: (state, action: PayloadAction<string>) => {
       state.followingIds.push(action.payload)
+      state.numberOfFollowings++
+      state.temporaryFollowersIds.push(action.payload)
+      state.temporaryNumberOfFollowers++
     },
     setUnfollowUser: (state, action: PayloadAction<string>) => {
       state.followingIds = state.followingIds.filter(
         (id) => id != action.payload
       )
+      state.followingPreview = state.followingPreview.filter((user) => {
+        return user.uid != action.payload
+      })
+      state.temporaryFollowersIds = state.temporaryFollowersIds.filter(
+        (id) => id != action.payload
+      )
+      state.numberOfFollowings--
+      state.temporaryNumberOfFollowers--
     },
     setArbitrarySearchResult: (
       state,
-      action: PayloadAction<
-        UserFollowPreviewType | UserFollowArrayType | undefined
-      >
+      action: PayloadAction<UserFollowArrayType>
     ) => {
       state.arbitrarySearch = action.payload
+    },
+    clearTemporaryStoredData: (state) => {
+      state.temporaryFollowersIds = []
+      state.temporaryFollowingIds = []
+      state.temporaryNumberOfFollowers = 0
+      state.temporaryNumberOfFollowings = 0
+      state.temporaryFollowersPreview = []
+      state.temporaryFollowingPreview = []
     },
   },
   extraReducers: (builder) => {
     builder.addCase(
       getUserConnectionsIdsThunk.fulfilled,
-      (state, action: PayloadAction<UserConnectionsReturnResult>) => {
+      (
+        state,
+        action: PayloadAction<GetUserConnectionsIdsThunkReturnResult>
+      ) => {
         state.fetchedAtStartup = true
-        if (action.payload.type === "followers") {
-          state.followersIds = action.payload.ids
+        if (action.payload.temporary) {
+          state.temporaryFollowersIds = action.payload.response.followers
+          state.temporaryFollowingIds = action.payload.response.following
+          state.temporaryNumberOfFollowers =
+            action.payload.response.numberOfFollowers
+          state.temporaryNumberOfFollowings =
+            action.payload.response.numberOfFollowings
         } else {
-          state.followingIds = action.payload.ids
+          state.followersIds = action.payload.response.followers
+          state.followingIds = action.payload.response.following
+          state.numberOfFollowers = action.payload.response.numberOfFollowers
+          state.numberOfFollowings = action.payload.response.numberOfFollowings
         }
       }
     )
@@ -131,5 +141,6 @@ export const {
   setFollowUser,
   setIsLoading,
   setArbitrarySearchResult,
+  clearTemporaryStoredData,
 } = userConnectionsSlice.actions
 export default userConnectionsSlice.reducer
