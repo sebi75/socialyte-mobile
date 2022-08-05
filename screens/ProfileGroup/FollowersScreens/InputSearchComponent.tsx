@@ -4,59 +4,50 @@ import { useState } from "react"
 import { useAppDispatch, RootState } from "../../../state/store"
 import { useSelector } from "react-redux"
 import { setArbitrarySearchResult } from "../../../state/reducers/userConnectionsReducer"
-/* 
-the logic and architecture is the same as in the one where you search for users
-in the discover component, but here we want do instantly filter and display them,
-because we don't have to query the database for them.
-*/
 
 type HeaderType = "followers" | "following"
 
 interface InputSearchComponentProps {
   width: number
   type: HeaderType
+  uid: string
 }
-
-/* 
-LOGIC: 
-If we are here it means that we already have a list of "preview users" to display,
-otherwise it means the list is empty and it is shown some message to the user.
-
-We need to have an lifted state to keep track of the results of the search when the
-user is typing and when the user's input is clear or leave the screen clean the state so the list is shown as normal in the main component.
-
-we will render the results only when the user is typing from the parent component
-*/
 
 const InputSearchComponent: React.FC<InputSearchComponentProps> = ({
   width,
   type,
+  uid,
 }) => {
   const [text, setText] = useState("")
   const dispatch = useAppDispatch()
-  console.log("in the input component")
 
-  const followersPreview = useSelector(
-    (state: RootState) => state.userConnections.followersPreview
-  )
-  const followingPreview = useSelector(
-    (state: RootState) => state.userConnections.followingPreview
-  )
+  const {
+    followersPreview,
+    followingPreview,
+    temporaryFollowersPreview,
+    temporaryFollowingPreview,
+  } = useSelector((state: RootState) => state.userConnections)
+  const user = useSelector((state: RootState) => state.user)
 
-  const handleTextSearch = (text: string, type: HeaderType) => {
-    setText(text)
-    let filteredUsers: any
-
-    if (type === "followers") {
-      filteredUsers = followersPreview.filter((user: any) =>
-        user.username.toLowerCase().startsWith(text.toLowerCase())
-      )
-      dispatch(setArbitrarySearchResult(filteredUsers))
-    } else {
-      filteredUsers = followingPreview.filter((user: any) =>
-        user.username.toLowerCase().startsWith(text.toLowerCase())
-      )
-      dispatch(setArbitrarySearchResult(filteredUsers))
+  const handleTextSearch = (type: HeaderType) => {
+    return (text: string) => {
+      setText(text)
+      let filteredUsers: any
+      if (type === "followers") {
+        if (user.uid != uid) {
+          filteredUsers = filterUsers(temporaryFollowersPreview, text)
+        } else {
+          filteredUsers = filterUsers(followersPreview, text)
+        }
+        dispatch(setArbitrarySearchResult(filteredUsers))
+      } else {
+        if (user.uid != uid) {
+          filteredUsers = filterUsers(temporaryFollowingPreview, text)
+        } else {
+          filteredUsers = filterUsers(followingPreview, text)
+        }
+        dispatch(setArbitrarySearchResult(filteredUsers))
+      }
     }
   }
 
@@ -69,7 +60,7 @@ const InputSearchComponent: React.FC<InputSearchComponentProps> = ({
         value={text}
         autoCapitalize="none"
         autoCorrect={false}
-        onChangeText={(text) => handleTextSearch(text, type)}
+        onChangeText={handleTextSearch(type)}
       />
     </TouchableOpacity>
   )
@@ -90,5 +81,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
 })
+
+const filterUsers = (users: any, text: string) => {
+  return users.filter((user: any) =>
+    user.username.toLowerCase().startsWith(text.toLowerCase())
+  )
+}
 
 export default InputSearchComponent

@@ -1,8 +1,8 @@
-import { View, StyleSheet, Dimensions, FlatList } from "react-native"
+import { View, StyleSheet, Dimensions, FlatList, Text } from "react-native"
 import { useEffect } from "react"
 import HideKeyboard from "../../components/HideKeyboard"
 import SkeletonLoading from "../../components/Skeletons/SkeletonSearch"
-import UserSearchResult from "./components/UserSearchResult"
+import UserSearchResult from "../../components/UserSearchResult"
 
 /* REDUX */
 import { useSelector } from "react-redux"
@@ -34,20 +34,25 @@ const DiscoverSearchScreen: React.FC = () => {
     <HideKeyboard>
       <View style={styles.screen}>
         <SkeletonLoading isLoading={isLoading}>
-          <FlatList
-            data={displayUsers}
-            keyExtractor={(item) => item.uid}
-            showsVerticalScrollIndicator={false}
-            style={{ overflow: "hidden" }}
-            renderItem={({ item }) => (
-              <UserSearchResult
-                uid={item.uid}
-                username={item.username}
-                profilePicture={item.profilePicture}
-                description={item.description}
-              />
-            )}
-          />
+          {displayUsers.length ? (
+            <FlatList
+              data={displayUsers}
+              keyExtractor={(item) => item.uid}
+              showsVerticalScrollIndicator={false}
+              style={{ overflow: "hidden" }}
+              renderItem={({ item }) => (
+                <UserSearchResult
+                  uid={item.uid}
+                  username={item.username}
+                  profilePicture={item.profilePicture}
+                  description={item.description}
+                  addableToSearchHistory={true}
+                />
+              )}
+            />
+          ) : (
+            <Text>No results</Text>
+          )}
         </SkeletonLoading>
       </View>
     </HideKeyboard>

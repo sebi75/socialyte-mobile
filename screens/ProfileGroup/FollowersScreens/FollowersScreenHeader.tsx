@@ -5,15 +5,17 @@ type HeaderType = "followers" | "following"
 
 interface FollowersScreenHeaderProps {
   type: HeaderType
+  uid: string
 }
 
 const { width, height } = Dimensions.get("window")
 const FollowersScreenHeader: React.FC<FollowersScreenHeaderProps> = ({
   type,
+  uid,
 }) => {
   return (
     <View style={styles.screen}>
-      <InputSearchComponent width={width * 0.8} type={type} />
+      <InputSearchComponent width={width * 0.8} type={type} uid={uid} />
     </View>
   )
 }

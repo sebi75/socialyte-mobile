@@ -7,7 +7,6 @@ import {
 
 import {
   UserFollowArrayType,
-  UserFollowPreviewType,
   getUserConnectionsThunk,
   UserConnectionsReturnResult as UserConnectionsType,
 } from "../thunks/user-connections/getUserConnectionsThunk"
@@ -25,7 +24,7 @@ interface UserConnectionsState {
   followingPreview: UserFollowArrayType
   temporaryFollowersPreview: UserFollowArrayType
   temporaryFollowingPreview: UserFollowArrayType
-  arbitrarySearch: UserFollowPreviewType | UserFollowArrayType | undefined
+  arbitrarySearch: UserFollowArrayType | []
   isLoading: boolean
   fetchedAtStartup: boolean
 }
@@ -43,7 +42,7 @@ const userConnectionsInitialState: UserConnectionsState = {
   followingPreview: [],
   temporaryFollowersPreview: [],
   temporaryFollowingPreview: [],
-  arbitrarySearch: undefined,
+  arbitrarySearch: [],
   isLoading: false,
   fetchedAtStartup: false,
 }
@@ -57,6 +56,7 @@ export const userConnectionsSlice = createSlice({
     },
     setFollowUser: (state, action: PayloadAction<string>) => {
       state.followingIds.push(action.payload)
+      state.numberOfFollowings++
       state.temporaryFollowersIds.push(action.payload)
       state.temporaryNumberOfFollowers++
     },
@@ -64,16 +64,18 @@ export const userConnectionsSlice = createSlice({
       state.followingIds = state.followingIds.filter(
         (id) => id != action.payload
       )
+      state.followingPreview = state.followingPreview.filter((user) => {
+        return user.uid != action.payload
+      })
       state.temporaryFollowersIds = state.temporaryFollowersIds.filter(
         (id) => id != action.payload
       )
+      state.numberOfFollowings--
       state.temporaryNumberOfFollowers--
     },
     setArbitrarySearchResult: (
       state,
-      action: PayloadAction<
-        UserFollowPreviewType | UserFollowArrayType | undefined
-      >
+      action: PayloadAction<UserFollowArrayType>
     ) => {
       state.arbitrarySearch = action.payload
     },

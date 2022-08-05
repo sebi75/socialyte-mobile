@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   modalElementsContainer: {
-    backgroundColor: "white",
+    backgroundColor: "rgba(255,255,255,0.7)",
     borderColor: "rgba(0, 0, 0, 0.1)",
     flexDirection: "column",
     borderRadius: 10,

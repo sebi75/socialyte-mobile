@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
-import ProfileScreen from "../../screens/ProfileGroup/ProfileScreen"
+import ProfileScreen from "../../screens/ProfileGroup/ProfileScreen/ProfileScreen"
 import SettingsModal from "../../screens/ProfileGroup/SettingsModal"
 import EditScreen from "../../screens/ProfileGroup/EditScreen/EditScreen"
 import PostScreen from "../../screens/ProfileGroup/Post/PostScreen"
@@ -48,10 +48,11 @@ const ProfileStackNavigator: React.FC = () => {
               )
             }
           },
-          title: route.params.username,
+          title: route.params.uid != user.uid ? "Profile" : "Your Profile",
           headerStyle: {
             backgroundColor: ProfileSettings.backgroundColor,
           },
+          headerTintcolor: "white",
           headerTitleStyle: {
             color: ProfileSettings.titleColor,
           },
@@ -110,8 +111,7 @@ const ProfileStackNavigator: React.FC = () => {
           headerStyle: {
             backgroundColor: ProfileSettings.backgroundColor,
           },
-          headerTintColor:
-            Platform.OS === "android" ? ProfileSettings.titleColor : "white",
+          headerTintColor: "white",
           headerTitleStyle: {
             color: ProfileSettings.titleColor,
           },
@@ -126,8 +126,7 @@ const ProfileStackNavigator: React.FC = () => {
           headerStyle: {
             backgroundColor: ProfileSettings.backgroundColor,
           },
-          headerTintColor:
-            Platform.OS === "android" ? ProfileSettings.titleColor : "white",
+          headerTintColor: "white",
           headerTitleStyle: {
             color: ProfileSettings.titleColor,
           },

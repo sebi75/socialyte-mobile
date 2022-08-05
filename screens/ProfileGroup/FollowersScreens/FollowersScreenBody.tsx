@@ -1,9 +1,13 @@
-import { FlatList, StyleSheet, View } from "react-native"
-import SkeletonLoading from "../../../components/Skeletons/SkeletonSearch"
+import { FlatList, View, Text } from "react-native"
 import { UserFollowArrayType } from "../../../firebase/types"
+
+/* COMPONENTS */
+import SkeletonLoading from "../../../components/Skeletons/SkeletonSearch"
+import UserSearchResult from "../../../components/UserSearchResult"
+
+/* REDUX */
 import { RootState } from "../../../state/store"
 import { useSelector } from "react-redux"
-import UserSearchResult from "../../Discover/components/UserSearchResult"
 
 interface FollowersScreenBody {
   isLoading: boolean
@@ -14,40 +18,38 @@ const FollowersScreenBody: React.FC<FollowersScreenBody> = ({
   isLoading,
   data,
 }) => {
-  console.log("data: ", data)
   const arbitraryData = useSelector(
     (state: RootState) => state.userConnections.arbitrarySearch
   )
-  const displayData = arbitraryData ? arbitraryData : data
+  const displayData = arbitraryData.length > 0 ? arbitraryData : data
   return (
-    <View style={styles.screen}>
+    <View style={{ flex: 1 }}>
       <SkeletonLoading isLoading={isLoading}>
-        <FlatList
-          /* @ts-ignore */
-          data={displayData}
-          keyExtractor={(item) => item.uid}
-          renderItem={(userPreview) => {
-            const { uid, description, profilePicture, username } =
-              userPreview.item
-            return (
-              <UserSearchResult
-                uid={uid}
-                description={description}
-                profilePicture={profilePicture}
-                username={username}
-              />
-            )
-          }}
-        />
+        {displayData ? (
+          <FlatList
+            /* @ts-ignore */
+            data={displayData}
+            keyExtractor={(item) => item.uid}
+            renderItem={(userPreview) => {
+              const { uid, description, profilePicture, username } =
+                userPreview.item
+              return (
+                <UserSearchResult
+                  uid={uid}
+                  description={description}
+                  profilePicture={profilePicture}
+                  username={username}
+                  addableToSearchHistory={false}
+                />
+              )
+            }}
+          />
+        ) : (
+          <Text>No results</Text>
+        )}
       </SkeletonLoading>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-})
 
 export default FollowersScreenBody

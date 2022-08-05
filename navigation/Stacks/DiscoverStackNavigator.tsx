@@ -11,21 +11,21 @@ import { CustomButton } from "../../components/CustomButton"
 import MainDiscoverScreen from "../../screens/Discover/MainDiscoverScreen"
 import DiscoverSearchComponent from "../../components/InputSearchComponent"
 import DiscoverSearchScreen from "../../screens/Discover/DiscoverSearchScreen"
-import ProfileScreen from "../../screens/ProfileGroup/ProfileScreen"
+import ProfileScreen from "../../screens/ProfileGroup/ProfileScreen/ProfileScreen"
+import FollowersScreen from "../../screens/ProfileGroup/FollowersScreens/FollowersScreen"
 
 import Colors from "../../constants/Colors"
 import { useAppDispatch } from "../../state/store"
+import { RootState } from "../../state/store"
+import { useSelector } from "react-redux"
 import { setUsersSearch } from "../../state/reducers/searchUsersReducer"
+import { CustomIconButton } from "../../components/IconButton"
 const DiscoverStack = createNativeStackNavigator()
-
-//
-//
-/* BUG: Funky behavior with the cancel button in the header in the Searching screen */
-//
-//
 
 const { width } = Dimensions.get("window")
 const DiscoverStackNavigator = () => {
+  const user = useSelector((state: RootState) => state.user)
+
   const dispatch = useAppDispatch()
   return (
     <DiscoverStack.Navigator>
@@ -67,7 +67,7 @@ const DiscoverStackNavigator = () => {
                   dispatch(setUsersSearch([]))
                 }}
                 title={"Cancel"}
-                style={styles.button}
+                buttonStyle={styles.button}
               />
             )
           },
@@ -81,20 +81,63 @@ const DiscoverStackNavigator = () => {
         })}
       />
       <DiscoverStack.Screen
-        name="ProfileScreenSearched"
+        name="ProfileScreen"
         component={ProfileScreen}
         initialParams={{
-          uid: "",
-          username: "",
-          description: "",
+          uid: user.uid,
+          username: user.username,
+          description: user.description,
+          profilePicture: user.profilePicture,
         }}
         options={({ navigation, route }: { navigation: any; route: any }) => ({
-          title: route.params.username || "Profile",
+          headerRight: () => {
+            if (route.params.uid == user.uid) {
+              return (
+                <CustomIconButton
+                  iconName={"settings"}
+                  color={"white"}
+                  onPress={() => navigation.navigate("SettingsModal")}
+                  size={25}
+                />
+              )
+            }
+          },
+          title: route.params.username,
           headerStyle: {
             backgroundColor: ProfileSettings.backgroundColor,
-            headerTintColor:
-              Platform.OS === "android" ? Colors.primary : "white",
           },
+          headerTintcolor: "white",
+          headerTitleStyle: {
+            color: ProfileSettings.titleColor,
+          },
+        })}
+      />
+
+      <DiscoverStack.Screen
+        name="FollowersScreen"
+        component={FollowersScreen}
+        initialParams={{ uid: user.uid, type: "followers" }}
+        options={({ navigation, route }: { navigation: any; route: any }) => ({
+          title: "Followers",
+          headerStyle: {
+            backgroundColor: ProfileSettings.backgroundColor,
+          },
+          headerTintColor: "white",
+          headerTitleStyle: {
+            color: ProfileSettings.titleColor,
+          },
+        })}
+      />
+      <DiscoverStack.Screen
+        name="FollowingScreen"
+        component={FollowersScreen}
+        initialParams={{ uid: user.uid, type: "following" }}
+        options={({ navigation, route }: { navigation: any; route: any }) => ({
+          title: "Following",
+          headerStyle: {
+            backgroundColor: ProfileSettings.backgroundColor,
+          },
+          headerTintColor: "white",
           headerTitleStyle: {
             color: ProfileSettings.titleColor,
           },

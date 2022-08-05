@@ -5,11 +5,11 @@ import {
   View,
   ActivityIndicator,
 } from "react-native"
-import PostPreview from "./PostPreview"
+import PostPreview from "../../../components/PostPreview"
 
 /* REDUX */
 import { useSelector } from "react-redux"
-import { RootState } from "../../../../state/store"
+import { RootState } from "../../../state/store"
 
 interface ProfilePostsProps {
   uid: string

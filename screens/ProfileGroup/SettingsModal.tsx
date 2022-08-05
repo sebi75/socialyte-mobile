@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native"
 
-import SettingItem from "./components/Settings/SettingItem"
+import SettingItem from "./ProfileScreen/SettingItem"
 
 import Colors from "../../constants/Colors"
 
