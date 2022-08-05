@@ -7,6 +7,7 @@ interface CustomButtonProps {
   textStyle?: any
 }
 
+const { width } = Dimensions.get("window")
 export const CustomButton: React.FC<CustomButtonProps> = ({
   title,
   onPress,
@@ -26,7 +27,9 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
 
 const styles = StyleSheet.create({
   buttonStyle: {
-    padding: 10,
+    paddingHorizontal: 15,
+    width: width * 0.3,
+    paddingVertical: 7,
     marginHorizontal: 5,
     borderRadius: 10,
     justifyContent: "center",

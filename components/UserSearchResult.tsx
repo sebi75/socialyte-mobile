@@ -90,6 +90,7 @@ const UserSearchResult: React.FC<UserSearchResultProps> = ({
         ) : (
           <CustomButton
             title={"Follow"}
+            buttonStyle={{ backgroundColor: "#2168db" }}
             onPress={() => {
               dispatch(setFollowUser(uid))
               followUser(currentUserUid as string, uid)

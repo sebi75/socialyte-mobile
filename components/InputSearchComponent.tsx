@@ -35,6 +35,7 @@ const InputSearchComponent: React.FC<DiscoverSearchComponentProps> = ({
         keyboardType="default"
         autoCapitalize="none"
         autoCorrect={false}
+        placeholderTextColor="rgba(255,255,255,0.85)"
         onChangeText={(text) => simulateSearch(text)}
       />
     </TouchableOpacity>

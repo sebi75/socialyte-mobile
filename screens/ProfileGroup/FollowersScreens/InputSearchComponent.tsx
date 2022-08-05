@@ -60,6 +60,7 @@ const InputSearchComponent: React.FC<InputSearchComponentProps> = ({
         value={text}
         autoCapitalize="none"
         autoCorrect={false}
+        placeholderTextColor="rgba(255,255,255,0.85)"
         onChangeText={handleTextSearch(type)}
       />
     </TouchableOpacity>
