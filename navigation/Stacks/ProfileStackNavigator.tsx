@@ -25,7 +25,11 @@ const ProfileStack = createNativeStackNavigator()
 const ProfileStackNavigator: React.FC = () => {
   const user = useSelector((state: RootState) => state.user)
   return (
-    <ProfileStack.Navigator>
+    <ProfileStack.Navigator
+      screenOptions={{
+        headerTintColor: "white",
+      }}
+    >
       <ProfileStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}

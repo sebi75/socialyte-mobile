@@ -79,7 +79,6 @@ export const userConnectionsSlice = createSlice({
       state,
       action: PayloadAction<UserFollowArrayType>
     ) => {
-      console.log("setting arbitrary search result", action.payload)
       state.arbitrarySearch = action.payload
     },
     setInputSearchText: (state, action: PayloadAction<string>) => {

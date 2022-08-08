@@ -34,20 +34,6 @@ const CameraScreen = ({
     switchFlashMode,
   } = useCameraFeatures(cameraRef, navigation)
 
-  /* const handleFacesDetected = (faces: any) => {
-    if (faces.faces.length > 0) {
-      setTimeout(() => {
-        setFacesDetected({
-          origin: faces.faces[0].bounds.origin,
-          size: faces.faces[0].bounds.size,
-        })
-      }, 1000)
-      setFacesDetected(undefined)
-    } else {
-      setFacesDetected(undefined)
-    }
-  } */
-
   return (
     <Layout>
       <Camera
@@ -129,13 +115,9 @@ const Layout: React.FC = ({ children }) => {
 }
 
 const styles = StyleSheet.create({
-  wrapperCustom: {
-    borderRadius: 8,
-    padding: 6,
-  },
   container: {
     width,
-    height: "100%",
+    height,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -152,17 +134,20 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.12,
   },
   topButtons: {
-    width: width,
+    width: width * 0.9,
+    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    flexDirection: "row",
     marginVertical: 40,
-    alignSelf: "flex-start",
   },
   insideOfCameraContent: {
-    backgroundColor: "transparent",
-    flex: 1,
+    width: width,
+    height: height * 0.95,
     justifyContent: "space-between",
+    display: "flex",
+    alignItems: "center",
+    position: "absolute",
+    top: height * 0.05,
   },
   captureButton: {
     backgroundColor: "transparent",

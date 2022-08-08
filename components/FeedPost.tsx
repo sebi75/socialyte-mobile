@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     width: width,
     backgroundColor: Colors.dark,
     alignItems: "center",
-    marginVertical: 35,
   },
   postContainer: {
     width: width,

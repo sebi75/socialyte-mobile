@@ -18,6 +18,7 @@ interface FollowersScreenProps {
     }
   }
 }
+
 const { width, height } = Dimensions.get("window")
 const FollowersScreen: React.FC<FollowersScreenProps> = ({ route }) => {
   const dispatch = useAppDispatch()
@@ -57,6 +58,7 @@ const FollowersScreen: React.FC<FollowersScreenProps> = ({ route }) => {
   }, [uid])
 
   useEffect(() => {
+    console.log({ message: "called this useeffect" })
     if (type == "followers") {
       if (user.uid != uid) {
         dispatch(getUserConnectionsThunk({ uid, type: "followers" }))

@@ -28,7 +28,11 @@ const DiscoverStackNavigator = () => {
 
   const dispatch = useAppDispatch()
   return (
-    <DiscoverStack.Navigator>
+    <DiscoverStack.Navigator
+      screenOptions={{
+        headerTintColor: "white",
+      }}
+    >
       <DiscoverStack.Screen
         name="MainDiscoverScreen"
         component={MainDiscoverScreen}

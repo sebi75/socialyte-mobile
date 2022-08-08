@@ -5,3 +5,4 @@ export {
   UserFollowArrayType,
   UserFollowPreviewType,
 } from "./Connections"
+export { Story } from "./Story"

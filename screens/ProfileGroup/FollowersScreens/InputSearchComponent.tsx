@@ -50,7 +50,6 @@ const InputSearchComponent: React.FC<InputSearchComponentProps> = ({
           filteredUsers = filterUsers(temporaryFollowingPreview, text)
         } else {
           filteredUsers = filterUsers(followingPreview, text)
-          console.log({ users: filteredUsers })
         }
         dispatch(setArbitrarySearchResult(filteredUsers))
       }

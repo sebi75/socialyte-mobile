@@ -16,9 +16,12 @@ const BottomTabNavigator = () => {
       screenOptions={({ route }) => {
         return {
           tabBarBackground: () => {
-            return <BlurView tint="dark" intensity={90} style={{ flex: 1 }} />
+            return <BlurView tint="dark" intensity={95} style={{ flex: 1 }} />
           },
           headerShown: false,
+          tabBarStyle: {
+            height: 100,
+          },
         }
       }}
     >
