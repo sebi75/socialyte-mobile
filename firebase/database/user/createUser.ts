@@ -12,6 +12,16 @@ interface ConnectionDocumentInterface {
   following: Array<UserFollowingInterface>
 }
 
+interface UserDocumentInterface {
+  uid: string
+  email: string
+  profilePicture: string
+  username: string
+  description: string
+  numberOfPosts: number
+  fullName: string
+}
+
 const initialConnectionsDocumentState: ConnectionDocumentInterface = {
   followers: [],
   following: [],
@@ -27,17 +37,16 @@ export const createUserDocumentAtSignup = async (
   const searchHistoryRef = doc(db, "searchHistory", uid)
 
   try {
-    await setDoc(docRef, {
+    const injectedUserDocument: UserDocumentInterface = {
       uid,
       email,
       username,
       description: "",
       profilePicture: "",
-      posts: 0,
-      following: 0,
-      followers: 0,
-      name: "",
-    })
+      numberOfPosts: 0,
+      fullName: "",
+    }
+    await setDoc(docRef, injectedUserDocument)
     await setDoc(searchHistoryRef, {
       users: [],
     })
