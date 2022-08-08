@@ -3,7 +3,10 @@ import { useState } from "react"
 
 import { useAppDispatch, RootState } from "../../../state/store"
 import { useSelector } from "react-redux"
-import { setArbitrarySearchResult } from "../../../state/reducers/userConnectionsReducer"
+import {
+  setArbitrarySearchResult,
+  setInputSearchText,
+} from "../../../state/reducers/userConnectionsReducer"
 
 type HeaderType = "followers" | "following"
 
@@ -32,6 +35,8 @@ const InputSearchComponent: React.FC<InputSearchComponentProps> = ({
   const handleTextSearch = (type: HeaderType) => {
     return (text: string) => {
       setText(text)
+      dispatch(setInputSearchText(text))
+
       let filteredUsers: any
       if (type === "followers") {
         if (user.uid != uid) {
@@ -45,8 +50,14 @@ const InputSearchComponent: React.FC<InputSearchComponentProps> = ({
           filteredUsers = filterUsers(temporaryFollowingPreview, text)
         } else {
           filteredUsers = filterUsers(followingPreview, text)
+          console.log({ users: filteredUsers })
         }
         dispatch(setArbitrarySearchResult(filteredUsers))
+      }
+
+      if (text == "") {
+        dispatch(setArbitrarySearchResult([]))
+        dispatch(setInputSearchText(""))
       }
     }
   }

@@ -25,6 +25,7 @@ interface UserConnectionsState {
   temporaryFollowersPreview: UserFollowArrayType
   temporaryFollowingPreview: UserFollowArrayType
   arbitrarySearch: UserFollowArrayType | []
+  inputSearchText: string
   isLoading: boolean
   fetchedAtStartup: boolean
 }
@@ -43,6 +44,7 @@ const userConnectionsInitialState: UserConnectionsState = {
   temporaryFollowersPreview: [],
   temporaryFollowingPreview: [],
   arbitrarySearch: [],
+  inputSearchText: "",
   isLoading: false,
   fetchedAtStartup: false,
 }
@@ -77,7 +79,11 @@ export const userConnectionsSlice = createSlice({
       state,
       action: PayloadAction<UserFollowArrayType>
     ) => {
+      console.log("setting arbitrary search result", action.payload)
       state.arbitrarySearch = action.payload
+    },
+    setInputSearchText: (state, action: PayloadAction<string>) => {
+      state.inputSearchText = action.payload
     },
     clearTemporaryStoredData: (state) => {
       state.temporaryFollowersIds = []
@@ -142,5 +148,6 @@ export const {
   setIsLoading,
   setArbitrarySearchResult,
   clearTemporaryStoredData,
+  setInputSearchText,
 } = userConnectionsSlice.actions
 export default userConnectionsSlice.reducer

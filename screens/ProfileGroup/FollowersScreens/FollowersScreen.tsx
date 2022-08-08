@@ -1,5 +1,5 @@
 import { View, FlatList, StyleSheet, Dimensions } from "react-native"
-import { useEffect } from "react"
+import { useEffect, useCallback } from "react"
 
 import { RootState } from "../../../state/store"
 import { useSelector } from "react-redux"
@@ -31,28 +31,30 @@ const FollowersScreen: React.FC<FollowersScreenProps> = ({ route }) => {
   const user = useSelector((state: RootState) => state.user)
   const { uid, type } = route.params
 
-  const getFollowersBody = () => {
+  const getFollowersBody = useCallback(() => {
     return (
       <FollowersScreenBody
         isLoading={isContentLoading}
         data={user.uid != uid ? temporaryFollowersPreview : followersPreview}
       />
     )
-  }
-  const getFollowingBody = () => {
+  }, [temporaryFollowersPreview, followersPreview, uid])
+  const getFollowingBody = useCallback(() => {
     return (
       <FollowersScreenBody
         isLoading={isContentLoading}
         data={user.uid != uid ? temporaryFollowingPreview : followingPreview}
       />
     )
-  }
-  const getFollowingHeader = () => {
+  }, [temporaryFollowingPreview, followingPreview, uid])
+
+  const getFollowingHeader = useCallback(() => {
     return <FollowersScreenHeader type={"following"} uid={uid} />
-  }
-  const getFollowersHeader = () => {
+  }, [uid])
+
+  const getFollowersHeader = useCallback(() => {
     return <FollowersScreenHeader type={"followers"} uid={uid} />
-  }
+  }, [uid])
 
   useEffect(() => {
     if (type == "followers") {

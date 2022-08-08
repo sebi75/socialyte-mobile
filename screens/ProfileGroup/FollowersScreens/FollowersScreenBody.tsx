@@ -18,10 +18,11 @@ const FollowersScreenBody: React.FC<FollowersScreenBody> = ({
   isLoading,
   data,
 }) => {
-  const arbitraryData = useSelector(
-    (state: RootState) => state.userConnections.arbitrarySearch
+  const { arbitrarySearch: arbitrarySearchData, inputSearchText } = useSelector(
+    (state: RootState) => state.userConnections
   )
-  const displayData = arbitraryData.length > 0 ? arbitraryData : data
+
+  const displayData = inputSearchText != "" ? arbitrarySearchData : data
   return (
     <View style={{ flex: 1 }}>
       <SkeletonLoading isLoading={isLoading}>
