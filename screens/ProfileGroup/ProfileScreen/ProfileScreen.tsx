@@ -49,22 +49,6 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
     }
   }, [])
 
-  useEffect(() => {
-    getUserPosts(route.params.uid)
-    if (
-      user.uid != route.params.uid &&
-      (temporaryFollowersIds[passedUid] == undefined ||
-        temporaryFollowingIds[passedUid] == undefined)
-    ) {
-      dispatch(getUserConnectionsIdsThunk(route.params.uid))
-    }
-    return () => {
-      //clear the temporary state whenever the screen is unmounted,
-      //even if it's the user's
-      //dispatch(clearTemporaryStoredData())
-    }
-  }, [])
-
   const getHeader = () => {
     return (
       <ProfileHeader
@@ -83,6 +67,22 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
   const getBody = () => {
     return <ProfilePosts uid={passedUid} />
   }
+
+  useEffect(() => {
+    getUserPosts(route.params.uid)
+    if (
+      user.uid != route.params.uid &&
+      (temporaryFollowersIds[passedUid] == undefined ||
+        temporaryFollowingIds[passedUid] == undefined)
+    ) {
+      dispatch(getUserConnectionsIdsThunk(route.params.uid))
+    }
+    return () => {
+      //clear the temporary state whenever the screen is unmounted,
+      //even if it's the user's
+      //dispatch(clearTemporaryStoredData())
+    }
+  }, [])
 
   return (
     <View style={styles.screen}>
@@ -104,7 +104,5 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.dark,
   },
 })
-
-const useFucntionality = () => {}
 
 export default ProfileScreen

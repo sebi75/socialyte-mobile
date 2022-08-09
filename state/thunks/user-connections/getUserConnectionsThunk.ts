@@ -25,7 +25,6 @@ export const getUserConnectionsThunk = createAsyncThunk(
           uid: uid,
         }
       } else {
-        console.log({ yes: "got here", response: response })
         return {
           type: type,
           response: response,

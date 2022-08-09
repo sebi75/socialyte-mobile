@@ -71,7 +71,7 @@ const ProfileStackNavigator: React.FC = () => {
             headerStyle: {
               backgroundColor: "black",
             },
-            headerTintColor: Platform.OS === "android" ? "white" : "black",
+            headerTintColor: "white",
             headerTitleStyle: {
               color: "white",
             },
@@ -83,10 +83,10 @@ const ProfileStackNavigator: React.FC = () => {
         component={EditScreen}
         options={{
           title: "Edit Profile",
-          headerTintColor: Platform.OS === "android" ? "black" : "white",
           headerStyle: {
             backgroundColor: "black",
           },
+          headerTintColor: "white",
           headerTitleStyle: {
             color: "white",
           },
@@ -97,7 +97,7 @@ const ProfileStackNavigator: React.FC = () => {
         component={PostScreen}
         options={({ navigation, route }: { navigation: any; route: any }) => ({
           title: route.params.title,
-          headerTintColor: Platform.OS === "android" ? "white" : "black",
+          headerTintColor: "white",
           headerStyle: {
             backgroundColor: "black",
           },

@@ -129,7 +129,6 @@ export const userConnectionsSlice = createSlice({
       (state, action: PayloadAction<UserConnectionsType>) => {
         state.isLoading = false
         const userId = action.payload.uid
-        console.log({ ...action.payload })
         if (action.payload.type === "followers") {
           if (action.payload.temporary) {
             state.temporaryFollowersPreview[userId] = action.payload.response
