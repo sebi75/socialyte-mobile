@@ -9,8 +9,13 @@ import { Story } from "../../types/Story"
 export const postStory = async (story: Story) => {
   const collectionRef = collection(db, "stories")
 
+  const fileStorageName = uuidv()
+  //upload image to firebase storage
+  const imageUrl = await uploadImage(story.mediaURL, fileStorageName)
+
   const storyData: Story = {
     ...story,
+    mediaURL: imageUrl,
   }
 
   try {

@@ -3,6 +3,7 @@ import { Story } from "../../firebase/types"
 
 /* THUNKS */
 import { postStoryThunk } from "../thunks/stories/postStoryThunk"
+import { getStoriesThunk } from "../thunks/stories/getStoriesThunk"
 
 interface UserStoriesStateType {
   stories: Story[]
@@ -30,6 +31,15 @@ const userStories = createSlice({
     builder.addCase(postStoryThunk.rejected, (state, action: any) => {
       state.postError = action.payload
     })
+    builder.addCase(getStoriesThunk.pending, (state, action: any) => {
+      state.isLoading = true
+    })
+    builder.addCase(
+      getStoriesThunk.fulfilled,
+      (state, action: PayloadAction<Story[]>) => {
+        state.stories = action.payload
+      }
+    )
   },
 })
 

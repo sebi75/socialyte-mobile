@@ -24,6 +24,9 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
   const dispatch = useDispatch()
 
   const { uid: passedUid, username, description, profilePicture } = route.params
+  const { temporaryFollowersIds, temporaryFollowingIds } = useSelector(
+    (state: RootState) => state.userConnections
+  )
   const { users } = useSelector((state: RootState) => state.userPosts)
   const user = useSelector((state: RootState) => state.user)
   const posts = users[passedUid]
@@ -48,13 +51,17 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     getUserPosts(route.params.uid)
-    if (user.uid != route.params.uid) {
+    if (
+      user.uid != route.params.uid &&
+      (temporaryFollowersIds[passedUid] == undefined ||
+        temporaryFollowingIds[passedUid] == undefined)
+    ) {
       dispatch(getUserConnectionsIdsThunk(route.params.uid))
     }
     return () => {
       //clear the temporary state whenever the screen is unmounted,
       //even if it's the user's
-      dispatch(clearTemporaryStoredData())
+      //dispatch(clearTemporaryStoredData())
     }
   }, [])
 

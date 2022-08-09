@@ -7,8 +7,7 @@ export const postStoryThunk = createAsyncThunk(
   "userStories/postStory",
   async (story: Story, thunkAPI: any): Promise<any> => {
     try {
-      const response = await postStory(story)
-      console.log("got here")
+      await postStory(story)
     } catch (error: any) {
       console.log(error)
       throw new Error("Error in saving the story")

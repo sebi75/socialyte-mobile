@@ -8,12 +8,6 @@ import {
   UserFollowPreviewType,
 } from "../../../firebase/types"
 
-//this thunk retrieves and returns the imported type: UserFollowArrayType
-
-/* 
-The logic here checks if the request is made with the same uid as the one in the state, that is the user's logged in and if not, then the previewUserFollowers of following will be stored in the temporary state instead of the user's
-*/
-
 export const getUserConnectionsThunk = createAsyncThunk(
   "userConnections/getUserConnectionsThunk",
   async (
@@ -28,12 +22,15 @@ export const getUserConnectionsThunk = createAsyncThunk(
           type: type,
           response: response,
           temporary: true,
+          uid: uid,
         }
       } else {
+        console.log({ yes: "got here", response: response })
         return {
           type: type,
           response: response,
           temporary: false,
+          uid: uid,
         }
       }
     } catch (error: any) {
@@ -43,12 +40,11 @@ export const getUserConnectionsThunk = createAsyncThunk(
   }
 )
 
-//export UserFollowArrayType,
-//  UserFollowPreviewType,
 export { UserFollowPreviewType, UserFollowArrayType }
 
 export type UserConnectionsReturnResult = {
   response: UserFollowArrayType
   type: ConnectionsType
   temporary: boolean
+  uid: string
 }

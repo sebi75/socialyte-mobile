@@ -16,14 +16,14 @@ interface UserConnectionsState {
   followingIds: string[]
   numberOfFollowers: number
   numberOfFollowings: number
-  temporaryFollowersIds: string[]
-  temporaryFollowingIds: string[]
-  temporaryNumberOfFollowers: number
-  temporaryNumberOfFollowings: number
+  temporaryFollowersIds: { [key: string]: Array<string> } //key: string is the userIds
+  temporaryFollowingIds: { [key: string]: Array<string> }
+  temporaryNumberOfFollowers: { [key: string]: number }
+  temporaryNumberOfFollowings: { [key: string]: number }
   followersPreview: UserFollowArrayType
   followingPreview: UserFollowArrayType
-  temporaryFollowersPreview: UserFollowArrayType
-  temporaryFollowingPreview: UserFollowArrayType
+  temporaryFollowersPreview: { [key: string]: UserFollowArrayType }
+  temporaryFollowingPreview: { [key: string]: UserFollowArrayType }
   arbitrarySearch: UserFollowArrayType | []
   inputSearchText: string
   isLoading: boolean
@@ -35,14 +35,14 @@ const userConnectionsInitialState: UserConnectionsState = {
   followingIds: [],
   numberOfFollowers: 0,
   numberOfFollowings: 0,
-  temporaryFollowersIds: [],
-  temporaryFollowingIds: [],
-  temporaryNumberOfFollowers: 0,
-  temporaryNumberOfFollowings: 0,
+  temporaryFollowersIds: {},
+  temporaryFollowingIds: {},
+  temporaryNumberOfFollowers: {},
+  temporaryNumberOfFollowings: {},
   followersPreview: [],
   followingPreview: [],
-  temporaryFollowersPreview: [],
-  temporaryFollowingPreview: [],
+  temporaryFollowersPreview: {},
+  temporaryFollowingPreview: {},
   arbitrarySearch: [],
   inputSearchText: "",
   isLoading: false,
@@ -57,23 +57,25 @@ export const userConnectionsSlice = createSlice({
       state.isLoading = action.payload
     },
     setFollowUser: (state, action: PayloadAction<string>) => {
-      state.followingIds.push(action.payload)
+      const userId = action.payload
+      state.followingIds.push(userId)
       state.numberOfFollowings++
-      state.temporaryFollowersIds.push(action.payload)
-      state.temporaryNumberOfFollowers++
+      state.temporaryFollowersIds[userId].push(userId) //we need to get our own id to push
+      state.temporaryNumberOfFollowers[userId]++
     },
     setUnfollowUser: (state, action: PayloadAction<string>) => {
+      const userId = action.payload
       state.followingIds = state.followingIds.filter(
         (id) => id != action.payload
       )
       state.followingPreview = state.followingPreview.filter((user) => {
         return user.uid != action.payload
       })
-      state.temporaryFollowersIds = state.temporaryFollowersIds.filter(
-        (id) => id != action.payload
-      )
+      state.temporaryFollowersIds[userId] = state.temporaryFollowersIds[
+        userId
+      ].filter((id) => id != action.payload)
       state.numberOfFollowings--
-      state.temporaryNumberOfFollowers--
+      state.temporaryNumberOfFollowers[action.payload]--
     },
     setArbitrarySearchResult: (
       state,
@@ -85,12 +87,12 @@ export const userConnectionsSlice = createSlice({
       state.inputSearchText = action.payload
     },
     clearTemporaryStoredData: (state) => {
-      state.temporaryFollowersIds = []
-      state.temporaryFollowingIds = []
-      state.temporaryNumberOfFollowers = 0
-      state.temporaryNumberOfFollowings = 0
-      state.temporaryFollowersPreview = []
-      state.temporaryFollowingPreview = []
+      state.temporaryFollowersIds = {}
+      state.temporaryFollowingIds = {}
+      state.temporaryNumberOfFollowers = {}
+      state.temporaryNumberOfFollowings = {}
+      state.temporaryFollowersPreview = {}
+      state.temporaryFollowingPreview = {}
     },
   },
   extraReducers: (builder) => {
@@ -100,13 +102,16 @@ export const userConnectionsSlice = createSlice({
         state,
         action: PayloadAction<GetUserConnectionsIdsThunkReturnResult>
       ) => {
+        const userId = action.payload.response.uid
         state.fetchedAtStartup = true
         if (action.payload.temporary) {
-          state.temporaryFollowersIds = action.payload.response.followers
-          state.temporaryFollowingIds = action.payload.response.following
-          state.temporaryNumberOfFollowers =
+          state.temporaryFollowersIds[userId] =
+            action.payload.response.followers
+          state.temporaryFollowingIds[userId] =
+            action.payload.response.following
+          state.temporaryNumberOfFollowers[userId] =
             action.payload.response.numberOfFollowers
-          state.temporaryNumberOfFollowings =
+          state.temporaryNumberOfFollowings[userId] =
             action.payload.response.numberOfFollowings
         } else {
           state.followersIds = action.payload.response.followers
@@ -123,15 +128,17 @@ export const userConnectionsSlice = createSlice({
       getUserConnectionsThunk.fulfilled,
       (state, action: PayloadAction<UserConnectionsType>) => {
         state.isLoading = false
+        const userId = action.payload.uid
+        console.log({ ...action.payload })
         if (action.payload.type === "followers") {
           if (action.payload.temporary) {
-            state.temporaryFollowersPreview = action.payload.response
+            state.temporaryFollowersPreview[userId] = action.payload.response
           } else {
             state.followersPreview = action.payload.response
           }
         } else {
           if (action.payload.temporary) {
-            state.temporaryFollowingPreview = action.payload.response
+            state.temporaryFollowingPreview[userId] = action.payload.response
           } else {
             state.followingPreview = action.payload.response
           }

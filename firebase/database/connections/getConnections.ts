@@ -14,13 +14,13 @@ export const getConnections = async (
   let usersIds: string[]
   if (type === "followers") {
     if (uid != store.getState().user.uid) {
-      usersIds = store.getState().userConnections.temporaryFollowersIds
+      usersIds = store.getState().userConnections.temporaryFollowersIds[uid]
     } else {
       usersIds = store.getState().userConnections.followersIds
     }
   } else {
     if (uid != store.getState().user.uid) {
-      usersIds = store.getState().userConnections.temporaryFollowingIds
+      usersIds = store.getState().userConnections.temporaryFollowingIds[uid]
     } else {
       usersIds = store.getState().userConnections.followingIds
     }

@@ -1,12 +1,6 @@
 import { doc, getDoc } from "firebase/firestore"
 import { db } from "../../firebaseConfig"
 
-/* 
-LOGIC: when someone visits profile we need to know if the user is following or not
-the user, and having the user's followers and following list we can format better
-and can display buttons properly (follow/unfollow)
-*/
-
 export const getUserFollowIds = async (
   userId: string
 ): Promise<GetUserFollowIdsResult> => {
@@ -14,10 +8,9 @@ export const getUserFollowIds = async (
   try {
     const response = await getDoc(docRef)
     const documentResponseData = response.data()
-    console.log("response in firebase function: ", documentResponseData)
     if (documentResponseData) {
-      console.log("this is what we return: ", documentResponseData)
       const returnData = {
+        uid: userId,
         following: documentResponseData.following,
         followers: documentResponseData.followers,
         numberOfFollowers: documentResponseData.numberOfFollowers,
@@ -25,14 +18,16 @@ export const getUserFollowIds = async (
       }
       return returnData
     }
-  } catch (error) {
-    console.log("error in getting the user document from the db")
+  } catch (error: any) {
+    console.log(error)
+    throw new Error(`Error in getting the users connection ids`)
   }
   return {
     following: [],
     followers: [],
     numberOfFollowers: 0,
     numberOfFollowings: 0,
+    uid: userId,
   }
 }
 
@@ -41,4 +36,5 @@ export interface GetUserFollowIdsResult {
   followers: string[]
   numberOfFollowers: number
   numberOfFollowings: number
+  uid: string
 }

@@ -84,14 +84,18 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           <FieldType
             type="Followers"
             count={
-              uid != user.uid ? temporaryNumberOfFollowers : numberOfFollowers
+              uid != user.uid
+                ? temporaryNumberOfFollowers[uid]
+                : numberOfFollowers
             }
             onClick={() => navigation.push("FollowersScreen", { uid })}
           />
           <FieldType
             type="Following"
             count={
-              uid != user.uid ? temporaryNumberOfFollowings : numberOfFollowings
+              uid != user.uid
+                ? temporaryNumberOfFollowings[uid]
+                : numberOfFollowings
             }
             onClick={() => navigation.push("FollowingScreen", { uid })}
           />
