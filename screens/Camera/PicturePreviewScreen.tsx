@@ -5,9 +5,7 @@ import { useRef } from "react"
 
 import { useAppDispatch } from "../../state/store"
 import { postStoryThunk } from "../../state/thunks/stories/postStoryThunk"
-import { postStory } from "../../firebase/database/stories/postStory"
 
-import { uploadImage } from "../../firebase/storage"
 import { uuidv } from "../../utils/uuidv"
 
 import Colors from "../../constants/Colors"
@@ -30,17 +28,18 @@ const PicturePreviewScreen = ({
   const dispatch = useAppDispatch()
 
   const handleStoryPost = async () => {
-    console.log({ resource })
     try {
-      const fileLocation = uuidv()
-      const mediaUrl = await uploadImage(resource, fileLocation)
-      console.log("crashixng?")
-      await postStory({
-        mediaURL: mediaUrl,
-        createdBy: user.uid as string,
-        createdAt: Date.now(),
-        expiresAt: Date.now() + 60 * 60 * 24 * 1000,
-      })
+      await dispatch(
+        postStoryThunk({
+          mediaURL: resource,
+          createdBy: user.uid as string,
+          storyId: uuidv(),
+          expiresAt: Date.now() + 60 * 60 * 24 * 1000,
+          username: user.username as string,
+          profilePicture: user.profilePicture as string,
+        })
+      )
+      navigation.goBack()
     } catch (error: any) {
       console.log(error)
       throw new Error(error)

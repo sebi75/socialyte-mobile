@@ -29,8 +29,8 @@ export const CustomIconButton: React.FC<CustomIconButtonProps> = (props) => {
 
 const styles = StyleSheet.create({
   screen: {
-    maxWidth: 50,
-    maxHeight: 50,
+    maxWidth: 75,
+    maxHeight: 75,
     justifyContent: "center",
     alignItems: "center",
   },
