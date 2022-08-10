@@ -9,12 +9,14 @@ const width = Dimensions.get("window").width / 2 - margin * 2
 
 interface StoryThumbnailProps {
   profilePicture: string
+  mediaURL: string
   username: string
   storyId: string
 }
 
 const StoryThumbnail: React.FC<StoryThumbnailProps> = ({
   profilePicture,
+  mediaURL,
   storyId,
   username,
 }) => {
@@ -31,8 +33,15 @@ const StoryThumbnail: React.FC<StoryThumbnailProps> = ({
     <Pressable
       style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
       onPress={() => {
-        //setOpacity(0)
-        navigation.navigate("Story", { storyId })
+        setOpacity(0)
+        navigation.navigate("Story", {
+          story: {
+            storyId: storyId,
+            username: username,
+            profilePicture: profilePicture,
+            mediaURL: mediaURL,
+          },
+        })
       }}
     >
       <View style={[styles.container, { opacity }]}>
@@ -46,10 +55,11 @@ const StoryThumbnail: React.FC<StoryThumbnailProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    width,
-    height: width * 1.77,
+    width: 48,
+    height: 48,
     marginTop: 16,
     borderRadius,
+    backgroundColor: "green",
   },
   image: {
     ...StyleSheet.absoluteFillObject,

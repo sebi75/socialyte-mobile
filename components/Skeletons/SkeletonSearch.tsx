@@ -1,4 +1,4 @@
-import SkeletonContent from "react-native-skeleton-content"
+/* import SkeletonContent from "react-native-skeleton-content"
 import { Dimensions } from "react-native"
 
 interface SkeletonProps {
@@ -98,4 +98,4 @@ const Placeholder: React.FC<SkeletonProps> = ({ children, isLoading }) => {
   )
 }
 
-export default Placeholder
+export default Placeholder */
