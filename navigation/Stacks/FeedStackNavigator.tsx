@@ -11,6 +11,7 @@ import { CustomIconButton } from "../../components/IconButton"
 import CameraStackNavigator from "./CameraStackNavigator"
 import InboxScreen from "../../screens/Inbox/InboxScreen"
 import CreatePostStackNavigator from "./CreatePostStackNavigator"
+import { createSharedElementStackNavigator } from "react-navigation-shared-element"
 
 /* REDUX: */
 import { useAppDispatch } from "../../state/store"

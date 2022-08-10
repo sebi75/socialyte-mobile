@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useFocusEffect, useNavigation } from "@react-navigation/native"
+import { SharedElement } from "react-navigation-shared-element"
 import { View, Image, StyleSheet, Dimensions, Pressable } from "react-native"
 
 const margin = 16
@@ -17,12 +18,12 @@ const StoryThumbnail: React.FC<StoryThumbnailProps> = ({
   storyId,
   username,
 }) => {
-  //const [opacity, setOpacity] = useState(1)
+  const [opacity, setOpacity] = useState(1)
   const navigation: any = useNavigation()
 
   useFocusEffect(() => {
     if (navigation.isFocused()) {
-      //setOpacity(1)
+      setOpacity(1)
     }
   })
 
@@ -34,11 +35,10 @@ const StoryThumbnail: React.FC<StoryThumbnailProps> = ({
         navigation.navigate("Story", { storyId })
       }}
     >
-      <View style={[styles.container /* { opacity } */]}>
-        {/* <SharedElement id={story.id} style={{ flex: 1 }}> */}
-        <Image source={{ uri: profilePicture }} style={styles.image} />
-
-        {/* </SharedElement> */}
+      <View style={[styles.container, { opacity }]}>
+        <SharedElement id={storyId} style={{ flex: 1 }}>
+          <Image source={{ uri: profilePicture }} style={styles.image} />
+        </SharedElement>
       </View>
     </Pressable>
   )
