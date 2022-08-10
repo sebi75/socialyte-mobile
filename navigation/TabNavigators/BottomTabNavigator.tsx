@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { Ionicons, MaterialCommunityIcons, Feather } from "@expo/vector-icons"
 import { BlurView } from "expo-blur"
 
-import FeedStackNavigator from "../Stacks/FeedGroup/FeedStackNavigator"
+import FeedStackNavigator from "../Stacks/FeedStackNavigator"
 import StoriesStackNavigator from "../Stacks/StoriesStackNavigator"
 import DiscoverStackNavigator from "../Stacks/DiscoverStackNavigator"
 import ProfileStackNavigator from "../Stacks/ProfileStackNavigator"

@@ -1,11 +1,21 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import StoriesScreen from "../../screens/Stories/StoriesScreen"
+import { createSharedElementStackNavigator } from "react-navigation-shared-element"
 
-const StoriesStack = createNativeStackNavigator()
+import StoriesScreen from "../../screens/Stories/StoriesScreen"
+import Story from "../../screens/Stories/stories/StoryComponent"
+
+const StoriesStack = createSharedElementStackNavigator()
 
 const StoriesStackNavigator: React.FC = () => {
   return (
-    <StoriesStack.Navigator>
+    <StoriesStack.Navigator
+      screenOptions={{
+        presentation: "modal",
+        gestureEnabled: true,
+        headerShown: false,
+        // cardOverlayEnabled: true,
+        // cardStyle: { backgroundColor: "transparent" },
+      }}
+    >
       <StoriesStack.Screen
         name="StoriesScreen"
         component={StoriesScreen}
@@ -15,6 +25,19 @@ const StoriesStackNavigator: React.FC = () => {
             backgroundColor: "#1e1e1e",
           },
           headerTintColor: "#fff",
+        }}
+      />
+      <StoriesStack.Screen
+        name="Story"
+        component={Story}
+        options={({ route }) => ({
+          headerStyle: {
+            backgroundColor: "#1e1e1e",
+          },
+          headerTintColor: "#fff",
+        })}
+        sharedElements={(route) => {
+          return [route.params.story.storyId]
         }}
       />
     </StoriesStack.Navigator>

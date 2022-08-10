@@ -1,24 +1,23 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
-import FeedScreen from "../../../screens/Feed/FeedScreen"
-import CommentsModalScreen from "../../../screens/Feed/CommentsModalScreen"
+import FeedScreen from "../../screens/Feed/FeedScreen"
+import CommentsModalScreen from "../../screens/Feed/CommentsModalScreen"
 
 import { View, Platform } from "react-native"
-import Colors from "../../../constants/Colors"
+import Colors from "../../constants/Colors"
 
 /* COMPONENTS */
-import { CustomIconButton } from "../../../components/IconButton"
-import CameraStackNavigator from "../CameraStackNavigator"
-import InboxScreen from "../../../screens/Inbox/InboxScreen"
-import CreatePostStackNavigator from "../CreatePostStackNavigator"
-import FeedAndStoriesStackNavigator from "./FeedAndStoriesStackNavigator"
+import { CustomIconButton } from "../../components/IconButton"
+import CameraStackNavigator from "./CameraStackNavigator"
+import InboxScreen from "../../screens/Inbox/InboxScreen"
+import CreatePostStackNavigator from "./CreatePostStackNavigator"
 
 /* REDUX: */
-import { useAppDispatch } from "../../../state/store"
+import { useAppDispatch } from "../../state/store"
 import { useSelector } from "react-redux"
-import { RootState } from "../../../state/store"
+import { RootState } from "../../state/store"
 
-import testAsync from "../../../utils/testAsync"
+import testAsync from "../../utils/testAsync"
 
 type RootStackParamList = {
   FeedScreen: undefined
@@ -39,7 +38,7 @@ const FeedStackNavigator: React.FC = () => {
     <FeedStack.Navigator>
       <FeedStack.Screen
         name="FeedScreen"
-        component={FeedAndStoriesStackNavigator}
+        component={FeedScreen}
         options={({ navigation }) => ({
           title: FeedSettings.title,
           headerStyle: {

@@ -46,7 +46,8 @@ const StoryThumbnail: React.FC<StoryThumbnailProps> = ({
     >
       <View style={[styles.container, { opacity }]}>
         <SharedElement id={storyId} style={{ flex: 1 }}>
-          <Image source={{ uri: profilePicture }} style={styles.image} />
+          {/* @ts-ignore */}
+          <Image source={{ uri: mediaURL }} style={styles.image} />
         </SharedElement>
       </View>
     </Pressable>
@@ -55,11 +56,10 @@ const StoryThumbnail: React.FC<StoryThumbnailProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: 48,
-    height: 48,
+    width,
+    height: width * 1.77,
     marginTop: 16,
     borderRadius,
-    backgroundColor: "green",
   },
   image: {
     ...StyleSheet.absoluteFillObject,

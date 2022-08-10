@@ -4,7 +4,6 @@ import { useEffect } from "react"
 
 import Colors from "../../constants/Colors"
 
-import FeedHeaderComponent from "./FeedHeaderComponent"
 import FeedBodyComponent from "./FeedBodyComponent"
 
 import { useSelector } from "react-redux"
@@ -13,9 +12,6 @@ import { RootState } from "../../state/store"
 const FeedScreen: React.FC = () => {
   const user = useSelector((state: RootState) => state.user)
 
-  const getFeedHeader = () => {
-    return <FeedHeaderComponent />
-  }
   const getFeedBody = () => {
     return <FeedBodyComponent />
   }
@@ -30,7 +26,7 @@ const FeedScreen: React.FC = () => {
         showsVerticalScrollIndicator={false}
         data={null}
         renderItem={() => null}
-        ListHeaderComponent={getFeedHeader}
+        ListHeaderComponent={null}
         ListFooterComponent={getFeedBody}
       />
     </View>

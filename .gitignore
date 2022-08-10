@@ -7,6 +7,7 @@ firebase/firebaseConfig.ts
 
 .pnp.js
 .firebaserc
+.eslintrc.js
 firebase.json
 firestore.indexes.json
 firestore.rules

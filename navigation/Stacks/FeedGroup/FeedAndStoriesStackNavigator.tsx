@@ -1,7 +1,7 @@
 import { createSharedElementStackNavigator } from "react-navigation-shared-element"
 
 import FeedScreen from "../../../screens/Feed/FeedScreen"
-import Story from "../../../screens/Feed/stories/StoryComponent"
+import Story from "../../../screens/Stories/stories/StoryComponent"
 
 const FeedAndStoriesStack = createSharedElementStackNavigator()
 
