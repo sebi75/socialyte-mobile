@@ -27,7 +27,8 @@ import { RootState } from "../../state/store"
 
 import { clearError } from "../../state/reducers/authenticationReducer"
 import { setUser } from "../../state/reducers/userSlice"
-import { signUpWithEmailThunk } from "../../state/thunks/authentication/signUpWithEmailThunk"
+
+import { signUpWithEmailThunk } from "../../state/thunks/authentication/signupWithEmailThunk"
 
 import { useNavigation } from "@react-navigation/native"
 

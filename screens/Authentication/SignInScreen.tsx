@@ -26,7 +26,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../state/store"
 
 import { clearError } from "../../state/reducers/authenticationReducer"
-import { signInWithEmailThunk } from "../../state/thunks/authentication/signInWithEmailThunk"
+import { signInWithEmailThunk } from "../../state/thunks/authentication/signinWithEmailThunk"
 
 import { useNavigation } from "@react-navigation/native"
 import { User } from "../../firebase/types/User"

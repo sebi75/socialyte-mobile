@@ -3,8 +3,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { AuthenticationState } from "../types/Authentication"
 
 /* thunks import */
-import { signUpWithEmailThunk } from "../thunks/authentication/signUpWithEmailThunk"
-import { signInWithEmailThunk } from "../thunks/authentication/signInWithEmailThunk"
+import { signUpWithEmailThunk } from "../thunks/authentication/signupWithEmailThunk"
+import { signInWithEmailThunk } from "../thunks/authentication/signinWithEmailThunk"
 import { signOut } from "../../firebase/authentication/signOut."
 
 /* user actions */
