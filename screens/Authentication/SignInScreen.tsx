@@ -10,13 +10,14 @@ import {
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useReducer, useCallback, useEffect } from "react"
-import { Ionicons } from "@expo/vector-icons"
 
 import Colors from "../../constants/Colors"
 
 import { Input } from "./components/Input"
 import formReducer from "./components/reducer"
 import CustomButton from "./components/CustomButton"
+import HideKeyboard from "../../components/HideKeyboard"
+import ErrorComponent from "../../components/ErrorComponent"
 
 /* REDUX: */
 import { useAppDispatch } from "../../state/store"
@@ -41,35 +42,6 @@ const SigninScreen: React.FC = () => {
   const dispatch = useAppDispatch()
   const navigation: any = useNavigation()
 
-  const signInHandler = async () => {
-    try {
-      if (formState?.isFormValid) {
-        const response = await dispatch(
-          signInWithEmailThunk({
-            email: formState.inputValues.email,
-            password: formState.inputValues.password,
-          })
-        )
-        if (response) {
-          console.log(response)
-          const userData = response.payload as User
-          console.log(userData)
-          const setLoggedInUser = await AsyncStorage.setItem(
-            "loggedInUser",
-            JSON.stringify({ uid: userData.uid })
-          )
-          const cacheInAsyncStorage = await AsyncStorage.setItem(
-            userData.uid,
-            JSON.stringify(userData)
-          )
-          navigation.navigate("BottomTabNavigator")
-        }
-      }
-    } catch (error) {
-      throw Error("ERROR signing in")
-    }
-  }
-
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
       if (typeof error === "string") {
@@ -92,12 +64,7 @@ const SigninScreen: React.FC = () => {
     }
   }, [])
   return (
-    <KeyboardAvoidingView
-      behavior={"padding"}
-      keyboardVerticalOffset={50}
-      style={styles.screen}
-    >
-      {/* FORM */}
+    <KeyboardFunctionality>
       <View style={styles.inputContainer}>
         <Text style={styles.mainTextLabelStyle}>Sign In</Text>
         <Input
@@ -121,36 +88,103 @@ const SigninScreen: React.FC = () => {
           initialValue={""}
           onInputChange={inputChangeHandler}
         />
+
         <TouchableOpacity onPress={() => navigation.navigate("SignupScreen")}>
           <Text style={styles.redirectToSigninStyle}>
             Don't have an account?
           </Text>
         </TouchableOpacity>
-        {error && (
-          <View style={styles.errorContainer}>
-            <Ionicons name="warning" size={24} color="red" />
-            <Text style={styles.errorTextStyle}>{error}</Text>
-          </View>
-        )}
-        {isLoading ? (
-          <ActivityIndicator
-            size={"small"}
-            color={"red"}
-            style={{ marginTop: 25 }}
-          />
+
+        {error != undefined ? (
+          <ErrorComponent errorMessage={error} />
         ) : (
-          <CustomButton
-            title="Sign In"
-            onPress={signInHandler}
-            buttonStyle={{
-              width: width * 0.5,
-              alignSelf: "center",
-              marginTop: 25,
-            }}
-          />
+          <View style={{ height: 30 }}></View>
         )}
+
+        <SignButtonComponent
+          formState={formState}
+          dispatch={dispatch}
+          navigation={navigation}
+          isLoading={isLoading}
+        />
       </View>
-    </KeyboardAvoidingView>
+    </KeyboardFunctionality>
+  )
+}
+
+const KeyboardFunctionality: React.FC = ({ children }) => {
+  return (
+    <HideKeyboard>
+      <KeyboardAvoidingView
+        behavior={"padding"}
+        keyboardVerticalOffset={15}
+        style={styles.screen}
+      >
+        {children}
+      </KeyboardAvoidingView>
+    </HideKeyboard>
+  )
+}
+
+interface SignButtonComponentProps {
+  isLoading: boolean
+  formState: any
+  dispatch: any
+  navigation: any
+}
+
+const SignButtonComponent: React.FC<SignButtonComponentProps> = ({
+  isLoading,
+  formState,
+  dispatch,
+  navigation,
+}) => {
+  const signInHandler = async () => {
+    try {
+      if (formState?.isFormValid) {
+        const response = await dispatch(
+          signInWithEmailThunk({
+            email: formState.inputValues.email,
+            password: formState.inputValues.password,
+          })
+        )
+        if (response.payload) {
+          console.log({ responsePayload: response.payload })
+          const userData = response.payload as User
+
+          await AsyncStorage.setItem(
+            "loggedInUser",
+            JSON.stringify({ uid: userData.uid })
+          )
+          await AsyncStorage.setItem(userData.uid, JSON.stringify(userData))
+          navigation.navigate("BottomTabNavigator")
+        }
+      }
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <ActivityIndicator
+        size={"small"}
+        color={"red"}
+        style={{ marginTop: 25 }}
+      />
+    )
+  }
+  return (
+    <CustomButton
+      title="Sign In"
+      onPress={signInHandler}
+      buttonStyle={{
+        width: width * 0.5,
+        alignSelf: "center",
+        marginTop: 25,
+        backgroundColor: Colors.buttonColors.primary,
+      }}
+    />
   )
 }
 

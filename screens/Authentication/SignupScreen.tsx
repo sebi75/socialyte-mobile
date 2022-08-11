@@ -167,6 +167,7 @@ const SignupScreen: React.FC = () => {
               width: width * 0.5,
               alignSelf: "center",
               marginTop: 25,
+              backgroundColor: Colors.buttonColors.primary,
             }}
           />
         )}

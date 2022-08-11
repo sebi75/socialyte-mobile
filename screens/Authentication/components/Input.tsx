@@ -1,6 +1,8 @@
 import { View, Text, TextInput, StyleSheet, Dimensions } from "react-native"
 import { useReducer, useEffect } from "react"
 
+import Colors from "../../../constants/Colors"
+
 const INPUT_CHANGE = "INPUT_CHANGE"
 const INPUT_BLUR = "INPUT_BLUR"
 
@@ -126,9 +128,10 @@ const styles = StyleSheet.create({
   input: {
     paddingHorizontal: 2,
     paddingVertical: 5,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: "rgba(255,255,255,0.2)",
     borderRadius: 7,
+    backgroundColor: "rgba(255,255,255,0.15)",
     width: width * 0.7,
     height: 40,
     color: "#fff",
@@ -140,6 +143,6 @@ const styles = StyleSheet.create({
 
   errorText: {
     fontSize: 14,
-    color: "red",
+    color: Colors.errorColor,
   },
 })

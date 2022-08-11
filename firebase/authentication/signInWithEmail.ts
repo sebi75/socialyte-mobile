@@ -27,10 +27,8 @@ export const signInWithEmail = async (
     })
     .catch((error) => {
       const errorCode = error.code
-      const errorMessage = error.message
       returnedUser = undefined
-
-      throw Error(errorMessage)
+      throw Error(errorCode)
     })
 
   return returnedUser

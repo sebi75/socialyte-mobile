@@ -48,27 +48,29 @@ const userSlice = createSlice({
     })
     builder.addCase(signInWithEmailThunk.rejected, (state, action) => {
       state.isLoading = false
-      state.error = action.error.message
+      if (action.error.message == "auth/user-not-found") {
+        state.error = "Error: User not found"
+      } else if (action.error.message == "auth/wrong-password") {
+        state.error = "Error: Wrong password"
+      } else if (action.error.message == "auth/too-many-requests") {
+        state.error = "Error: Too many requests"
+      } else {
+        state.error = action.error.message
+      }
     })
   },
 })
 
 export const { clearError } = userSlice.actions
 
-//to be known:
-// the createAsykcthunk doens't return only the value you return in it
-// it returns a bigger object with the arguments sent, status and the thing
-//you return is in the response.payload
 export const signOutThunk = createAsyncThunk(
   "user/signOut",
   async (_, { dispatch }) => {
     try {
       await signOut()
       dispatch(clearUserState())
-    } catch (error) {
-      console.log(
-        "error in removing userData from the AsyncStorage or in signOut from firebase"
-      )
+    } catch (error: any) {
+      throw new Error(error.message)
     }
   }
 )

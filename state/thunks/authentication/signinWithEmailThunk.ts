@@ -15,6 +15,7 @@ export const signInWithEmailThunk = createAsyncThunk(
 
     try {
       const response: any = await signInWithEmail(email, password)
+      console.log({ response })
       const userDocument = await getUserData(response.uid)
       if (userDocument) {
         dispatch(
@@ -30,10 +31,7 @@ export const signInWithEmailThunk = createAsyncThunk(
         return userDocument // return userDocumentData of type User
       }
     } catch (error: any) {
-      console.log(
-        "Error in authenticating with following errorMessage and code: "
-      )
-      console.log(error.message)
+      throw new Error(error.message)
     }
   }
 )
