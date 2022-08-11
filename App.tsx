@@ -40,17 +40,14 @@ export default function App() {
     asyncFetchUserData()
 
     setTimeout(() => {
-      if (!store.getState().userConnections.fetchedAtStartup) {
+      if (
+        !store.getState().userConnections.fetchedAtStartup &&
+        store.getState().user.isAuthenticated
+      ) {
         console.log("fetching the user connections ids at startup...")
         store.dispatch(
           getUserConnectionsIdsThunk(store.getState().user.uid as string)
         )
-        /*         store.dispatch(
-          getUserConnectionsIdsThunk({
-            uid: store.getState().user.uid as string,
-            type: "following",
-          })
-        ) */
       }
     }, 200)
   }, [])

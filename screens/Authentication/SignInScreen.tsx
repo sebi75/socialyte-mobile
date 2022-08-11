@@ -3,6 +3,7 @@ import {
   Text,
   Dimensions,
   StyleSheet,
+  Platform,
   KeyboardAvoidingView,
   ActivityIndicator,
   TouchableOpacity,
@@ -116,7 +117,7 @@ const KeyboardFunctionality: React.FC = ({ children }) => {
   return (
     <HideKeyboard>
       <KeyboardAvoidingView
-        behavior={"padding"}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={15}
         style={styles.screen}
       >
@@ -149,7 +150,6 @@ const SignButtonComponent: React.FC<SignButtonComponentProps> = ({
           })
         )
         if (response.payload) {
-          console.log({ responsePayload: response.payload })
           const userData = response.payload as User
 
           await AsyncStorage.setItem(

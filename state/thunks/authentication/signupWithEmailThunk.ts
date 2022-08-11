@@ -31,8 +31,8 @@ export const signUpWithEmailThunk = createAsyncThunk(
         const userDocument = await getUserData(response.uid)
         return userDocument
       }
-    } catch (error) {
-      throw Error("User with that email already exists!")
+    } catch (error: any) {
+      throw new Error(error.message)
     }
   }
 )

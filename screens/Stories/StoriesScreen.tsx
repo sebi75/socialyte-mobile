@@ -65,7 +65,7 @@ const StoriesScreen: React.FC = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "red",
+    backgroundColor: "black",
     alignItems: "center",
     paddingHorizontal: 10,
   },

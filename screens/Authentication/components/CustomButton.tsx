@@ -24,7 +24,6 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 const styles = StyleSheet.create({
   button: {
     padding: 10,
-    backgroundColor: "#1a68d6",
     marginHorizontal: 5,
     borderRadius: 7,
     justifyContent: "center",
@@ -32,6 +31,8 @@ const styles = StyleSheet.create({
   },
   followButtonText: {
     color: "white",
+    fontWeight: "bold",
+    textTransform: "uppercase",
   },
 })
 

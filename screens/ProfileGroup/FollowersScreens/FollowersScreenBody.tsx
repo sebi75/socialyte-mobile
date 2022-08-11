@@ -2,7 +2,7 @@ import { FlatList, View, Text } from "react-native"
 import { UserFollowArrayType } from "../../../firebase/types"
 
 /* COMPONENTS */
-//import SkeletonLoading from "../../../components/Skeletons/SkeletonSearch"
+import SkeletonLoading from "../../../components/Skeletons/SkeletonSearch"
 import UserSearchResult from "../../../components/UserSearchResult"
 
 /* REDUX */
@@ -25,30 +25,30 @@ const FollowersScreenBody: React.FC<FollowersScreenBody> = ({
   const displayData = inputSearchText != "" ? arbitrarySearchData : data
   return (
     <View style={{ flex: 1 }}>
-      {/* <SkeletonLoading isLoading={isLoading}> */}
-      {displayData ? (
-        <FlatList
-          /* @ts-ignore */
-          data={displayData}
-          keyExtractor={(item) => item.uid}
-          renderItem={(userPreview) => {
-            const { uid, description, profilePicture, username } =
-              userPreview.item
-            return (
-              <UserSearchResult
-                uid={uid}
-                description={description}
-                profilePicture={profilePicture}
-                username={username}
-                addableToSearchHistory={false}
-              />
-            )
-          }}
-        />
-      ) : (
-        <Text>No results</Text>
-      )}
-      {/* </SkeletonLoading> */}
+      <SkeletonLoading isLoading={isLoading}>
+        {displayData ? (
+          <FlatList
+            /* @ts-ignore */
+            data={displayData}
+            keyExtractor={(item) => item.uid}
+            renderItem={(userPreview) => {
+              const { uid, description, profilePicture, username } =
+                userPreview.item
+              return (
+                <UserSearchResult
+                  uid={uid}
+                  description={description}
+                  profilePicture={profilePicture}
+                  username={username}
+                  addableToSearchHistory={false}
+                />
+              )
+            }}
+          />
+        ) : (
+          <Text>No results</Text>
+        )}
+      </SkeletonLoading>
     </View>
   )
 }

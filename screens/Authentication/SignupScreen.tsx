@@ -2,6 +2,7 @@ import {
   View,
   Text,
   Dimensions,
+  Platform,
   StyleSheet,
   KeyboardAvoidingView,
   ActivityIndicator,
@@ -9,7 +10,9 @@ import {
 } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useReducer, useCallback, useEffect } from "react"
-import { Ionicons } from "@expo/vector-icons"
+
+import ErrorComponent from "../../components/ErrorComponent"
+import HideKeyboard from "../../components/HideKeyboard"
 
 import Colors from "../../constants/Colors"
 
@@ -40,46 +43,6 @@ const SignupScreen: React.FC = () => {
   const dispatch = useAppDispatch()
   const navigation: any = useNavigation()
 
-  const signUpHandler = async () => {
-    try {
-      if (formState?.isFormValid) {
-        const response = await dispatch(
-          signUpWithEmailThunk({
-            email: formState.inputValues.email,
-            password: formState.inputValues.password,
-            username: formState.inputValues.username,
-          })
-        )
-
-        if (response) {
-          console.log(response)
-          const responseData: any = response.payload
-          responseData.description = ""
-          dispatch(
-            setUser({
-              uid: responseData.uid,
-              email: responseData.email,
-              username: responseData.username,
-              description: responseData.description,
-              profilePicture: responseData.profilePicture,
-            })
-          )
-          await AsyncStorage.setItem(
-            "loggedInUser",
-            JSON.stringify({ uid: responseData.uid })
-          )
-          await AsyncStorage.setItem(
-            responseData.uid,
-            JSON.stringify(responseData)
-          )
-          navigation.navigate("BottomTabNavigator")
-        }
-      }
-    } catch (error) {
-      throw Error("Error in signing up")
-    }
-  }
-
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
       if (typeof error === "string") {
@@ -103,12 +66,7 @@ const SignupScreen: React.FC = () => {
   }, [isAuthenticated])
 
   return (
-    <KeyboardAvoidingView
-      behavior={"padding"}
-      keyboardVerticalOffset={50}
-      style={styles.screen}
-    >
-      {/* FORM */}
+    <KeyboardFunctionality>
       <View style={styles.inputContainer}>
         <Text style={styles.mainTextLabelStyle}>Sign Up</Text>
         <Input
@@ -147,39 +105,116 @@ const SignupScreen: React.FC = () => {
             Already have an account?
           </Text>
         </TouchableOpacity>
-        {error && (
-          <View style={styles.errorContainer}>
-            <Ionicons name="warning" size={24} color="red" />
-            <Text style={styles.errorTextStyle}>{error}</Text>
-          </View>
-        )}
-        {isLoading ? (
-          <ActivityIndicator
-            size={"small"}
-            color={"red"}
-            style={{ marginTop: 25 }}
-          />
+
+        {error != undefined ? (
+          <ErrorComponent errorMessage={error} />
         ) : (
-          <CustomButton
-            title="Signup"
-            onPress={signUpHandler}
-            buttonStyle={{
-              width: width * 0.5,
-              alignSelf: "center",
-              marginTop: 25,
-              backgroundColor: Colors.buttonColors.primary,
-            }}
-          />
+          <View style={{ height: 30 }}></View>
         )}
+
+        <SignButtonComponent
+          formState={formState}
+          navigation={navigation}
+          isLoading={isLoading}
+          dispatch={dispatch}
+        />
       </View>
-    </KeyboardAvoidingView>
+    </KeyboardFunctionality>
+  )
+}
+
+interface SignButtonComponentProps {
+  isLoading: boolean
+  formState: any
+  dispatch: any
+  navigation: any
+}
+
+const SignButtonComponent: React.FC<SignButtonComponentProps> = ({
+  isLoading,
+  formState,
+  dispatch,
+  navigation,
+}) => {
+  const signUpHandler = async () => {
+    try {
+      if (formState?.isFormValid) {
+        const response = await dispatch(
+          signUpWithEmailThunk({
+            email: formState.inputValues.email,
+            password: formState.inputValues.password,
+            username: formState.inputValues.username,
+          })
+        )
+
+        if (response.payload) {
+          console.log({ responsePayload: response.payload })
+          const responseData: any = response.payload
+          responseData.description = ""
+          dispatch(
+            setUser({
+              uid: responseData.uid,
+              email: responseData.email,
+              username: responseData.username,
+              description: responseData.description,
+              profilePicture: responseData.profilePicture,
+            })
+          )
+          await AsyncStorage.setItem(
+            "loggedInUser",
+            JSON.stringify({ uid: responseData.uid })
+          )
+          await AsyncStorage.setItem(
+            responseData.uid,
+            JSON.stringify(responseData)
+          )
+          navigation.navigate("BottomTabNavigator")
+        }
+      }
+    } catch (error) {
+      throw new Error("Error in signing up")
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <ActivityIndicator
+        size={"small"}
+        color={"red"}
+        style={{ marginTop: 25 }}
+      />
+    )
+  }
+  return (
+    <CustomButton
+      title="Signup"
+      onPress={signUpHandler}
+      buttonStyle={{
+        width: width * 0.5,
+        alignSelf: "center",
+        marginTop: 25,
+        backgroundColor: Colors.buttonColors.primary,
+      }}
+    />
+  )
+}
+
+const KeyboardFunctionality: React.FC = ({ children }) => {
+  return (
+    <HideKeyboard>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.screen}
+      >
+        {children}
+      </KeyboardAvoidingView>
+    </HideKeyboard>
   )
 }
 
 const styles = StyleSheet.create({
   screen: {
-    width,
-    height: "100%",
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Colors.dark,

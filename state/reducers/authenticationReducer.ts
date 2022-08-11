@@ -5,8 +5,6 @@ import { AuthenticationState } from "../types/Authentication"
 /* thunks import */
 import { signUpWithEmailThunk } from "../thunks/authentication/signUpWithEmailThunk"
 import { signInWithEmailThunk } from "../thunks/authentication/signInWithEmailThunk"
-
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import { signOut } from "../../firebase/authentication/signOut."
 
 /* user actions */
@@ -27,7 +25,6 @@ const userSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    //signup builder cases
     builder.addCase(signUpWithEmailThunk.pending, (state, action) => {
       state.isLoading = true
     })
@@ -36,10 +33,13 @@ const userSlice = createSlice({
     })
     builder.addCase(signUpWithEmailThunk.rejected, (state, action) => {
       state.isLoading = false
-      state.error = action.error.message
+      if (action.error.message == "auth/email-already-in-use") {
+        state.error = "Email already in use"
+      } else {
+        state.error = action.error.message
+      }
     })
 
-    //signin builder cases
     builder.addCase(signInWithEmailThunk.pending, (state, action) => {
       state.isLoading = true
     })

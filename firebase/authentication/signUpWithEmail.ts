@@ -28,10 +28,8 @@ export const signUpWithEmail = async (
     })
     .catch((error) => {
       const errorCode = error.code
-      const errorMessage = error.message
       returnedUser = undefined
-
-      throw Error(error.message)
+      throw new Error(errorCode)
     })
 
   return returnedUser
