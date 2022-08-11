@@ -63,7 +63,6 @@ const FollowersScreen: React.FC<FollowersScreenProps> = React.memo(
     }, [uid])
 
     useEffect(() => {
-      console.log({ message: "called this useeffect" })
       if (type == "followers") {
         if (user.uid != uid) {
           if (temporaryFollowersPreview[uid] != undefined) {

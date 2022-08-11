@@ -92,7 +92,13 @@ const CameraScreen = ({
               ref={recordref}
               minDurationMs={500}
             >
-              <TapGestureHandler waitFor={recordref} onActivated={takePicture}>
+              <TapGestureHandler
+                waitFor={recordref}
+                onActivated={() => {
+                  console.log("clicked")
+                  takePicture()
+                }}
+              >
                 <TouchableOpacity style={styles.captureButton} />
               </TapGestureHandler>
             </LongPressGestureHandler>

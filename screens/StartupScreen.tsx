@@ -4,10 +4,8 @@ import { useEffect } from "react"
 import { useNavigation } from "@react-navigation/native"
 
 /* redux */
-import store, { useAppDispatch } from "../state/store"
+import { useAppDispatch } from "../state/store"
 import { setUser } from "../state/reducers/userSlice"
-
-import { getUserConnectionsIdsThunk } from "../state/thunks/user-connections/getUserConnectionIdsThunk"
 
 const StartupScreen: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -16,7 +14,6 @@ const StartupScreen: React.FC = () => {
   const tryLogin = async () => {
     try {
       const loggedInUser = await AsyncStorage.getItem("loggedInUser")
-      //console.log("loggedInUser", loggedInUser)
 
       if (!loggedInUser) {
         navigation.navigate("AuthStackNavigator")
@@ -24,8 +21,6 @@ const StartupScreen: React.FC = () => {
       }
       const parsedLoggedInUser = JSON.parse(loggedInUser)
       const cachedUserData = await AsyncStorage.getItem(parsedLoggedInUser.uid)
-
-      //console.log("cachedUserData", cachedUserData)
 
       if (!cachedUserData) {
         navigation.navigate("AuthStackNavigator")

@@ -1,12 +1,14 @@
-import SkeletonContent from "react-native-skeleton-content"
+import React from "react"
 import { Dimensions } from "react-native"
+import SkeletonPlaceholder from "react-native-skeleton-placeholder"
 
 interface SkeletonProps {
   children: React.ReactNode
   isLoading: boolean
 }
-const { width } = Dimensions.get("window")
-const Placeholder: React.FC<SkeletonProps> = ({ children, isLoading }) => {
+const { width, height } = Dimensions.get("window")
+
+/* const Placeholder: React.FC<SkeletonProps> = ({ children, isLoading }) => {
   return (
     <SkeletonContent
       containerStyle={{
@@ -96,6 +98,156 @@ const Placeholder: React.FC<SkeletonProps> = ({ children, isLoading }) => {
       {children}
     </SkeletonContent>
   )
+} */
+
+const Placeholder: React.FC<SkeletonProps> = ({ children, isLoading }) => {
+  if (isLoading) {
+    return (
+      <SkeletonPlaceholder>
+        <SkeletonPlaceholder.Item
+          flexDirection="column"
+          alignItems="center"
+          marginTop={7}
+        >
+          <SkeletonPlaceholder.Item
+            width={width * 0.3}
+            height={13}
+            borderRadius={7}
+          />
+          <SkeletonPlaceholder.Item
+            width={width * 0.7}
+            height={13}
+            borderRadius={7}
+          />
+          <SkeletonPlaceholder.Item
+            width={width * 0.7}
+            height={13}
+            borderRadius={7}
+          />
+        </SkeletonPlaceholder.Item>
+        <SkeletonPlaceholder.Item
+          flexDirection="column"
+          alignItems="center"
+          marginTop={7}
+        >
+          <SkeletonPlaceholder.Item
+            width={width * 0.3}
+            height={13}
+            borderRadius={7}
+          />
+          <SkeletonPlaceholder.Item
+            width={width * 0.7}
+            height={13}
+            borderRadius={7}
+          />
+          <SkeletonPlaceholder.Item
+            width={width * 0.7}
+            height={13}
+            borderRadius={7}
+          />
+        </SkeletonPlaceholder.Item>
+        <SkeletonPlaceholder.Item
+          flexDirection="column"
+          alignItems="center"
+          marginTop={7}
+        >
+          <SkeletonPlaceholder.Item
+            width={width * 0.3}
+            height={13}
+            borderRadius={7}
+          />
+          <SkeletonPlaceholder.Item
+            width={width * 0.7}
+            height={13}
+            borderRadius={7}
+          />
+          <SkeletonPlaceholder.Item
+            width={width * 0.7}
+            height={13}
+            borderRadius={7}
+          />
+        </SkeletonPlaceholder.Item>
+        <SkeletonPlaceholder.Item
+          flexDirection="column"
+          alignItems="center"
+          marginTop={7}
+        >
+          <SkeletonPlaceholder.Item
+            width={width * 0.3}
+            height={13}
+            borderRadius={7}
+          />
+          <SkeletonPlaceholder.Item
+            width={width * 0.7}
+            height={13}
+            borderRadius={7}
+          />
+          <SkeletonPlaceholder.Item
+            width={width * 0.7}
+            height={13}
+            borderRadius={7}
+          />
+        </SkeletonPlaceholder.Item>
+        <SkeletonPlaceholder.Item
+          flexDirection="column"
+          alignItems="center"
+          marginTop={7}
+        >
+          <SkeletonPlaceholder.Item
+            width={width * 0.3}
+            height={13}
+            borderRadius={7}
+          />
+          <SkeletonPlaceholder.Item
+            width={width * 0.7}
+            height={13}
+            borderRadius={7}
+          />
+          <SkeletonPlaceholder.Item
+            width={width * 0.7}
+            height={13}
+            borderRadius={7}
+          />
+        </SkeletonPlaceholder.Item>
+        <SkeletonPlaceholder.Item
+          flexDirection="column"
+          alignItems="center"
+          marginTop={7}
+        >
+          <SkeletonPlaceholder.Item
+            width={width * 0.3}
+            height={13}
+            borderRadius={7}
+          />
+          <SkeletonPlaceholder.Item
+            width={width * 0.7}
+            height={13}
+            borderRadius={7}
+          />
+          <SkeletonPlaceholder.Item
+            width={width * 0.7}
+            height={13}
+            borderRadius={7}
+          />
+        </SkeletonPlaceholder.Item>
+      </SkeletonPlaceholder>
+    )
+  }
+  return <>{children}</>
+}
+
+{
+  /* <SkeletonPlaceholder.Item
+              width={120}
+              height={20}
+              borderRadius={4}
+            />
+            <SkeletonPlaceholder.Item
+              marginTop={6}
+              width={80}
+              height={20}
+              borderRadius={4}
+            /> */
 }
 
 export default Placeholder

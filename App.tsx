@@ -11,6 +11,7 @@ import store from "./state/store"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useEffect, useCallback } from "react"
 import { getUserConnectionsIdsThunk } from "./state/thunks/user-connections/getUserConnectionIdsThunk"
+import "react-native-gesture-handler"
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
@@ -39,17 +40,14 @@ export default function App() {
     asyncFetchUserData()
 
     setTimeout(() => {
-      if (!store.getState().userConnections.fetchedAtStartup) {
+      if (
+        !store.getState().userConnections.fetchedAtStartup &&
+        store.getState().user.isAuthenticated
+      ) {
         console.log("fetching the user connections ids at startup...")
         store.dispatch(
           getUserConnectionsIdsThunk(store.getState().user.uid as string)
         )
-        /*         store.dispatch(
-          getUserConnectionsIdsThunk({
-            uid: store.getState().user.uid as string,
-            type: "following",
-          })
-        ) */
       }
     }, 200)
   }, [])
