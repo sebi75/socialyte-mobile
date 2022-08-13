@@ -29,7 +29,7 @@ const InputSearchComponent: React.FC<DiscoverSearchComponentProps> = ({
   return (
     <TouchableOpacity style={[styles.discoverSearchInputStyle, { width }]}>
       <TextInput
-        autoFocus={autoFocus}
+        autoFocus
         style={styles.input}
         placeholder="search for someone..."
         keyboardType="default"

@@ -27,6 +27,7 @@ export const sharePost = async () => {
     username: user.username,
     createdAt: new Date(),
     postOwner: user.uid,
+    profilePicture: user.profilePicture,
   }
 
   try {

@@ -40,7 +40,6 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   description,
   numberOfPosts,
   navigation,
-  route,
 }) => {
   const dispatch = useAppDispatch()
   const user = useSelector((state: RootState) => state.user)
@@ -78,7 +77,6 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           )}
         </TouchableOpacity>
 
-        {/* FOLLOWERS & FOLLOWING display */}
         <View style={styles.followingCard}>
           <FieldType type="Posts" count={numberOfPosts} />
           <FieldType
@@ -103,17 +101,14 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       </View>
 
       <View style={styles.lineTwo}>
-        {/* USERNAME */}
         <Text style={styles.usernameStyle}>
           {isUsersProfile ? user.username : username}
         </Text>
-        {/* BIO */}
         <Text style={styles.bioStyle}>
           {isUsersProfile ? user.description : description}
         </Text>
       </View>
 
-      {/* FOLLOW BUTTONS */}
       {!isUsersProfile && (
         <View style={styles.followButtonsSection}>
           {isFollowing ? (
@@ -145,7 +140,6 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       )}
 
       <View>
-        {/* buttons section */}
         {isUsersProfile && (
           <View style={styles.editProfileButton}>
             <CustomButton
@@ -153,7 +147,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
               onPress={() => navigation.navigate("EditScreen")}
               buttonStyle={{
                 backgroundColor: "rgba(255,255,255,0.1)",
-                width: width * 0.3,
+                width: width * 0.7,
               }}
             />
           </View>

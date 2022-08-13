@@ -9,11 +9,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../state/store"
 import { useAppDispatch } from "../../state/store"
 import { getUsersSearchHistoryThunk } from "../../state/thunks/search/getUsersSearchHistoryThunk"
-//
-//
-/* this screen should render results with user profiles from searches */
-//
-//
+
 const { width } = Dimensions.get("window")
 const DiscoverSearchScreen: React.FC = () => {
   const { users } = useSelector((state: RootState) => state.searchUsers)
@@ -21,7 +17,9 @@ const DiscoverSearchScreen: React.FC = () => {
   const { historyUsers, isLoading } = useSelector(
     (state: RootState) => state.searchUsers
   )
-  const displayUsers: any = users.length ? users : historyUsers
+  const displayUsers: any = users.length
+    ? users.filter((user: any) => user.uid !== uid)
+    : historyUsers.filter((user: any) => user.uid !== uid)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -47,6 +45,7 @@ const DiscoverSearchScreen: React.FC = () => {
                 profilePicture={item.profilePicture}
                 description={item.description}
                 addableToSearchHistory={true}
+                showFollowButton={false}
               />
             )}
           />

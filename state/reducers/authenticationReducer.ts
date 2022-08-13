@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
-import { AuthenticationState } from "../types/Authentication"
-
 /* thunks import */
 import { signUpWithEmailThunk } from "../thunks/authentication/signupWithEmailThunk"
 import { signInWithEmailThunk } from "../thunks/authentication/signinWithEmailThunk"
@@ -9,6 +7,11 @@ import { signOut } from "../../firebase/authentication/signOut."
 
 /* user actions */
 import { clearUserState } from "./userSlice"
+
+export interface AuthenticationState {
+  isLoading: boolean
+  error: string | undefined
+}
 
 const authenticationInitialState: AuthenticationState = {
   isLoading: false,

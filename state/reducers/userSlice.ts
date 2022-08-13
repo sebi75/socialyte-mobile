@@ -1,6 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { UserState } from "../types/User"
 import { updateUserProfileThunk } from "../thunks/user/updateUserProfileThunk"
+
+export interface UserState {
+  isAuthenticated: boolean
+  email: string | undefined
+  uid: string | undefined
+  username: string | undefined
+  description: string | undefined
+  profilePicture: string | undefined
+  isUpdatingLoading: boolean
+}
 
 const userInitialState: UserState = {
   isAuthenticated: false,

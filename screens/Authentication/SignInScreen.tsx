@@ -14,9 +14,9 @@ import { useReducer, useCallback, useEffect } from "react"
 
 import Colors from "../../constants/Colors"
 
-import { Input } from "./components/Input"
-import formReducer from "./components/reducer"
-import CustomButton from "./components/CustomButton"
+import { Input } from "../../components/Input/Input"
+import formReducer from "../../components/Input/reducer"
+import { CustomButton } from "../../components/CustomButton"
 import HideKeyboard from "../../components/HideKeyboard"
 import ErrorComponent from "../../components/ErrorComponent"
 

@@ -10,7 +10,7 @@ import React, { useEffect, useCallback } from "react"
 import { Avatar } from "react-native-paper"
 
 import Colors from "../../../constants/Colors"
-import CustomButton from "../../Authentication/components/CustomButton"
+import { CustomButton } from "../../../components/CustomButton"
 import HideKeyboard from "../../../components/HideKeyboard"
 
 /* REDUX */
@@ -121,7 +121,11 @@ const EditScreen: React.FC = () => {
             </View>
             <CustomButton
               title={"Update Profile"}
-              buttonStyle={{ marginTop: 50 }}
+              buttonStyle={{
+                marginTop: 35,
+                backgroundColor: "rgba(255,255,255,0.1)",
+                width: width * 0.7,
+              }}
               onPress={updateProfileHandler}
             />
           </View>
@@ -166,6 +170,7 @@ const containers = StyleSheet.create({
     width: width * 0.9,
     height: "100%",
     marginTop: 25,
+    alignItems: "center",
   },
   firstLineContainer: {
     flexDirection: "row",

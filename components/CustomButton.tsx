@@ -27,10 +27,8 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
 
 const styles = StyleSheet.create({
   buttonStyle: {
-    paddingHorizontal: 15,
-    width: width * 0.3,
+    width: width * 0.25,
     paddingVertical: 7,
-    marginHorizontal: 5,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",

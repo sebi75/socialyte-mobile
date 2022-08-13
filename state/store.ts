@@ -9,13 +9,14 @@ import userProfilePostsReducer from "./reducers/userProfilePosts"
 import editProfileReducer from "./reducers/editProfileReducer"
 import searchUsersReducer from "./reducers/searchUsersReducer"
 import userConnectionsReducer from "./reducers/userConnectionsReducer"
+import userFeedReducer from "./reducers/feedReducer"
 
-/* state that controls the global custom alert popup */
 import globalAlertReducer from "./reducers/globalAlertReducer"
 
 const store = configureStore({
   reducer: {
     userPosts: userProfilePostsReducer,
+    userFeed: userFeedReducer,
     userConnections: userConnectionsReducer,
     globalAlert: globalAlertReducer,
     editProfile: editProfileReducer,

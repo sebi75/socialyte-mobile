@@ -10,7 +10,9 @@ import store from "./state/store"
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useEffect, useCallback } from "react"
+
 import { getUserConnectionsIdsThunk } from "./state/thunks/user-connections/getUserConnectionIdsThunk"
+
 import "react-native-gesture-handler"
 
 LogBox.ignoreLogs([

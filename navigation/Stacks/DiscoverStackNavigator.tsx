@@ -176,7 +176,9 @@ const styles = StyleSheet.create({
   },
   button: {
     width: width * 0.3,
-    position: "absolute",
+    borderWidth: 1,
+    borderRadius: 7,
+    borderColor: "rgba(255,255,255,0.2)",
     right: 0,
   },
 })

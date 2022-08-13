@@ -5,15 +5,26 @@ import { useNavigation } from "@react-navigation/native"
 
 interface FeedPostProps {
   username: string
-  caption: string
-  imageURL: string
-  avatarImage: string
+  postDescription: string
+  mediaURL: string
+  profilePicture: string
+  createdAt: string
+  postId: string
+  postOwner: string
 }
 
 const { width } = Dimensions.get("window")
 
 const FeedPost: React.FC<FeedPostProps> = (props) => {
-  const { username, caption, imageURL, avatarImage } = props
+  const {
+    username,
+    profilePicture,
+    postDescription,
+    mediaURL,
+    createdAt,
+    postId,
+    postOwner,
+  } = props
   const navigation: any = useNavigation()
 
   return (
@@ -21,13 +32,13 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
       <View style={styles.postContainer}>
         {/* FIRST LINE */}
         <View style={styles.firstLine}>
-          <Image style={styles.avatarImage} source={{ uri: avatarImage }} />
+          <Image style={styles.avatarImage} source={{ uri: profilePicture }} />
           <Text style={styles.usernameStyle}>{username}</Text>
         </View>
         {/* SECOND LINE a.k.a. post image line */}
         <View>
           {/* @ts-ignore */}
-          <Image style={styles.postImage} source={imageURL} />
+          <Image style={styles.postImage} source={{ uri: mediaURL }} />
         </View>
         {/* THIRD LINE a.k.a. likes and comments icons */}
         <View style={styles.thirdLine}>

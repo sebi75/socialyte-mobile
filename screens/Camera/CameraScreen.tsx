@@ -11,6 +11,12 @@ import { CustomIconButton } from "../../components/IconButton"
 /* Use camera features */
 import { useCameraFeatures } from "../../hooks/useCameraFeatures"
 
+/* 
+//
+// BUG: witht he current version of the react-native-gesture-handler, we can't use the LongPressGestureHandler
+//
+*/
+
 const { width, height } = Dimensions.get("window")
 const CameraScreen = ({
   navigation,

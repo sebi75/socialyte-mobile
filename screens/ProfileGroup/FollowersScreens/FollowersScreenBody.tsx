@@ -36,6 +36,7 @@ const FollowersScreenBody: React.FC<FollowersScreenBody> = ({
                 userPreview.item
               return (
                 <UserSearchResult
+                  showFollowButton
                   uid={uid}
                   description={description}
                   profilePicture={profilePicture}

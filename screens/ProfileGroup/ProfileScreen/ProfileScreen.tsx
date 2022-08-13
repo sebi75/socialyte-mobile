@@ -3,7 +3,7 @@ import { View, FlatList, StyleSheet, Dimensions } from "react-native"
 import Colors from "../../../constants/Colors"
 
 /* Components */
-import ProfileHeader from "./Header"
+import ProfileHeader from "./ProfileHeader"
 import ProfilePosts from "./ProfilePosts"
 import { useEffect, useCallback } from "react"
 
@@ -12,7 +12,6 @@ import { getUserPostsThunk } from "../../../state/thunks/userPosts/getUserPostsT
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../../state/store"
 import { getUserConnectionsIdsThunk } from "../../../state/thunks/user-connections/getUserConnectionIdsThunk"
-import { clearTemporaryStoredData } from "../../../state/reducers/userConnectionsReducer"
 
 interface ProfileScreenProps {
   navigation: any
@@ -31,7 +30,6 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
   const user = useSelector((state: RootState) => state.user)
   const posts = users[passedUid]
 
-  //conditions to check if userPosts are already in the state and if they are, don't fetch them again
   const getUserPosts = useCallback((uid: string) => {
     if (
       (passedUid == user.uid &&
@@ -49,7 +47,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
     }
   }, [])
 
-  const getHeader = () => {
+  const getHeader = useCallback(() => {
     return (
       <ProfileHeader
         uid={passedUid}
@@ -63,10 +61,11 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
         route={route}
       />
     )
-  }
-  const getBody = () => {
+  }, [passedUid])
+
+  const getBody = useCallback(() => {
     return <ProfilePosts uid={passedUid} />
-  }
+  }, [passedUid])
 
   useEffect(() => {
     getUserPosts(route.params.uid)
@@ -76,11 +75,6 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
         temporaryFollowingIds[passedUid] == undefined)
     ) {
       dispatch(getUserConnectionsIdsThunk(route.params.uid))
-    }
-    return () => {
-      //clear the temporary state whenever the screen is unmounted,
-      //even if it's the user's
-      //dispatch(clearTemporaryStoredData())
     }
   }, [])
 

@@ -16,18 +16,16 @@ import HideKeyboard from "../../components/HideKeyboard"
 
 import Colors from "../../constants/Colors"
 
-import { Input } from "./components/Input"
-import formReducer from "./components/reducer"
-import CustomButton from "./components/CustomButton"
+import { Input } from "../../components/Input/Input"
+import formReducer from "../../components/Input/reducer"
+import { CustomButton } from "../../components/CustomButton"
 
 /* REDUX: */
 import { useAppDispatch } from "../../state/store"
 import { useSelector } from "react-redux"
 import { RootState } from "../../state/store"
-
 import { clearError } from "../../state/reducers/authenticationReducer"
 import { setUser } from "../../state/reducers/userSlice"
-
 import { signUpWithEmailThunk } from "../../state/thunks/authentication/signupWithEmailThunk"
 
 import { useNavigation } from "@react-navigation/native"
