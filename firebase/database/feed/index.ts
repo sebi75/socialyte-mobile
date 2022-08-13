@@ -19,7 +19,8 @@ export const getUserFeed = async (uid: string): Promise<GetUserPostsResult> => {
   const collectionRef = collection(db, "media")
   const userIdsDocument = await getDoc(doc(db, "connections", uid))
   const userIdsData = userIdsDocument.data()
-  const userIds = userIdsData?.followingIds || []
+  console.log({ userIdsData: userIdsData })
+  const userIds = userIdsData?.following || []
 
   const q = query(collectionRef, where("postOwner", "in", userIds))
 
@@ -27,7 +28,6 @@ export const getUserFeed = async (uid: string): Promise<GetUserPostsResult> => {
     const querySnapshot = await getDocs(q)
 
     querySnapshot.forEach((doc) => {
-      //same as the post
       const post = doc.data()
       post.createdAt = formatDate(new Date(post.createdAt.toDate()))
       post.postId = doc.id

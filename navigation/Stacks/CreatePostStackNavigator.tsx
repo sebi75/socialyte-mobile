@@ -29,7 +29,6 @@ const CreatePostStackNavigator = ({ navigation }: { navigation: any }) => {
       dispatch(setIsLoading(false))
       dispatch(clearCaption())
       dispatch(clearImageUri())
-      //after the post is shared and state cleared, navigate back to the feed
       navigation.navigate("FeedScreen")
     } catch (error: any) {
       dispatch(

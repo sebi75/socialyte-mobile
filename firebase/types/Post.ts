@@ -1,8 +1,7 @@
 export interface Post {
   postOwner: string
-  profilePicture: string
   username: string
-  description: string
+  postDescription: string
   mediaURL: string
   mediaType: string
   createdAt: Object

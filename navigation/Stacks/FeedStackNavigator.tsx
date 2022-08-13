@@ -11,6 +11,7 @@ import { CustomIconButton } from "../../components/IconButton"
 import CameraStackNavigator from "./CameraStackNavigator"
 import InboxScreen from "../../screens/Inbox/InboxScreen"
 import CreatePostStackNavigator from "./CreatePostStackNavigator"
+import ProfileScreen from "../../screens/ProfileGroup/ProfileScreen/ProfileScreen"
 
 /* REDUX: */
 import { useAppDispatch } from "../../state/store"
@@ -25,6 +26,7 @@ type RootStackParamList = {
   CameraStackNavigator: undefined
   InboxScreen: undefined
   CreatePostModal: undefined
+  ProfileScreen: undefined
 }
 
 const FeedStack = createNativeStackNavigator<RootStackParamList>()
@@ -35,7 +37,11 @@ const FeedStackNavigator: React.FC = () => {
   const dispatch = useAppDispatch()
 
   return (
-    <FeedStack.Navigator>
+    <FeedStack.Navigator
+      screenOptions={{
+        headerTintColor: "white",
+      }}
+    >
       <FeedStack.Screen
         name="FeedScreen"
         component={FeedScreen}
@@ -133,6 +139,33 @@ const FeedStackNavigator: React.FC = () => {
           headerTintColor: FeedSettings.titleColor,
         }}
       />
+
+      <FeedStack.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={({ navigation, route }: { navigation: any; route: any }) => ({
+          /* headerRight: () => {
+            if (route.params.uid == user.uid) {
+              return (
+                <CustomIconButton
+                  iconName={"settings"}
+                  color={"white"}
+                  onPress={() => navigation.navigate("SettingsModal")}
+                  size={25}
+                />
+              )
+            }
+          }, */
+          title: "Profile",
+          headerStyle: {
+            backgroundColor: ProfileSettings.backgroundColor,
+          },
+          headerTintcolor: "white",
+          headerTitleStyle: {
+            color: ProfileSettings.titleColor,
+          },
+        })}
+      />
     </FeedStack.Navigator>
   )
 }
@@ -145,6 +178,16 @@ interface FeedSettingsType {
 
 export const FeedSettings: FeedSettingsType = {
   title: "Socialyte",
+  backgroundColor: Platform.OS === "ios" ? Colors.dark : Colors.dark,
+  titleColor: "white",
+}
+
+interface ProfileSettingsType {
+  backgroundColor: string
+  titleColor: string
+}
+
+export const ProfileSettings: ProfileSettingsType = {
   backgroundColor: Platform.OS === "ios" ? Colors.dark : Colors.dark,
   titleColor: "white",
 }

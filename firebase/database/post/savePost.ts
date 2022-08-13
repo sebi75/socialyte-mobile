@@ -7,7 +7,7 @@ export const savePost = async (post: Partial<Post>) => {
   const collectionRef = collection(db, "media")
   const {
     mediaURL,
-    description,
+    postDescription,
     mediaType,
     username,
     createdAt,
@@ -18,7 +18,7 @@ export const savePost = async (post: Partial<Post>) => {
   const postData: Partial<Post> = {
     postOwner: postOwner,
     mediaURL: mediaURL,
-    description: description,
+    postDescription: postDescription,
     mediaType: mediaType,
     username: username,
     createdAt: createdAt,

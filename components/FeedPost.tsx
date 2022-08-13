@@ -1,13 +1,22 @@
-import { View, Text, Dimensions, StyleSheet, Image } from "react-native"
+import {
+  View,
+  Text,
+  Dimensions,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from "react-native"
 import Colors from "../constants/Colors"
+
 import { CustomIconButton } from "./IconButton"
+import { Avatar } from "react-native-paper"
+
 import { useNavigation } from "@react-navigation/native"
 
 interface FeedPostProps {
   username: string
   postDescription: string
   mediaURL: string
-  profilePicture: string
   createdAt: string
   postId: string
   postOwner: string
@@ -16,25 +25,28 @@ interface FeedPostProps {
 const { width } = Dimensions.get("window")
 
 const FeedPost: React.FC<FeedPostProps> = (props) => {
-  const {
-    username,
-    profilePicture,
-    postDescription,
-    mediaURL,
-    createdAt,
-    postId,
-    postOwner,
-  } = props
+  const { username, postDescription, mediaURL, createdAt, postId, postOwner } =
+    props
   const navigation: any = useNavigation()
 
   return (
     <View style={styles.screen}>
       <View style={styles.postContainer}>
         {/* FIRST LINE */}
-        <View style={styles.firstLine}>
-          <Image style={styles.avatarImage} source={{ uri: profilePicture }} />
+        <TouchableOpacity
+          style={styles.firstLine}
+          onPress={() =>
+            navigation.navigate("ProfileScreen", {
+              uid: postOwner,
+              username: username,
+              profilePicture: "",
+              description: "trololololo",
+            })
+          }
+        >
+          <AvatarPicture profilePicture={null} />
           <Text style={styles.usernameStyle}>{username}</Text>
-        </View>
+        </TouchableOpacity>
         {/* SECOND LINE a.k.a. post image line */}
         <View>
           {/* @ts-ignore */}
@@ -46,7 +58,7 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
           <View>
             <CustomIconButton
               iconName={"ios-heart-outline"}
-              size={31}
+              size={25}
               color={"white"}
               onPress={() => console.log("button clicked")}
             />
@@ -54,7 +66,7 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
           {/* comment button */}
           <View style={{ marginLeft: 10 }}>
             <CustomIconButton
-              size={31}
+              size={25}
               iconName={"ios-chatbubbles"}
               color={"white"}
               onPress={() => navigation.navigate("CommentsModal")}
@@ -63,6 +75,26 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
         </View>
       </View>
     </View>
+  )
+}
+
+const AvatarPicture: React.FC<{ profilePicture: string | null }> = ({
+  profilePicture,
+}) => {
+  return profilePicture ? (
+    <Avatar.Image
+      size={48}
+      source={{
+        uri: profilePicture,
+      }}
+    />
+  ) : (
+    <Avatar.Image
+      size={48}
+      source={{
+        uri: "https://firebasestorage.googleapis.com/v0/b/socialyte-baas.appspot.com/o/images%2Fdefault.png?alt=media&token=703d1382-8bb7-49e2-9dd0-8c7aeb8a8f74",
+      }}
+    />
   )
 }
 

@@ -16,10 +16,11 @@ const FeedScreen: React.FC = () => {
   const { posts, fetchedAtFirstMount } = useSelector(
     (state: RootState) => state.userFeed
   )
+
   const dispatch = useAppDispatch()
 
   const getFeedBody = () => {
-    return <FeedBodyComponent />
+    return <FeedBodyComponent posts={posts} />
   }
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const FeedScreen: React.FC = () => {
       console.log("Fetching user feed.....")
       dispatch(getUserFeedThunk(user.uid as string))
     }
-  }, [posts, fetchedAtFirstMount])
+  }, [posts, fetchedAtFirstMount, user.uid])
 
   return (
     <View style={styles.screen}>
