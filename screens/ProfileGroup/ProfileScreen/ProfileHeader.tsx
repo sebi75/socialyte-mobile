@@ -133,7 +133,10 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           <CustomButton
             title={"Message"}
             onPress={() => console.log("clicker")}
-            buttonStyle={{ backgroundColor: "rgba(255,255,255,0.1)", flex: 1 }}
+            buttonStyle={{
+              backgroundColor: "rgba(255,255,255,0.1)",
+              width: width * 0.5,
+            }}
             textStyle={{ color: "white" }}
           />
         </View>

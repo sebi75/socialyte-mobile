@@ -35,9 +35,13 @@ export const userFeedSlice = createSlice({
       getUserFeedThunk.fulfilled,
       (state, action: PayloadAction<Array<Post>>) => {
         state.fetchedAtFirstMount = true
+        state.isLoading = false
         state.posts = action.payload
       }
     )
+    builder.addCase(getUserFeedThunk.rejected, (state) => {
+      state.isLoading = false
+    })
   },
 })
 

@@ -36,7 +36,10 @@ const PicturePreviewScreen = ({
           storyId: uuidv(),
           expiresAt: Date.now() + 60 * 60 * 24 * 1000,
           username: user.username as string,
-          profilePicture: user.profilePicture as string,
+          profilePicture:
+            user.profilePicture != "" || user.profilePicture
+              ? (user.profilePicture as string)
+              : "https://firebasestorage.googleapis.com/v0/b/socialyte-baas.appspot.com/o/images%2Fdefault.png?alt=media&token=703d1382-8bb7-49e2-9dd0-8c7aeb8a8f74",
         })
       )
       navigation.goBack()

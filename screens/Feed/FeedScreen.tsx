@@ -1,4 +1,4 @@
-import { View, FlatList, StyleSheet } from "react-native"
+import { View, FlatList, StyleSheet, ActivityIndicator } from "react-native"
 
 import { useEffect } from "react"
 
@@ -13,7 +13,7 @@ import { useAppDispatch } from "../../state/store"
 
 const FeedScreen: React.FC = () => {
   const user = useSelector((state: RootState) => state.user)
-  const { posts, fetchedAtFirstMount } = useSelector(
+  const { posts, fetchedAtFirstMount, isLoading } = useSelector(
     (state: RootState) => state.userFeed
   )
 
@@ -33,6 +33,10 @@ const FeedScreen: React.FC = () => {
     <View style={styles.screen}>
       <FlatList
         showsVerticalScrollIndicator={false}
+        onRefresh={() => {
+          dispatch(getUserFeedThunk(user.uid as string))
+        }}
+        refreshing={isLoading}
         data={null}
         renderItem={() => null}
         ListHeaderComponent={null}

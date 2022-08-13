@@ -19,7 +19,7 @@ export const getUserFeed = async (uid: string): Promise<GetUserPostsResult> => {
   const collectionRef = collection(db, "media")
   const userIdsDocument = await getDoc(doc(db, "connections", uid))
   const userIdsData = userIdsDocument.data()
-  console.log({ userIdsData: userIdsData })
+
   const userIds = userIdsData?.following || []
 
   const q = query(collectionRef, where("postOwner", "in", userIds))
@@ -30,22 +30,14 @@ export const getUserFeed = async (uid: string): Promise<GetUserPostsResult> => {
     querySnapshot.forEach(async (document) => {
       const post = document.data()
 
-      const userDocRef = doc(db, "users", post.postOwner)
-      const userDoc = await getDoc(userDocRef)
-      const userData = userDoc.data()
-
-      post.createdAt = formatDate(new Date(post.createdAt.toDate()))
-      post.postId = document.id
-      post.profilePicture = userData?.profilePicture
-      post.username = userData?.username
-
-      posts.push(post as Post)
+      posts.push({
+        ...post,
+        postId: document.id,
+        createdAt: formatDate(new Date(post.createdAt.toDate())),
+      } as unknown as Post)
     })
   } catch (error: any) {
-    throw Error(
-      "error in getting the posts from the database with error: ",
-      error
-    )
+    throw Error("error in the getFeed function", error)
   }
   const time2 = performance.now()
   console.log(`getUserFeed took ${time2 - time1} milliseconds`)

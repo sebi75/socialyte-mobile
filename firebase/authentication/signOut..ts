@@ -9,7 +9,8 @@ export const signOut = async () => {
     const parsedUser = JSON.parse(signedInUser)
     await AsyncStorage.removeItem(parsedUser.uid)
     await AsyncStorage.removeItem("loggedInUser")
-  } catch (error) {
+  } catch (error: any) {
     console.log(error)
+    throw new Error(error)
   }
 }

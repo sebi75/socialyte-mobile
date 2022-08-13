@@ -52,7 +52,7 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
             })
           }
         >
-          <AvatarPicture profilePicture={null} />
+          <AvatarPicture profilePicture={profilePicture} />
           <Text style={styles.usernameStyle}>{username}</Text>
         </TouchableOpacity>
         {/* SECOND LINE a.k.a. post image line */}
@@ -91,14 +91,14 @@ const AvatarPicture: React.FC<{ profilePicture: string | null }> = ({
 }) => {
   return profilePicture ? (
     <Avatar.Image
-      size={48}
+      size={40}
       source={{
         uri: profilePicture,
       }}
     />
   ) : (
     <Avatar.Image
-      size={48}
+      size={40}
       source={{
         uri: "https://firebasestorage.googleapis.com/v0/b/socialyte-baas.appspot.com/o/images%2Fdefault.png?alt=media&token=703d1382-8bb7-49e2-9dd0-8c7aeb8a8f74",
       }}

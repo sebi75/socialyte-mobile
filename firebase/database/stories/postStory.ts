@@ -21,8 +21,7 @@ export const postStory = async (story: Story) => {
   try {
     await addDoc(collectionRef, storyData)
   } catch (error: any) {
-    console.log("Error in saving the story")
     console.log({ error })
-    throw new Error("Error in saving the post")
+    throw new Error("Error in saving the story")
   }
 }

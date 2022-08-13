@@ -88,7 +88,7 @@ const CameraScreen = ({
           </View>
           {/* BOTTOM BUTTONS */}
           <View style={styles.bottomButtons}>
-            <LongPressGestureHandler
+            {/* <LongPressGestureHandler
               onEnded={() => {
                 stopRecording()
               }}
@@ -107,7 +107,14 @@ const CameraScreen = ({
               >
                 <TouchableOpacity style={styles.captureButton} />
               </TapGestureHandler>
-            </LongPressGestureHandler>
+            </LongPressGestureHandler> */}
+            <TouchableOpacity
+              onPress={() => {
+                takePicture()
+              }}
+            >
+              <View style={styles.captureButton} />
+            </TouchableOpacity>
 
             <CustomIconButton
               iconName={"ios-camera-reverse-outline"}
