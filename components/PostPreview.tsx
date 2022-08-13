@@ -3,19 +3,38 @@ import { useNavigation } from "@react-navigation/native"
 const { width } = Dimensions.get("window")
 
 interface PostPreviewProps {
-  imageURL: string
+  mediaURL: string
+  username: string
+  postDescription: string
+  createdAt: string
+  postId: string
+  postOwner: string
 }
 
-const PostPreview: React.FC<PostPreviewProps> = ({ imageURL }) => {
+const PostPreview: React.FC<PostPreviewProps> = ({
+  mediaURL,
+  username,
+  postDescription,
+  createdAt,
+  postId,
+  postOwner,
+}) => {
   const navigation: any = useNavigation()
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={() =>
-        navigation.navigate("PostScreen", { title: "Sebastian Semeniuc" })
+        navigation.navigate("PostScreen", {
+          postOwner,
+          username,
+          postDescription,
+          mediaURL,
+          createdAt,
+          postId,
+        })
       }
     >
-      <Image style={styles.imageStyle} source={{ uri: imageURL }} />
+      <Image style={styles.imageStyle} source={{ uri: mediaURL }} />
     </TouchableOpacity>
   )
 }

@@ -1,11 +1,11 @@
 import { View, StyleSheet } from "react-native"
 
-import SettingItem from "./ProfileScreen/SettingItem"
+import SettingItem from "./SettingItem"
 
-import Colors from "../../constants/Colors"
+import Colors from "../../../constants/Colors"
 
-import { useAppDispatch } from "../../state/store"
-import { signOutThunk } from "../../state/reducers/authenticationReducer"
+import { useAppDispatch } from "../../../state/store"
+import { signOutThunk } from "../../../state/reducers/authenticationReducer"
 import { useNavigation } from "@react-navigation/native"
 
 const SettingsModal: React.FC = () => {

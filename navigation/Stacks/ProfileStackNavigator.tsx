@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
 import ProfileScreen from "../../screens/ProfileGroup/ProfileScreen/ProfileScreen"
-import SettingsModal from "../../screens/ProfileGroup/SettingsModal"
+import SettingsModal from "../../screens/ProfileGroup/SettingsScreen/SettingsModal"
 import EditScreen from "../../screens/ProfileGroup/EditScreen/EditScreen"
-import PostScreen from "../../screens/ProfileGroup/Post/PostScreen"
+import IndividualPostScreen from "../../screens/IndividualPostScreen"
 import FollowersScreen from "../../screens/ProfileGroup/FollowersScreens/FollowersScreen"
 
 import { CustomIconButton } from "../../components/IconButton"
@@ -62,22 +62,20 @@ const ProfileStackNavigator: React.FC = () => {
           },
         })}
       />
-      <ProfileStack.Group screenOptions={{ presentation: "modal" }}>
-        <ProfileStack.Screen
-          name="SettingsModal"
-          component={SettingsModal}
-          options={{
-            title: "Settings",
-            headerStyle: {
-              backgroundColor: "black",
-            },
-            headerTintColor: "white",
-            headerTitleStyle: {
-              color: "white",
-            },
-          }}
-        />
-      </ProfileStack.Group>
+      <ProfileStack.Screen
+        name="SettingsModal"
+        component={SettingsModal}
+        options={{
+          title: "Settings",
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          headerTintColor: "white",
+          headerTitleStyle: {
+            color: "white",
+          },
+        }}
+      />
       <ProfileStack.Screen
         name="EditScreen"
         component={EditScreen}
@@ -94,9 +92,9 @@ const ProfileStackNavigator: React.FC = () => {
       />
       <ProfileStack.Screen
         name="PostScreen"
-        component={PostScreen}
+        component={IndividualPostScreen}
         options={({ navigation, route }: { navigation: any; route: any }) => ({
-          title: route.params.title,
+          title: "Post",
           headerTintColor: "white",
           headerStyle: {
             backgroundColor: "black",

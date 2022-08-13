@@ -60,20 +60,24 @@ export const userConnectionsSlice = createSlice({
       const userId = action.payload
       state.followingIds.push(userId)
       state.numberOfFollowings++
-      state.temporaryFollowersIds[userId].push(userId) //we need to get our own id to push
+
+      if (state.temporaryFollowersIds[userId]) {
+        state.temporaryFollowersIds[userId].push(userId)
+      }
+
       state.temporaryNumberOfFollowers[userId]++
     },
     setUnfollowUser: (state, action: PayloadAction<string>) => {
       const userId = action.payload
-      state.followingIds = state.followingIds.filter(
-        (id) => id != action.payload
-      )
+      state.followingIds = state.followingIds.filter((id) => id != userId)
       state.followingPreview = state.followingPreview.filter((user) => {
-        return user.uid != action.payload
+        return user.uid != userId
       })
-      state.temporaryFollowersIds[userId] = state.temporaryFollowersIds[
-        userId
-      ].filter((id) => id != action.payload)
+      if (state.temporaryFollowersIds[userId]) {
+        state.temporaryFollowersIds[userId] = state.temporaryFollowersIds[
+          userId
+        ].filter((id) => id != action.payload)
+      }
       state.numberOfFollowings--
       state.temporaryNumberOfFollowers[action.payload]--
     },

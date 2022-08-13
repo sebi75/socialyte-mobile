@@ -36,8 +36,24 @@ const ProfilePosts: React.FC<ProfilePostsProps> = ({ uid }) => {
         data={posts}
         keyExtractor={(item) => item.description}
         renderItem={({ item }) => {
-          const { mediaURL, description } = item
-          return <PostPreview imageURL={mediaURL} />
+          const {
+            mediaURL,
+            description,
+            createdAt,
+            username,
+            postId,
+            postOwner,
+          } = item
+          return (
+            <PostPreview
+              mediaURL={mediaURL}
+              postDescription={description}
+              createdAt={createdAt}
+              username={username}
+              postId={postId}
+              postOwner={postOwner}
+            />
+          )
         }}
       />
     </SafeAreaView>

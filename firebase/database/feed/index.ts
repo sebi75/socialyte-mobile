@@ -13,8 +13,8 @@ import { formatDate } from "../../../utils/formatDate"
 
 type GetUserPostsResult = Array<Post>
 
-//this function creates the post in the state
 export const getUserFeed = async (uid: string): Promise<GetUserPostsResult> => {
+  const time1 = performance.now()
   let posts: Array<Post> = []
   const collectionRef = collection(db, "media")
   const userIdsDocument = await getDoc(doc(db, "connections", uid))
@@ -27,10 +27,18 @@ export const getUserFeed = async (uid: string): Promise<GetUserPostsResult> => {
   try {
     const querySnapshot = await getDocs(q)
 
-    querySnapshot.forEach((doc) => {
-      const post = doc.data()
+    querySnapshot.forEach(async (document) => {
+      const post = document.data()
+
+      const userDocRef = doc(db, "users", post.postOwner)
+      const userDoc = await getDoc(userDocRef)
+      const userData = userDoc.data()
+
       post.createdAt = formatDate(new Date(post.createdAt.toDate()))
-      post.postId = doc.id
+      post.postId = document.id
+      post.profilePicture = userData?.profilePicture
+      post.username = userData?.username
+
       posts.push(post as Post)
     })
   } catch (error: any) {
@@ -39,6 +47,7 @@ export const getUserFeed = async (uid: string): Promise<GetUserPostsResult> => {
       error
     )
   }
-
+  const time2 = performance.now()
+  console.log(`getUserFeed took ${time2 - time1} milliseconds`)
   return posts
 }

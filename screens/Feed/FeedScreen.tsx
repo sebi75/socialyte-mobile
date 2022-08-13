@@ -25,7 +25,6 @@ const FeedScreen: React.FC = () => {
 
   useEffect(() => {
     if (posts == [] || fetchedAtFirstMount == false) {
-      console.log("Fetching user feed.....")
       dispatch(getUserFeedThunk(user.uid as string))
     }
   }, [posts, fetchedAtFirstMount, user.uid])

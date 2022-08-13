@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native"
 interface FeedPostProps {
   username: string
   postDescription: string
+  profilePicture: string
   mediaURL: string
   createdAt: string
   postId: string
@@ -25,8 +26,15 @@ interface FeedPostProps {
 const { width } = Dimensions.get("window")
 
 const FeedPost: React.FC<FeedPostProps> = (props) => {
-  const { username, postDescription, mediaURL, createdAt, postId, postOwner } =
-    props
+  const {
+    username,
+    postDescription,
+    mediaURL,
+    createdAt,
+    postId,
+    postOwner,
+    profilePicture,
+  } = props
   const navigation: any = useNavigation()
 
   return (
@@ -39,8 +47,8 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
             navigation.navigate("ProfileScreen", {
               uid: postOwner,
               username: username,
-              profilePicture: "",
-              description: "trololololo",
+              profilePicture: profilePicture,
+              description: postDescription,
             })
           }
         >
