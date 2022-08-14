@@ -17,7 +17,7 @@ export const uploadImage = async (
   const blob = await response.blob()
 
   try {
-    await uploadBytes(imagesRef, blob).then((snapshot) => {})
+    await uploadBytes(imagesRef, blob)
   } catch (error) {
     console.log("error in uploading the image to the cloud storage: ", error)
   }

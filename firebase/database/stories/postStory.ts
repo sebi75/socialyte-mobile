@@ -8,20 +8,15 @@ import { Story } from "../../types/Story"
 
 export const postStory = async (story: Story) => {
   const collectionRef = collection(db, "stories")
-
-  const fileStorageName = uuidv()
-  //upload image to firebase storage
-  const imageUrl = await uploadImage(story.mediaURL, fileStorageName)
-
-  const storyData: Story = {
-    ...story,
-    mediaURL: imageUrl,
-  }
+  const imageUrl = await uploadImage(story.mediaURL, uuidv())
 
   try {
-    await addDoc(collectionRef, storyData)
+    await addDoc(collectionRef, {
+      ...story,
+      mediaURL: imageUrl,
+    })
   } catch (error: any) {
     console.log({ error })
-    throw new Error("Error in saving the story")
+    //throw new Error("Error in saving the story")
   }
 }

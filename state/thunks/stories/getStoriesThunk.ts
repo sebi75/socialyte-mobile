@@ -7,7 +7,6 @@ export const getStoriesThunk = createAsyncThunk(
   "userStories/getStories",
   async (_, thunkAPI: any): Promise<Story[] | []> => {
     try {
-      console.log({ message: "got here" })
       const stories = await getStories()
 
       if (stories.length == 0) {

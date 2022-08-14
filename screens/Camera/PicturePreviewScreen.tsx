@@ -1,4 +1,10 @@
-import { View, StyleSheet, Image } from "react-native"
+import {
+  View,
+  StyleSheet,
+  Image,
+  Dimensions,
+  ActivityIndicator,
+} from "react-native"
 import { CustomIconButton } from "../../components/IconButton"
 import { Video } from "expo-av"
 import { useRef } from "react"
@@ -8,6 +14,8 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { useAppDispatch } from "../../state/store"
 import { postStoryThunk } from "../../state/thunks/stories/postStoryThunk"
 
+import { postStory } from "../../firebase/database/stories/postStory"
+
 import { uuidv } from "../../utils/uuidv"
 
 import Colors from "../../constants/Colors"
@@ -15,6 +23,7 @@ import Colors from "../../constants/Colors"
 import { useSelector } from "react-redux"
 import { RootState } from "../../state/store"
 
+const { width, height } = Dimensions.get("window")
 const PicturePreviewScreen = ({
   navigation,
   route,
@@ -23,6 +32,7 @@ const PicturePreviewScreen = ({
   route: any
 }) => {
   const user = useSelector((state: RootState) => state.user)
+  const { postLoading } = useSelector((state: RootState) => state.stories)
   const resource = route.params.resource
   const isRecording = route.params.isRecording
   const videoRef = useRef<any>(null)
@@ -30,23 +40,19 @@ const PicturePreviewScreen = ({
   const dispatch = useAppDispatch()
 
   const handleStoryPost = async () => {
-    console.log("got here")
     try {
-      await dispatch(
-        postStoryThunk({
-          mediaURL: resource,
-          createdBy: user.uid as string,
-          storyId: uuidv(),
-          expiresAt: Date.now() + 60 * 60 * 24 * 1000,
-          username: user.username as string,
-          profilePicture: user.profilePicture as string,
-          createdAt: Date.now(),
-        })
-      )
+      await postStory({
+        mediaURL: resource,
+        createdBy: user.uid as string,
+        storyId: uuidv(),
+        expiresAt: Date.now() + 60 * 60 * 24 * 1000,
+        username: user.username as string,
+        profilePicture: user.profilePicture as string,
+        createdAt: Date.now(),
+      })
       navigation.goBack()
     } catch (error: any) {
       console.log(error)
-      throw new Error(error)
     }
   }
 
@@ -64,7 +70,7 @@ const PicturePreviewScreen = ({
           iconName={"cloud-upload"}
           color={"white"}
           size={25}
-          onPress={handleStoryPost}
+          onPress={() => handleStoryPost()}
         />
       </SafeAreaView>
       {isRecording ? (
@@ -79,6 +85,19 @@ const PicturePreviewScreen = ({
       ) : (
         <Image style={styles.image} source={{ uri: resource }} />
       )}
+
+      <View style={styles.bottomButtons}>
+        {postLoading ? (
+          <ActivityIndicator size={"small"} color={Colors.primary} />
+        ) : (
+          <CustomIconButton
+            iconName={"cloud-upload"}
+            size={30}
+            color={"white"}
+            onPress={handleStoryPost}
+          />
+        )}
+      </View>
     </View>
   )
 }
@@ -93,14 +112,22 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     position: "absolute",
+    zIndex: -10,
   },
   upperButtons: {
     flexDirection: "row",
-    marginVertical: 55,
     marginHorizontal: 15,
-    zIndex: 1,
     justifyContent: "space-between",
     alignItems: "center",
+  },
+
+  bottomButtons: {
+    backgroundColor: "red",
+    width,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    marginBottom: height * 0.12,
   },
 })
 
