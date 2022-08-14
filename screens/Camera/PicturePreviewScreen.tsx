@@ -3,6 +3,8 @@ import { CustomIconButton } from "../../components/IconButton"
 import { Video } from "expo-av"
 import { useRef } from "react"
 
+import { SafeAreaView } from "react-native-safe-area-context"
+
 import { useAppDispatch } from "../../state/store"
 import { postStoryThunk } from "../../state/thunks/stories/postStoryThunk"
 
@@ -37,7 +39,8 @@ const PicturePreviewScreen = ({
           storyId: uuidv(),
           expiresAt: Date.now() + 60 * 60 * 24 * 1000,
           username: user.username as string,
-          profilePicture: "",
+          profilePicture: user.profilePicture as string,
+          createdAt: Date.now(),
         })
       )
       navigation.goBack()
@@ -49,7 +52,7 @@ const PicturePreviewScreen = ({
 
   return (
     <View style={styles.screen}>
-      <View style={styles.upperButtons}>
+      <SafeAreaView style={styles.upperButtons}>
         <CustomIconButton
           iconName={"arrow-back"}
           color={"white"}
@@ -60,10 +63,10 @@ const PicturePreviewScreen = ({
         <CustomIconButton
           iconName={"cloud-upload"}
           color={"white"}
-          size={35}
+          size={25}
           onPress={handleStoryPost}
         />
-      </View>
+      </SafeAreaView>
       {isRecording ? (
         <Video
           source={{ uri: resource }}

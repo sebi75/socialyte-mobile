@@ -8,6 +8,11 @@ import { useSelector } from "react-redux"
 import { RootState, useAppDispatch } from "../../state/store"
 import { getStoriesThunk } from "../../state/thunks/stories/getStoriesThunk"
 
+/* 
+TODO: Add stories to local state when adding a new one
+fix the crash issues when adding a new story
+*/
+
 const { width, height } = Dimensions.get("window")
 const StoriesScreen: React.FC = () => {
   const {

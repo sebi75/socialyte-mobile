@@ -1,7 +1,16 @@
 import { useState } from "react"
 import { useFocusEffect, useNavigation } from "@react-navigation/native"
 import { SharedElement } from "react-navigation-shared-element"
-import { View, Image, StyleSheet, Dimensions, Pressable } from "react-native"
+import {
+  View,
+  Image,
+  StyleSheet,
+  Dimensions,
+  Pressable,
+  Text,
+} from "react-native"
+
+import { Avatar } from "react-native-paper"
 
 const margin = 16
 const borderRadius = 5
@@ -12,10 +21,13 @@ interface StoryThumbnailProps {
   mediaURL: string
   username: string
   storyId: string
+  createdAt: number
 }
 
+const { width: screenWidth } = Dimensions.get("window")
 const StoryThumbnail: React.FC<StoryThumbnailProps> = ({
   profilePicture,
+  createdAt,
   mediaURL,
   storyId,
   username,
@@ -29,37 +41,72 @@ const StoryThumbnail: React.FC<StoryThumbnailProps> = ({
     }
   })
 
+  const postedAgo = calculateTimeAgo(createdAt)
+
   return (
-    <Pressable
-      style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
-      onPress={() => {
-        setOpacity(0)
-        navigation.navigate("Story", {
-          story: {
-            storyId: storyId,
-            username: username,
-            profilePicture: profilePicture,
-            mediaURL: mediaURL,
-          },
-        })
-      }}
-    >
-      <View style={[styles.container, { opacity }]}>
-        <SharedElement id={storyId} style={{ flex: 1 }}>
-          {/* @ts-ignore */}
-          <Image source={{ uri: mediaURL }} style={styles.image} />
-        </SharedElement>
+    <View style={styles.mainContainer}>
+      <View style={styles.usersInformationContainer}>
+        {/* card with user info up above */}
+        <View
+          style={{
+            flexDirection: "row",
+          }}
+        >
+          <Avatar.Image
+            size={width * 0.15}
+            source={{
+              uri: profilePicture
+                ? profilePicture
+                : "https://firebasestorage.googleapis.com/v0/b/socialyte-baas.appspot.com/o/images%2Fdefault.png?alt=media&token=703d1382-8bb7-49e2-9dd0-8c7aeb8a8f74",
+            }}
+          />
+          <Text style={styles.textStyle}>{username}</Text>
+        </View>
+
+        <Text style={styles.postedAgoStyle}>{postedAgo} ago</Text>
       </View>
-    </Pressable>
+      <Pressable
+        style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+        onPress={() => {
+          setOpacity(0)
+          navigation.navigate("Story", {
+            story: {
+              storyId: storyId,
+              username: username,
+              profilePicture: profilePicture,
+              mediaURL: mediaURL,
+            },
+          })
+        }}
+      >
+        <View style={[styles.container, { opacity }]}>
+          <SharedElement id={storyId} style={{ flex: 1 }}>
+            {/* @ts-ignore */}
+            <Image source={{ uri: mediaURL }} style={styles.image} />
+          </SharedElement>
+        </View>
+      </Pressable>
+    </View>
   )
+}
+
+const calculateTimeAgo = (createdAt: number) => {
+  const timeInMinutes = Math.round((Date.now() - createdAt) / (1000 * 60))
+  if (timeInMinutes > 60) {
+    const timeInHours = timeInMinutes / 60 // 1.1, 1.111, 1.1232, 2.1...
+    const fractionalPart =
+      parseFloat(timeInHours.toFixed(1)) - Math.floor(timeInHours)
+    const minutes = fractionalPart * 60
+    return `${Math.floor(timeInHours)}h ${Math.floor(minutes)}m`
+  } else {
+    return `${timeInMinutes}m`
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     width,
     height: width * 1.77,
-    marginTop: 16,
-    marginHorizontal: 10,
     borderRadius,
   },
   image: {
@@ -68,6 +115,29 @@ const styles = StyleSheet.create({
     height: undefined,
     resizeMode: "cover",
     borderRadius,
+  },
+
+  textStyle: {
+    fontSize: 15,
+    color: "white",
+    marginHorizontal: 5,
+  },
+
+  usersInformationContainer: {
+    width,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginVertical: 5,
+  },
+
+  mainContainer: {
+    marginHorizontal: 5,
+    marginVertical: 10,
+  },
+  postedAgoStyle: {
+    fontSize: 12,
+    color: "rgba(255,255,255,0.7)",
   },
 })
 
