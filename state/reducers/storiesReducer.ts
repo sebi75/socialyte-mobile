@@ -7,6 +7,7 @@ import { getStoriesThunk } from "../thunks/stories/getStoriesThunk"
 
 interface UserStoriesStateType {
   stories: Story[]
+  postLoading: boolean
   isLoading: boolean
   postError: string | undefined
   getError: string | undefined
@@ -16,6 +17,7 @@ interface UserStoriesStateType {
 const initialState: UserStoriesStateType = {
   stories: [],
   isLoading: false,
+  postLoading: false,
   postError: undefined,
   getError: undefined,
   fetchedOnce: false,
@@ -30,8 +32,14 @@ const userStories = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(postStoryThunk.pending, (state) => {
+      state.postLoading = true
+    })
     builder.addCase(postStoryThunk.rejected, (state, action: any) => {
       state.postError = action.payload
+    })
+    builder.addCase(postStoryThunk.fulfilled, (state) => {
+      state.postLoading = false
     })
     builder.addCase(getStoriesThunk.pending, (state, action: any) => {
       state.isLoading = true
