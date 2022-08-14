@@ -4,6 +4,8 @@ import { uuidv } from "../../utils/uuidv"
 import { uploadImage } from "../storage"
 import { savePost } from "../database/post/savePost"
 
+import { setUserPost } from "../../state/reducers/userProfilePosts"
+
 export const sharePost = async () => {
   const { postData } = store.getState()
   const { user } = store.getState()
@@ -23,11 +25,22 @@ export const sharePost = async () => {
     mediaURL: mediaUrl,
     postDescription: caption as string,
     mediaType: "image/jpeg",
-    username: user.username,
+    username: user.username as string,
     createdAt: new Date(),
-    postOwner: user.uid,
-    profilePicture: user.profilePicture,
+    postOwner: user.uid as string,
+    profilePicture: user.profilePicture as string,
   }
+
+  //set the new post in the local state when posting it
+  store.dispatch(
+    setUserPost({
+      post: {
+        ...post,
+        postId: uuidv(),
+      },
+      uid: user.uid as string,
+    })
+  )
 
   try {
     await savePost(post)

@@ -10,14 +10,18 @@ type GetStoriesResult = Array<Story>
 export const getStories = async (): Promise<GetStoriesResult> => {
   let stories: GetStoriesResult = []
 
-  const userFollowingIds = store.getState().userConnections.followingIds
+  const uid = store.getState().user.uid
+
+  let userFollowingIds = store.getState().userConnections.followingIds
+
+  const uids = [...userFollowingIds, uid]
 
   const collectionRef = collection(db, "stories")
   const timeNow = Date.now()
 
   const q = query(
     collectionRef,
-    where("createdBy", "in", userFollowingIds),
+    where("createdBy", "in", uids),
     where("expiresAt", ">=", timeNow)
   )
 

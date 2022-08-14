@@ -7,6 +7,7 @@ export const getStoriesThunk = createAsyncThunk(
   "userStories/getStories",
   async (_, thunkAPI: any): Promise<Story[] | []> => {
     try {
+      console.log({ message: "got here" })
       const stories = await getStories()
 
       if (stories.length == 0) {
@@ -14,7 +15,8 @@ export const getStoriesThunk = createAsyncThunk(
       }
       return stories
     } catch (error: any) {
-      throw new Error("Error in getting the stories from the database", error)
+      console.log(error)
+      throw new Error("Error in getting the stories from the database")
     }
   }
 )

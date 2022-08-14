@@ -11,8 +11,8 @@ const StoriesStackNavigator: React.FC = () => {
       screenOptions={{
         presentation: "modal",
         gestureEnabled: true,
-        // cardOverlayEnabled: true,
-        // cardStyle: { backgroundColor: "transparent" },
+        cardOverlayEnabled: true,
+        cardStyle: { backgroundColor: "transparent" },
       }}
     >
       <StoriesStack.Screen

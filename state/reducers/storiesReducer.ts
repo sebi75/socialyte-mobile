@@ -44,9 +44,9 @@ const userStories = createSlice({
         state.stories = action.payload
       }
     )
-    builder.addCase(getStoriesThunk.rejected, (state) => {
+    builder.addCase(getStoriesThunk.rejected, (state, action) => {
       state.isLoading = false
-      console.log("error in thunk getting the stories, catched in reducer")
+      console.log(action.error)
       state.getError = "Error: Could not get stories"
     })
   },

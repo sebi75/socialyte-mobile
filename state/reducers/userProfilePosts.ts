@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { Post } from "../types/Post"
+import { Post } from "../../firebase/types"
 
 /* THUNKS */
 import { getUserPostsThunk } from "../thunks/userPosts/getUserPostsThunk"
@@ -24,6 +24,14 @@ const userProfilePosts = createSlice({
       const uid = action.payload.uid
       const posts = action.payload.posts
       state.users[uid] = posts
+    },
+
+    setUserPost: (
+      state,
+      action: PayloadAction<{ post: Post; uid: string }>
+    ) => {
+      const uid = action.payload.uid
+      state.users[uid].push(action.payload.post)
     },
   },
   extraReducers: (builder) => {
@@ -54,5 +62,5 @@ interface UserPostsAction {
   posts: Array<Post>
 }
 
-export const { setUserPosts } = userProfilePosts.actions
+export const { setUserPosts, setUserPost } = userProfilePosts.actions
 export default userProfilePosts.reducer
