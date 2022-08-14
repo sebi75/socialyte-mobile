@@ -32,10 +32,6 @@
 <img src="https://reactnavigation.org/img/spiro.svg" width="36" height="36" alt="SocketIo">
      <br>React navigation
     </td>
-    <td align="Center">      
-<img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/tailwindcss-colored.svg" width="36" height="36" alt="TailwindCSS" />
-  <br>TailwindCSS
-    </td>
           </tr>
 </tbody>
   </table>
