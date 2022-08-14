@@ -11,7 +11,6 @@ const StoriesStackNavigator: React.FC = () => {
       screenOptions={{
         presentation: "modal",
         gestureEnabled: true,
-        headerShown: false,
         // cardOverlayEnabled: true,
         // cardStyle: { backgroundColor: "transparent" },
       }}
@@ -34,6 +33,7 @@ const StoriesStackNavigator: React.FC = () => {
           headerStyle: {
             backgroundColor: "#1e1e1e",
           },
+          headerShown: false,
           headerTintColor: "#fff",
         })}
         sharedElements={(route) => {

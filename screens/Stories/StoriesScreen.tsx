@@ -1,8 +1,17 @@
 import { Text, View, StyleSheet, FlatList } from "react-native"
+import { useEffect } from "react"
+
 import StoryThumbnail from "./stories/StoryThumbnail"
 
+import { useSelector } from "react-redux"
+import { RootState, useAppDispatch } from "../../state/store"
+import { getStoriesThunk } from "../../state/thunks/stories/getStoriesThunk"
+
 const StoriesScreen: React.FC = () => {
-  //const stories = useSelector((state: RootState) => state.stories.stories)
+  const { stories: storiesData, fetchedOnce } = useSelector(
+    (state: RootState) => state.stories
+  )
+  const dispatch = useAppDispatch()
 
   const stories = [
     {
@@ -47,12 +56,22 @@ const StoriesScreen: React.FC = () => {
     },
   ]
 
+  useEffect(() => {
+    console.log({ storiesData })
+    if (storiesData.length == 0 || !fetchedOnce) {
+      console.log("Fetching stories data at first mount....")
+      dispatch(getStoriesThunk())
+    }
+  }, [])
+
+  const displayData = storiesData ? storiesData : stories
+
   return (
     <View style={styles.screen}>
       <FlatList
         showsVerticalScrollIndicator={false}
         numColumns={2}
-        data={stories}
+        data={displayData}
         keyExtractor={(item) => item.storyId}
         renderItem={({ item }) => {
           return <StoryThumbnail {...item} />

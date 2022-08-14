@@ -11,9 +11,8 @@ export const getStoriesThunk = createAsyncThunk(
 
       if (stories.length == 0) {
         return []
-      } else {
-        return stories
       }
+      return stories
     } catch (error: any) {
       throw new Error("Error in getting the stories from the database", error)
     }

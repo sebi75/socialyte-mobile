@@ -1,3 +1,5 @@
+import { Comment } from "./Comment"
+
 export interface Post {
   postOwner: string
   username: string
@@ -7,4 +9,6 @@ export interface Post {
   mediaType: string
   createdAt: Object
   postId: string
+  likes?: string[]
+  comments?: Comment[]
 }

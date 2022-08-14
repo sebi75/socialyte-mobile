@@ -7,7 +7,6 @@ import { Story } from "../../types"
 
 type GetStoriesResult = Array<Story>
 
-//this function creates the post in the state
 export const getStories = async (): Promise<GetStoriesResult> => {
   let stories: GetStoriesResult = []
 

@@ -1,8 +1,8 @@
 export interface Story {
-  createdBy: string
-  expiresAt: number
   mediaURL: string
+  createdBy: string
+  storyId: string
+  expiresAt: number
   username: string
   profilePicture: string
-  storyId: string
 }

@@ -10,6 +10,7 @@ interface UserStoriesStateType {
   isLoading: boolean
   postError: string | undefined
   getError: string | undefined
+  fetchedOnce: boolean
 }
 
 const initialState: UserStoriesStateType = {
@@ -17,6 +18,7 @@ const initialState: UserStoriesStateType = {
   isLoading: false,
   postError: undefined,
   getError: undefined,
+  fetchedOnce: false,
 }
 
 const userStories = createSlice({
@@ -37,9 +39,16 @@ const userStories = createSlice({
     builder.addCase(
       getStoriesThunk.fulfilled,
       (state, action: PayloadAction<Story[]>) => {
+        state.isLoading = false
+        state.fetchedOnce = true
         state.stories = action.payload
       }
     )
+    builder.addCase(getStoriesThunk.rejected, (state) => {
+      state.isLoading = false
+      console.log("error in thunk getting the stories, catched in reducer")
+      state.getError = "Error: Could not get stories"
+    })
   },
 })
 
