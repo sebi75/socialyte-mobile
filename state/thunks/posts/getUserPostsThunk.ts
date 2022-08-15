@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { getUserPosts } from "../../../firebase/database/post/getUserPosts"
 
-import { Post } from "../../types/Post"
+import { Post } from "../../../firebase/types"
 
 export const getUserPostsThunk = createAsyncThunk(
   "userPosts/getUserPosts",

@@ -8,7 +8,7 @@ import ProfilePosts from "./ProfilePosts"
 import { useEffect, useCallback } from "react"
 
 /* REDUX */
-import { getUserPostsThunk } from "../../../state/thunks/userPosts/getUserPostsThunk"
+import { getUserPostsThunk } from "../../../state/thunks/posts/getUserPostsThunk"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../../state/store"
 import { getUserConnectionsIdsThunk } from "../../../state/thunks/user-connections/getUserConnectionIdsThunk"

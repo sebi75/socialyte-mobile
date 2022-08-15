@@ -7,20 +7,25 @@ import FeedStackNavigator from "../Stacks/FeedStackNavigator"
 import StoriesStackNavigator from "../Stacks/StoriesStackNavigator"
 import DiscoverStackNavigator from "../Stacks/DiscoverStackNavigator"
 import ProfileStackNavigator from "../Stacks/ProfileStackNavigator"
+import { Platform, View } from "react-native"
 
 const Tab = createBottomTabNavigator()
 
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => {
+      screenOptions={() => {
         return {
           tabBarBackground: () => {
-            return <BlurView tint="dark" intensity={95} style={{ flex: 1 }} />
+            return Platform.OS === "android" ? (
+              <View style={{ backgroundColor: "black" }} />
+            ) : (
+              <BlurView tint="dark" intensity={95} style={{ flex: 1 }} />
+            )
           },
           headerShown: false,
           tabBarStyle: {
-            height: 100,
+            backgroundColor: "black",
           },
         }
       }}
@@ -30,9 +35,6 @@ const BottomTabNavigator = () => {
         name="FeedStackNavigator"
         component={FeedStackNavigator}
         options={{
-          tabBarStyle: {
-            position: "absolute",
-          },
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => {
             if (focused) {
@@ -48,9 +50,6 @@ const BottomTabNavigator = () => {
         name="DiscoverStackNavigator"
         component={DiscoverStackNavigator}
         options={{
-          tabBarStyle: {
-            position: "absolute",
-          },
           tabBarShowLabel: false,
           headerShown: false,
           tabBarIcon: ({ focused }) => {
@@ -62,10 +61,8 @@ const BottomTabNavigator = () => {
         name="StoriesStackNavigator"
         component={StoriesStackNavigator}
         options={{
-          tabBarStyle: {
-            position: "absolute",
-          },
           tabBarShowLabel: false,
+          headerShown: false,
           tabBarIcon: ({ focused }) => {
             if (!focused) {
               return (
@@ -82,9 +79,6 @@ const BottomTabNavigator = () => {
         options={{
           title: "Profile",
           tabBarShowLabel: false,
-          tabBarStyle: {
-            position: "absolute",
-          },
           tabBarIcon: ({ focused }) => {
             if (focused) {
               return (
@@ -100,9 +94,6 @@ const BottomTabNavigator = () => {
               )
             }
           },
-          tabBarBackground: () => (
-            <BlurView tint="dark" intensity={85} style={{ flex: 1 }} />
-          ),
         }}
       />
     </Tab.Navigator>

@@ -10,5 +10,7 @@ export interface Post {
   createdAt: Object
   postId: string
   likes?: string[]
+  numOfLikes: number
+  numOfComments: number
   comments?: Comment[]
 }

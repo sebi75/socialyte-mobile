@@ -14,7 +14,7 @@ export const CustomIconButton: React.FC<CustomIconButtonProps> = (props) => {
 
   return (
     <TouchableOpacity style={[styles.screen, style]} onPress={onPress}>
-      <Ionicons name={iconName} size={size} color={color} />
+      <Ionicons name={iconName} size={size} color={color} onPress={onPress} />
     </TouchableOpacity>
   )
 }
@@ -22,10 +22,9 @@ export const CustomIconButton: React.FC<CustomIconButtonProps> = (props) => {
 const styles = StyleSheet.create({
   screen: {
     maxWidth: 50,
-    width: 30,
+    width: 45,
     maxHeight: 50,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "green",
   },
 })

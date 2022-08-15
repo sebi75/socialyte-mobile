@@ -1,11 +1,5 @@
 import { updateDoc, doc, getDoc } from "firebase/firestore"
 import { db } from "../../firebaseConfig"
-/* 
-TODOS:
---> when someone taps the follow button, first it is checked on the frontend if the user is already followed by the user to exclude an unnecessary database call
-
---> if the user isn't followed and it is a valid user, then the user is added to the following list of the current user and the current user is added to the followers list of the user
-*/
 
 export const followUser = async (userId: string, userToFollowId: string) => {
   const currentUserDocRef = doc(db, "connections", userId)

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { Post } from "../types/Post"
+import { Post } from "../../firebase/types"
 
 /* THUNKS */
-import { getUserPostsThunk } from "../thunks/userPosts/getUserPostsThunk"
+import { getUserPostsThunk } from "../thunks/posts/getUserPostsThunk"
 
 interface UserFeedStateType {
   posts: Post[]

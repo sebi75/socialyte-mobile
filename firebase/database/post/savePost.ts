@@ -22,6 +22,10 @@ export const savePost = async (post: Partial<Post>) => {
     mediaType: mediaType,
     username: username,
     createdAt: createdAt,
+    numOfLikes: 0,
+    numOfComments: 0,
+    likes: [],
+    comments: [],
     profilePicture: profilePicture,
   }
 
