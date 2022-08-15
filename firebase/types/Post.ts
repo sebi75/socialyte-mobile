@@ -7,10 +7,10 @@ export interface Post {
   profilePicture: string
   mediaURL: string
   mediaType: string
-  createdAt: Object
+  createdAt: number
   postId: string
-  likes?: string[]
+  likes: string[]
   numOfLikes: number
   numOfComments: number
-  comments?: Comment[]
+  comments: Comment[]
 }

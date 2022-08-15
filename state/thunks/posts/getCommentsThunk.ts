@@ -6,11 +6,14 @@ import { Comment } from "../../../firebase/types"
 
 export const getCommentsThunk = createAsyncThunk(
   "posts/getCommentsThunk",
-  async (postId: string, thunkAPI): Promise<Comment[]> => {
+  async (
+    postId: string,
+    thunkAPI
+  ): Promise<{ postId: string; comments: Comment[] }> => {
     try {
       const comments = await getComments(postId)
 
-      return comments
+      return { comments, postId }
     } catch (error: any) {
       console.log(error.code)
       console.log(error)

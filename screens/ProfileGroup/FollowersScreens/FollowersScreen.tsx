@@ -27,6 +27,7 @@ const FollowersScreen: React.FC<FollowersScreenProps> = React.memo(
       followersPreview,
       temporaryFollowersPreview,
       followingPreview,
+      followingIds,
       temporaryFollowingPreview,
       isLoading: isContentLoading,
     } = useSelector((state: RootState) => state.userConnections)
@@ -52,7 +53,7 @@ const FollowersScreen: React.FC<FollowersScreenProps> = React.memo(
           }
         />
       )
-    }, [temporaryFollowingPreview[uid], followingPreview, uid])
+    }, [temporaryFollowingPreview[uid], followingPreview, uid, followingIds])
 
     const getFollowingHeader = useCallback(() => {
       return <FollowersScreenHeader type={"following"} uid={uid} />

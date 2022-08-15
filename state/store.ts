@@ -11,6 +11,7 @@ import searchUsersReducer from "./reducers/searchUsersReducer"
 import userConnectionsReducer from "./reducers/userConnectionsReducer"
 import userFeedReducer from "./reducers/feedReducer"
 import storiesReducer from "./reducers/storiesReducer"
+import postsUtilsReducer from "./reducers/postsUtilsReducer"
 
 import globalAlertReducer from "./reducers/globalAlertReducer"
 
@@ -19,6 +20,7 @@ const store = configureStore({
     userPosts: userProfilePostsReducer,
     userFeed: userFeedReducer,
     userConnections: userConnectionsReducer,
+    postsUtils: postsUtilsReducer,
     stories: storiesReducer,
     globalAlert: globalAlertReducer,
     editProfile: editProfileReducer,

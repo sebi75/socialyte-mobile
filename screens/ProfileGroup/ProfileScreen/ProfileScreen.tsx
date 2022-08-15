@@ -15,7 +15,14 @@ import { getUserConnectionsIdsThunk } from "../../../state/thunks/user-connectio
 
 interface ProfileScreenProps {
   navigation: any
-  route: any
+  route: {
+    params: {
+      uid: string
+      username: string
+      description: string
+      profilePicture: string
+    }
+  }
 }
 
 const { width, height } = Dimensions.get("window")
@@ -53,7 +60,9 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
         uid={passedUid}
         username={username}
         profilePicture={
-          user.uid == passedUid ? user.profilePicture : profilePicture
+          user.uid == passedUid
+            ? (user.profilePicture as string)
+            : profilePicture
         }
         description={description}
         numberOfPosts={1}

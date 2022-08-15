@@ -5,7 +5,7 @@ export const likePostOperation = async (
   postId: string,
   userId: string,
   type: "like" | "unlike"
-) => {
+): Promise<void> => {
   const postDocRef = doc(db, "media", postId)
 
   if (type == "like") {

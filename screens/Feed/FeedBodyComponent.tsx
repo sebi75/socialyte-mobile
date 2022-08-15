@@ -11,10 +11,11 @@ import { useNavigation } from "@react-navigation/native"
 
 interface FeedScreenProps {
   posts: Array<Post>
+  uid: string
 }
 
 const { width, height } = Dimensions.get("window")
-const FeedScreen: React.FC<FeedScreenProps> = React.memo(({ posts }) => {
+const FeedScreen: React.FC<FeedScreenProps> = React.memo(({ posts, uid }) => {
   const navigation: any = useNavigation()
 
   return (
@@ -33,10 +34,12 @@ const FeedScreen: React.FC<FeedScreenProps> = React.memo(({ posts }) => {
               postId,
               createdAt,
               postOwner,
+              likes,
             } = item
 
             return (
               <FeedPost
+                uid={uid}
                 username={username}
                 postDescription={postDescription}
                 profilePicture={profilePicture}
@@ -44,6 +47,7 @@ const FeedScreen: React.FC<FeedScreenProps> = React.memo(({ posts }) => {
                 postId={postId}
                 createdAt={createdAt.toLocaleString()}
                 postOwner={postOwner}
+                likes={likes}
               />
             )
           }}

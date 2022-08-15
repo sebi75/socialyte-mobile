@@ -1,6 +1,6 @@
 import { View, FlatList, StyleSheet, ActivityIndicator } from "react-native"
 
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 
 import Colors from "../../constants/Colors"
 
@@ -20,7 +20,7 @@ const FeedScreen: React.FC = () => {
   const dispatch = useAppDispatch()
 
   const getFeedBody = () => {
-    return <FeedBodyComponent posts={posts} />
+    return <FeedBodyComponent posts={posts} uid={user.uid as string} />
   }
 
   useEffect(() => {

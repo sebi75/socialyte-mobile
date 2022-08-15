@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native"
 import Colors from "../constants/Colors"
 
@@ -12,8 +13,15 @@ import { CustomIconButton } from "./IconButton"
 import { Avatar } from "react-native-paper"
 
 import { useNavigation } from "@react-navigation/native"
+import { useState } from "react"
+
+import { useAppDispatch, RootState } from "../state/store"
+import { likePostOperationThunk } from "../state/thunks/posts/likePostThunk"
+import { setLikePost } from "../state/reducers/feedReducer"
+import { useSelector } from "react-redux"
 
 interface FeedPostProps {
+  uid: string
   username: string
   postDescription: string
   profilePicture: string
@@ -21,12 +29,14 @@ interface FeedPostProps {
   createdAt: string
   postId: string
   postOwner: string
+  likes: string[]
 }
 
 const { width } = Dimensions.get("window")
 
 const FeedPost: React.FC<FeedPostProps> = (props) => {
   const {
+    uid,
     username,
     postDescription,
     mediaURL,
@@ -34,13 +44,54 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
     postId,
     postOwner,
     profilePicture,
+    likes,
   } = props
   const navigation: any = useNavigation()
+
+  const isLiked = likes.includes(uid)
+
+  const dispatch = useAppDispatch()
+  const isLoading = useSelector(
+    (state: RootState) => state.postsUtils.isLoading
+  )
+
+  const handleLikeButtonHandler = async (type: "like" | "unlike") => {
+    if (type === "like") {
+      await dispatch(
+        likePostOperationThunk({
+          postId,
+          userId: uid as string,
+          type: "like",
+        })
+      )
+      dispatch(
+        setLikePost({
+          postId,
+          uid: uid as string,
+          type: "like",
+        })
+      )
+    } else {
+      await dispatch(
+        likePostOperationThunk({
+          postId,
+          userId: uid as string,
+          type: "unlike",
+        })
+      )
+      dispatch(
+        setLikePost({
+          postId,
+          uid: uid as string,
+          type: "like",
+        })
+      )
+    }
+  }
 
   return (
     <View style={styles.screen}>
       <View style={styles.postContainer}>
-        {/* FIRST LINE */}
         <TouchableOpacity
           style={styles.firstLine}
           onPress={() =>
@@ -55,34 +106,61 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
           <AvatarPicture profilePicture={profilePicture} />
           <Text style={styles.usernameStyle}>{username}</Text>
         </TouchableOpacity>
-        {/* SECOND LINE a.k.a. post image line */}
         <View>
-          {/* @ts-ignore */}
           <Image style={styles.postImage} source={{ uri: mediaURL }} />
         </View>
-        {/* THIRD LINE a.k.a. likes and comments icons */}
         <View style={styles.thirdLine}>
-          {/* like button */}
           <View>
-            <CustomIconButton
-              iconName={"ios-heart-outline"}
-              size={25}
-              color={"white"}
-              onPress={() => console.log("button clicked")}
-            />
+            {isLoading ? (
+              <ActivityIndicator size={"small"} color={Colors.primary} />
+            ) : (
+              <LikeButtonsComponent
+                isLiked={isLiked}
+                handleLikeButtonHandler={handleLikeButtonHandler}
+              />
+            )}
           </View>
-          {/* comment button */}
           <View style={{ marginLeft: 10 }}>
             <CustomIconButton
               size={25}
               iconName={"ios-chatbubbles"}
               color={"white"}
-              onPress={() => navigation.navigate("CommentsModal")}
+              onPress={() =>
+                navigation.navigate("CommentsModal", {
+                  postId: postId,
+                })
+              }
             />
           </View>
         </View>
       </View>
     </View>
+  )
+}
+
+interface LikeButtonsComponentProps {
+  isLiked: boolean
+  handleLikeButtonHandler: (type: "like" | "unlike") => void
+}
+
+const LikeButtonsComponent: React.FC<LikeButtonsComponentProps> = ({
+  isLiked,
+  handleLikeButtonHandler,
+}) => {
+  return isLiked ? (
+    <CustomIconButton
+      iconName={"ios-heart"}
+      size={25}
+      color={Colors.errorColor}
+      onPress={() => handleLikeButtonHandler("unlike")}
+    />
+  ) : (
+    <CustomIconButton
+      iconName={"ios-heart-outline"}
+      size={25}
+      color={"white"}
+      onPress={() => handleLikeButtonHandler("like")}
+    />
   )
 }
 

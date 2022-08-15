@@ -23,6 +23,26 @@ export const userFeedSlice = createSlice({
     setUserFeedPosts: (state, action: PayloadAction<Array<Post>>) => {
       state.posts = action.payload
     },
+
+    setLikePost: (
+      state,
+      action: PayloadAction<{
+        postId: string
+        uid: string
+        type: "like" | "unlike"
+      }>
+    ) => {
+      const { postId, uid, type } = action.payload
+      const post = state.posts.find((p) => p.postId == postId)
+      if (post) {
+        if (type === "like") {
+          post.likes.push(uid)
+        } else {
+          post.likes = post.likes.filter((like) => like !== uid)
+        }
+      }
+    },
+
     setIsLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload
     },
@@ -45,5 +65,6 @@ export const userFeedSlice = createSlice({
   },
 })
 
-export const { setUserFeedPosts, setIsLoading } = userFeedSlice.actions
+export const { setUserFeedPosts, setIsLoading, setLikePost } =
+  userFeedSlice.actions
 export default userFeedSlice.reducer

@@ -15,6 +15,7 @@ export const getComments = async (postId: string): Promise<Comment[]> => {
         comment: doc.data().comment,
         uid: doc.data().uid,
         commentId: doc.id,
+        createdAt: doc.data().createdAt,
       }
     })
 

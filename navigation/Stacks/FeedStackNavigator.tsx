@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
 import FeedScreen from "../../screens/Feed/FeedScreen"
-import CommentsModalScreen from "../../screens/Feed/CommentsModalScreen"
+import CommentsModalScreen from "../../screens/Comments/CommentsModalScreen"
 
 import { View, Platform } from "react-native"
 import Colors from "../../constants/Colors"
@@ -13,29 +13,12 @@ import InboxScreen from "../../screens/Inbox/InboxScreen"
 import CreatePostStackNavigator from "./CreatePostStackNavigator"
 import ProfileScreen from "../../screens/ProfileGroup/ProfileScreen/ProfileScreen"
 
-/* REDUX: */
-import { useAppDispatch } from "../../state/store"
-import { useSelector } from "react-redux"
-import { RootState } from "../../state/store"
-
+/* get the data in the asyncstorage of current signed user */
 import testAsync from "../../utils/testAsync"
 
-type RootStackParamList = {
-  FeedScreen: undefined
-  CommentsModal: undefined
-  CameraStackNavigator: undefined
-  InboxScreen: undefined
-  CreatePostModal: undefined
-  ProfileScreen: undefined
-}
-
-const FeedStack = createNativeStackNavigator<RootStackParamList>()
+const FeedStack = createNativeStackNavigator()
 
 const FeedStackNavigator: React.FC = () => {
-  const { uid } = useSelector((state: RootState) => state.user)
-  console.log(uid)
-  const dispatch = useAppDispatch()
-
   return (
     <FeedStack.Navigator
       screenOptions={{
@@ -91,6 +74,9 @@ const FeedStackNavigator: React.FC = () => {
       <FeedStack.Group screenOptions={{ presentation: "modal" }}>
         <FeedStack.Screen
           name={"CommentsModal"}
+          initialParams={{
+            postId: "",
+          }}
           component={CommentsModalScreen}
           options={{
             title: "Comments: ",
