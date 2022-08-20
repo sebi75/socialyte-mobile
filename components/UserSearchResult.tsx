@@ -61,7 +61,7 @@ const UserSearchResult: React.FC<UserSearchResultProps> = ({
       <View style={styles.body}>
         <Text style={styles.username}>{username}</Text>
 
-        {showFollowButton && (
+        {showFollowButton && currentUserUid != uid && (
           <ShowFollowButtons
             currentUserUid={currentUserUid as string}
             uid={uid}

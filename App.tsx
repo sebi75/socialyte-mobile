@@ -27,6 +27,12 @@ LogBox.ignoreLogs(["Setting a timer"])
 
 enableScreens()
 
+/* 
+Next todos: 
+Fix bug when posting a new picture with the createdAt and change date types where needed to Date.now() because it is easier to work with
+Test more when uploading a new story if it still crashes and try to fix it.
+*/
+
 export default function App() {
   const asyncFetchUserData = useCallback(async () => {
     try {

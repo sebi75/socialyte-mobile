@@ -63,7 +63,7 @@ const FollowersScreen: React.FC<FollowersScreenProps> = React.memo(
       return <FollowersScreenHeader type={"followers"} uid={uid} />
     }, [uid])
 
-    useEffect(() => {
+    const getConnectionsHandler = () => {
       if (type == "followers") {
         if (user.uid != uid) {
           if (temporaryFollowersPreview[uid] != undefined) {
@@ -83,16 +83,19 @@ const FollowersScreen: React.FC<FollowersScreenProps> = React.memo(
           } else {
             dispatch(getUserConnectionsThunk({ uid, type: "following" }))
           }
-        } else if (followingPreview.length != 0) {
-          return
         } else {
+          console.log({ message: "calling" })
           dispatch(getUserConnectionsThunk({ uid, type: "following" }))
         }
       }
+    }
+
+    useEffect(() => {
+      getConnectionsHandler()
       return () => {
         dispatch(setArbitrarySearchResult([]))
       }
-    }, [])
+    }, [uid, user.uid])
     return (
       <View style={styles.screen}>
         <FlatList
@@ -104,6 +107,8 @@ const FollowersScreen: React.FC<FollowersScreenProps> = React.memo(
           }
           data={null}
           renderItem={() => null}
+          onRefresh={getConnectionsHandler}
+          refreshing={isContentLoading}
         />
       </View>
     )

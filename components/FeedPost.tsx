@@ -83,7 +83,7 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
         setLikePost({
           postId,
           uid: uid as string,
-          type: "like",
+          type: "unlike",
         })
       )
     }
@@ -112,7 +112,15 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
         <View style={styles.thirdLine}>
           <View>
             {isLoading ? (
-              <ActivityIndicator size={"small"} color={Colors.primary} />
+              <View
+                style={{
+                  width: 45,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <ActivityIndicator size={"small"} color={Colors.primary} />
+              </View>
             ) : (
               <LikeButtonsComponent
                 isLiked={isLiked}

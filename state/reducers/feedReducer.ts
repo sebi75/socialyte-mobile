@@ -38,7 +38,8 @@ export const userFeedSlice = createSlice({
         if (type === "like") {
           post.likes.push(uid)
         } else {
-          post.likes = post.likes.filter((like) => like !== uid)
+          console.log({ message: "called here" })
+          post.likes = post.likes.filter((string) => string !== uid)
         }
       }
     },
