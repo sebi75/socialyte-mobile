@@ -14,8 +14,6 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { useAppDispatch } from "../../state/store"
 import { postStoryThunk } from "../../state/thunks/stories/postStoryThunk"
 
-import { postStory } from "../../firebase/database/stories/postStory"
-
 import { uuidv } from "../../utils/uuidv"
 
 import Colors from "../../constants/Colors"
@@ -52,15 +50,6 @@ const PicturePreviewScreen = ({
           createdAt: Date.now(),
         })
       )
-      /* await postStory({
-        mediaURL: resource,
-        createdBy: user.uid as string,
-        storyId: uuidv(),
-        expiresAt: Date.now() + 60 * 60 * 24 * 1000,
-        username: user.username as string,
-        profilePicture: user.profilePicture as string,
-        createdAt: Date.now(),
-      }) */
       navigation.goBack()
     } catch (error: any) {
       console.log(error)

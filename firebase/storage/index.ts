@@ -1,5 +1,5 @@
 import { storage } from "../firebaseConfig"
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 
 //BIG TODO:
 //support more than just images
@@ -17,7 +17,7 @@ export const uploadImage = async (
   const blob = await response.blob()
 
   try {
-    await uploadBytes(imagesRef, blob)
+    await uploadBytesResumable(imagesRef, blob)
   } catch (error) {
     console.log("error in uploading the image to the cloud storage: ", error)
   }
