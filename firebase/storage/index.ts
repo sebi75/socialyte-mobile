@@ -4,6 +4,9 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 //BIG TODO:
 //support more than just images
 
+//Important bug fixed: If the uploadBytes function was used, then the app crashed for unknown yet reasons.
+//So now we're using the uploadBytesResumable and it works as expected.
+
 //upload image function will upload the image to firebase storage and return
 //the remote url to store it as the mediaUrl in the "media" collection posts
 export const uploadImage = async (
