@@ -26,9 +26,13 @@ export const sharePost = async () => {
     postDescription: caption as string,
     mediaType: "image/jpeg",
     username: user.username as string,
-    createdAt: new Date(),
+    createdAt: Date.now(),
     postOwner: user.uid as string,
     profilePicture: user.profilePicture as string,
+    likes: [],
+    numOfLikes: 0,
+    numOfComments: 0,
+    comments: [],
   }
 
   //set the new post in the local state when posting it

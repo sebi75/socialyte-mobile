@@ -3,10 +3,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 /* thunks import */
 import { signUpWithEmailThunk } from "../thunks/authentication/signupWithEmailThunk"
 import { signInWithEmailThunk } from "../thunks/authentication/signinWithEmailThunk"
-import { signOut } from "../../firebase/authentication/signOut."
-
-/* user actions */
-import { clearUserState } from "./userSlice"
 
 export interface AuthenticationState {
   isLoading: boolean
@@ -18,7 +14,7 @@ const authenticationInitialState: AuthenticationState = {
   error: undefined,
 }
 
-const userSlice = createSlice({
+const authenticationSlice = createSlice({
   name: "authentication",
   initialState: authenticationInitialState,
   reducers: {
@@ -64,18 +60,6 @@ const userSlice = createSlice({
   },
 })
 
-export const { clearError } = userSlice.actions
+export const { clearError } = authenticationSlice.actions
 
-export const signOutThunk = createAsyncThunk(
-  "user/signOut",
-  async (_, { dispatch }) => {
-    try {
-      await signOut()
-      dispatch(clearUserState())
-    } catch (error: any) {
-      throw new Error(error.message)
-    }
-  }
-)
-
-export default userSlice.reducer
+export default authenticationSlice.reducer

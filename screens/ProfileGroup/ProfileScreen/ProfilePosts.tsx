@@ -34,24 +34,28 @@ const ProfilePosts: React.FC<ProfilePostsProps> = ({ uid }) => {
       <FlatList
         numColumns={3}
         data={posts}
-        keyExtractor={(item) => item.description}
+        keyExtractor={(item) => item.postId}
         renderItem={({ item }) => {
           const {
             mediaURL,
-            description,
+            postDescription,
             createdAt,
             username,
             postId,
             postOwner,
+            profilePicture,
+            likes,
           } = item
           return (
             <PostPreview
+              profilePicture={profilePicture}
               mediaURL={mediaURL}
-              postDescription={description}
+              postDescription={postDescription}
               createdAt={createdAt}
               username={username}
               postId={postId}
               postOwner={postOwner}
+              likes={likes}
             />
           )
         }}

@@ -33,7 +33,6 @@ export const getUserFeed = async (uid: string): Promise<GetUserPostsResult> => {
       posts.push({
         ...post,
         postId: document.id,
-        createdAt: formatDate(new Date(post.createdAt.toDate())),
       } as unknown as Post)
     })
   } catch (error: any) {

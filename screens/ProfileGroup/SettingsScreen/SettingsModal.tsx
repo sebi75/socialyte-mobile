@@ -5,7 +5,7 @@ import SettingItem from "./SettingItem"
 import Colors from "../../../constants/Colors"
 
 import { useAppDispatch } from "../../../state/store"
-import { signOutThunk } from "../../../state/reducers/authenticationReducer"
+import { signOutThunk } from "../../../state/thunks/authentication/signOutThunk"
 import { useNavigation } from "@react-navigation/native"
 
 const SettingsModal: React.FC = () => {

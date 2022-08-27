@@ -6,18 +6,22 @@ interface PostPreviewProps {
   mediaURL: string
   username: string
   postDescription: string
-  createdAt: string
+  profilePicture: string
+  createdAt: number
   postId: string
   postOwner: string
+  likes: string[]
 }
 
 const PostPreview: React.FC<PostPreviewProps> = ({
   mediaURL,
   username,
   postDescription,
+  profilePicture,
   createdAt,
   postId,
   postOwner,
+  likes,
 }) => {
   const navigation: any = useNavigation()
   return (
@@ -28,6 +32,8 @@ const PostPreview: React.FC<PostPreviewProps> = ({
           postOwner,
           username,
           postDescription,
+          profilePicture,
+          likes,
           mediaURL,
           createdAt,
           postId,

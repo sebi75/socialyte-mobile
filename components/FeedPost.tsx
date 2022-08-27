@@ -7,13 +7,14 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native"
+
 import Colors from "../constants/Colors"
+import { formatDateNow } from "../utils/timeAgo"
 
 import { CustomIconButton } from "./IconButton"
 import { Avatar } from "react-native-paper"
 
 import { useNavigation } from "@react-navigation/native"
-import { useState } from "react"
 
 import { useAppDispatch, RootState } from "../state/store"
 import { likePostOperationThunk } from "../state/thunks/posts/likePostThunk"
@@ -26,7 +27,7 @@ interface FeedPostProps {
   postDescription: string
   profilePicture: string
   mediaURL: string
-  createdAt: string
+  createdAt: number
   postId: string
   postOwner: string
   likes: string[]
@@ -36,7 +37,7 @@ const { width } = Dimensions.get("window")
 
 const FeedPost: React.FC<FeedPostProps> = (props) => {
   const {
-    uid,
+    //uid,
     username,
     postDescription,
     mediaURL,
@@ -47,8 +48,14 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
     likes,
   } = props
   const navigation: any = useNavigation()
+  const { uid } = useSelector((state: RootState) => state.user)
 
-  const isLiked = likes.includes(uid)
+  let isLiked = false
+  if (likes.length > 0) {
+    isLiked = likes.includes(uid as string)
+  }
+
+  const timeAgo = formatDateNow(createdAt)
 
   const dispatch = useAppDispatch()
   const isLoading = useSelector(
@@ -103,8 +110,11 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
             })
           }
         >
-          <AvatarPicture profilePicture={profilePicture} />
-          <Text style={styles.usernameStyle}>{username}</Text>
+          <View style={styles.firstLineLeftSide}>
+            <AvatarPicture profilePicture={profilePicture} />
+            <Text style={styles.usernameStyle}>{username}</Text>
+          </View>
+          <Text style={styles.firstLineRightSide}>{timeAgo} ago</Text>
         </TouchableOpacity>
         <View>
           <Image style={styles.postImage} source={{ uri: mediaURL }} />
@@ -201,13 +211,6 @@ const styles = StyleSheet.create({
   postContainer: {
     width: width,
   },
-  firstLine: {
-    width: "100%",
-    marginVertical: 10,
-    flexDirection: "row",
-    height: 55,
-    alignItems: "center",
-  },
   avatarImage: {
     width: 48,
     height: 48,
@@ -230,6 +233,22 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     marginVertical: 10,
+  },
+  firstLine: {
+    width: "100%",
+    marginVertical: 10,
+    flexDirection: "row",
+    height: 55,
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  firstLineLeftSide: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  firstLineRightSide: {
+    fontSize: 12,
+    color: "rgba(255,255,255,0.6)",
   },
 })
 

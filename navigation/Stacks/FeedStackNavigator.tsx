@@ -12,6 +12,12 @@ import CameraStackNavigator from "./CameraStackNavigator"
 import InboxScreen from "../../screens/Inbox/InboxScreen"
 import CreatePostStackNavigator from "./CreatePostStackNavigator"
 import ProfileScreen from "../../screens/ProfileGroup/ProfileScreen/ProfileScreen"
+import FollowersScreen from "../../screens/ProfileGroup/FollowersScreens/FollowersScreen"
+import IndividualPostScreen from "../../screens/IndividualPostScreen"
+
+/* REDUX */
+import { useSelector } from "react-redux"
+import { RootState } from "../../state/store"
 
 /* get the data in the asyncstorage of current signed user */
 import testAsync from "../../utils/testAsync"
@@ -19,6 +25,8 @@ import testAsync from "../../utils/testAsync"
 const FeedStack = createNativeStackNavigator()
 
 const FeedStackNavigator: React.FC = () => {
+  const user = useSelector((state: RootState) => state.user)
+
   return (
     <FeedStack.Navigator
       screenOptions={{
@@ -127,26 +135,59 @@ const FeedStackNavigator: React.FC = () => {
       />
 
       <FeedStack.Screen
+        name="PostScreen"
+        component={IndividualPostScreen}
+        options={({ navigation, route }: { navigation: any; route: any }) => ({
+          title: "Post",
+          headerTintColor: "white",
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          headerTitleStyle: {
+            color: "white",
+          },
+        })}
+      />
+
+      <FeedStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
         options={({ navigation, route }: { navigation: any; route: any }) => ({
-          /* headerRight: () => {
-            if (route.params.uid == user.uid) {
-              return (
-                <CustomIconButton
-                  iconName={"settings"}
-                  color={"white"}
-                  onPress={() => navigation.navigate("SettingsModal")}
-                  size={25}
-                />
-              )
-            }
-          }, */
           title: "Profile",
           headerStyle: {
             backgroundColor: ProfileSettings.backgroundColor,
           },
           headerTintcolor: "white",
+          headerTitleStyle: {
+            color: ProfileSettings.titleColor,
+          },
+        })}
+      />
+      <FeedStack.Screen
+        name="FollowersScreen"
+        component={FollowersScreen}
+        initialParams={{ uid: user.uid, type: "followers" }}
+        options={({ navigation, route }: { navigation: any; route: any }) => ({
+          title: "Followers",
+          headerStyle: {
+            backgroundColor: ProfileSettings.backgroundColor,
+          },
+          headerTintColor: "white",
+          headerTitleStyle: {
+            color: ProfileSettings.titleColor,
+          },
+        })}
+      />
+      <FeedStack.Screen
+        name="FollowingScreen"
+        component={FollowersScreen}
+        initialParams={{ uid: user.uid, type: "following" }}
+        options={({ navigation, route }: { navigation: any; route: any }) => ({
+          title: "Following",
+          headerStyle: {
+            backgroundColor: ProfileSettings.backgroundColor,
+          },
+          headerTintColor: "white",
           headerTitleStyle: {
             color: ProfileSettings.titleColor,
           },

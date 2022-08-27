@@ -11,8 +11,6 @@ import store from "./state/store"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useEffect, useCallback } from "react"
 
-import { getUserConnectionsIdsThunk } from "./state/thunks/user-connections/getUserConnectionIdsThunk"
-
 import "react-native-gesture-handler"
 
 LogBox.ignoreLogs([
@@ -28,9 +26,7 @@ LogBox.ignoreLogs(["Setting a timer"])
 enableScreens()
 
 /* 
-Next todos: 
-Fix bug when posting a new picture with the createdAt and change date types where needed to Date.now() because it is easier to work with
-Test more when uploading a new story if it still crashes and try to fix it.
+TODO: clear all the state when the user logs out
 */
 
 export default function App() {
@@ -46,18 +42,6 @@ export default function App() {
 
   useEffect(() => {
     asyncFetchUserData()
-
-    setTimeout(() => {
-      if (
-        !store.getState().userConnections.fetchedAtStartup &&
-        store.getState().user.isAuthenticated
-      ) {
-        console.log("fetching the user connections ids at startup...")
-        store.dispatch(
-          getUserConnectionsIdsThunk(store.getState().user.uid as string)
-        )
-      }
-    }, 200)
   }, [])
 
   return (
