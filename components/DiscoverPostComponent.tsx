@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  ActivityIndicator,
 } from "react-native"
 
 import Colors from "../constants/Colors"
@@ -14,9 +13,6 @@ import { formatDateNow } from "../utils/timeAgo"
 import { Avatar } from "react-native-paper"
 
 import { useNavigation } from "@react-navigation/native"
-
-import { useAppDispatch, RootState } from "../state/store"
-import { useSelector } from "react-redux"
 
 interface FeedPostProps {
   uid: string
@@ -34,21 +30,16 @@ const { width } = Dimensions.get("window")
 
 const DiscoverPostComponent: React.FC<FeedPostProps> = (props) => {
   const {
-    //uid,
     username,
     postDescription,
     mediaURL,
     createdAt,
-    postId,
     postOwner,
     profilePicture,
-    likes,
   } = props
   const navigation: any = useNavigation()
-  const { uid } = useSelector((state: RootState) => state.user)
 
   const timeAgo = formatDateNow(createdAt)
-  const dispatch = useAppDispatch()
 
   return (
     <View style={styles.screen}>

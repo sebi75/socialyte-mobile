@@ -5,28 +5,17 @@ import { Post } from "../../types"
 
 export const savePost = async (post: Partial<Post>) => {
   const collectionRef = collection(db, "media")
-  const {
-    mediaURL,
-    postDescription,
-    mediaType,
-    username,
-    createdAt,
-    postOwner,
-    profilePicture,
-  } = post
+  const { mediaURL, postDescription, mediaType, createdAt, postOwner } = post
 
   const postData: Partial<Post> = {
     postOwner: postOwner,
     mediaURL: mediaURL,
     postDescription: postDescription,
     mediaType: mediaType,
-    username: username,
     createdAt: createdAt,
     numOfLikes: 0,
     numOfComments: 0,
     likes: [],
-    comments: [],
-    profilePicture: profilePicture,
   }
 
   try {

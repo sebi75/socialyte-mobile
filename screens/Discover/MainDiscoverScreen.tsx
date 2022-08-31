@@ -9,10 +9,6 @@ import { getDiscoverPostsThunk } from "../../state/thunks/discover/getDiscoverPo
 import { useSelector } from "react-redux"
 import DiscoverBodyComponent from "./DiscoverBodyComponent"
 
-/* 
-HERE we will bring the latest posts from the last 7 days I guess
-*/
-
 const { width, height } = Dimensions.get("window")
 const MainDiscoverScreen: React.FC = (props) => {
   const dispatch = useAppDispatch()

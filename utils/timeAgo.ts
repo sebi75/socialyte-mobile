@@ -31,10 +31,7 @@ export function formatDateNow(createdAt: number) {
       }
       return `${Math.round(timeInDays)} days`
     } else {
-      const fractionalPart =
-        parseFloat(timeInHours.toFixed(1)) - Math.floor(timeInHours)
-      const minutes = fractionalPart * 60
-      return `${Math.floor(timeInHours)}h ${Math.floor(minutes)}m`
+      return `${Math.floor(timeInHours)}h`
     }
   } else {
     return `${timeInMinutes} minutes`

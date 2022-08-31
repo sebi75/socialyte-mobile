@@ -1,11 +1,10 @@
-import { View, StyleSheet, Dimensions, FlatList } from "react-native"
+import { FlatList } from "react-native"
 
 import { useSelector } from "react-redux"
 import { RootState } from "../../state/store"
 
 import DiscoverPostComponent from "../../components/DiscoverPostComponent"
 
-const { width, height } = Dimensions.get("window")
 const DiscoverBodyComponent: React.FC = () => {
   const { posts, isLoading } = useSelector((state: RootState) => state.discover)
   const { uid } = useSelector((state: RootState) => state.user)
@@ -22,7 +21,5 @@ const DiscoverBodyComponent: React.FC = () => {
     />
   )
 }
-
-const style = StyleSheet.create({})
 
 export default DiscoverBodyComponent
