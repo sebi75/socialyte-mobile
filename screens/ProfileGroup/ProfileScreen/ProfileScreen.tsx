@@ -70,7 +70,14 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
         route={route}
       />
     )
-  }, [passedUid])
+  }, [
+    passedUid,
+    username,
+    description,
+    profilePicture,
+    user.uid,
+    user.profilePicture,
+  ])
 
   const getBody = useCallback(() => {
     return <ProfilePosts uid={passedUid} />

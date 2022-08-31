@@ -27,7 +27,7 @@ export const getUserFeed = async (uid: string): Promise<GetUserPostsResult> => {
   try {
     const querySnapshot = await getDocs(q)
 
-    querySnapshot.forEach(async (document) => {
+    querySnapshot.forEach((document) => {
       const post = document.data()
 
       posts.push({

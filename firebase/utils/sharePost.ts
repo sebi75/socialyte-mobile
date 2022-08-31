@@ -35,7 +35,6 @@ export const sharePost = async () => {
     comments: [],
   }
 
-  //set the new post in the local state when posting it
   store.dispatch(
     setUserPost({
       post: {

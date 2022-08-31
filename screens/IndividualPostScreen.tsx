@@ -35,7 +35,11 @@ const IndividualPostScreen: React.FC<IndividualPostScreenProps> = ({
     likes,
   } = route.params
   return (
-    <ScrollView>
+    <ScrollView
+      style={{
+        backgroundColor: Colors.dark,
+      }}
+    >
       <View style={styles.screen}>
         <FeedPost {...route.params} />
       </View>

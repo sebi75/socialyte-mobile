@@ -12,7 +12,7 @@ import userConnectionsReducer from "./reducers/userConnectionsReducer"
 import userFeedReducer from "./reducers/feedReducer"
 import storiesReducer from "./reducers/storiesReducer"
 import postsUtilsReducer from "./reducers/postsUtilsReducer"
-
+import discoverPostsReducer from "./reducers/discoverPostsReducer"
 import globalAlertReducer from "./reducers/globalAlertReducer"
 
 const store = configureStore({
@@ -28,6 +28,7 @@ const store = configureStore({
     auth: authenticationReducer,
     postData: createPostReducer,
     user: userReducer,
+    discover: discoverPostsReducer,
   },
   devTools: process.env.NODE_ENV !== "production",
 })
