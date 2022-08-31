@@ -1,4 +1,4 @@
-import { View, StyleSheet, Dimensions, FlatList } from "react-native"
+import { View, StyleSheet, FlatList } from "react-native"
 import { useEffect, useCallback } from "react"
 
 import Colors from "../../constants/Colors"
@@ -17,7 +17,6 @@ interface LikesModalScreenProps {
   }
 }
 
-const { width, height } = Dimensions.get("window")
 const LikesModalScreen: React.FC<LikesModalScreenProps> = ({ route }) => {
   const postId = route.params.postId
   const dispatch = useAppDispatch()
@@ -46,6 +45,7 @@ const LikesModalScreen: React.FC<LikesModalScreenProps> = ({ route }) => {
     <View style={styles.screen}>
       <FlatList
         renderItem={() => null}
+        showsVerticalScrollIndicator={false}
         data={null}
         refreshing={isLikesPreviewsLoading}
         onRefresh={() => dispatch(getLikesPreviewsThunk(postId))}
