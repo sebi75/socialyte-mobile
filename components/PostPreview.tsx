@@ -7,6 +7,7 @@ interface PostPreviewProps {
   username: string
   postDescription: string
   profilePicture: string
+  numOfLikes: number
   createdAt: number
   postId: string
   postOwner: string
@@ -18,6 +19,7 @@ const PostPreview: React.FC<PostPreviewProps> = ({
   username,
   postDescription,
   profilePicture,
+  numOfLikes,
   createdAt,
   postId,
   postOwner,
@@ -33,6 +35,7 @@ const PostPreview: React.FC<PostPreviewProps> = ({
           username,
           postDescription,
           profilePicture,
+          numOfLikes,
           likes,
           mediaURL,
           createdAt,

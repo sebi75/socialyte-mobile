@@ -9,3 +9,4 @@ export {
 
 export { Story } from "./Story"
 export { Comment } from "./Comment"
+export { LikePreview } from "./LikePreview"

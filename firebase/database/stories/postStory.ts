@@ -17,6 +17,6 @@ export const postStory = async (story: Story) => {
     })
   } catch (error: any) {
     console.log({ error })
-    //throw new Error("Error in saving the story")
+    throw new Error("Error in saving the story")
   }
 }

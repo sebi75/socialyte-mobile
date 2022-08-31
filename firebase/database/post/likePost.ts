@@ -1,5 +1,11 @@
 import { db } from "../../firebaseConfig"
-import { updateDoc, arrayUnion, arrayRemove, doc } from "firebase/firestore"
+import {
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  doc,
+  increment,
+} from "firebase/firestore"
 
 export const likePostOperation = async (
   postId: string,
@@ -11,10 +17,12 @@ export const likePostOperation = async (
   if (type == "like") {
     await updateDoc(postDocRef, {
       likes: arrayUnion(userId),
+      numOfLikes: increment(1),
     })
   } else {
     await updateDoc(postDocRef, {
       likes: arrayRemove(userId),
+      numOfLikes: increment(-1),
     })
   }
 }

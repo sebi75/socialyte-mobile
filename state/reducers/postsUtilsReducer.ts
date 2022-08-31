@@ -1,27 +1,35 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-import { Post, Comment } from "../../firebase/types"
+import { Comment, LikePreview } from "../../firebase/types"
 
 /* THUNKS */
 import { getCommentsThunk } from "../thunks/posts/getCommentsThunk"
 import { addCommentThunk } from "../thunks/posts/addCommentThunk"
 import { likePostOperationThunk } from "../thunks/posts/likePostThunk"
+import { getLikesPreviewsThunk } from "../thunks/posts/getLikesPreviewsThunk"
+
 import { uuidv } from "../../utils/uuidv"
 
 export interface UserFeedState {
   comments: { [key: string]: Comment[] } // and the key should be postIds
+  likesPreviews: { [key: string]: LikePreview[] } // and the key should be postIds
+  isLikesPreviewsLoading: boolean
   isLoading: boolean
   addingError: null | string
-  addingLoading: boolean
   gettingError: null | string
+  likesPreviewError: null | string
+  addingLoading: boolean
 }
 
 const initialState: UserFeedState = {
   comments: {},
+  likesPreviews: {},
+  isLikesPreviewsLoading: false,
   isLoading: false,
   addingLoading: false,
   addingError: null,
   gettingError: null,
+  likesPreviewError: null,
 }
 
 export const postsUtilsSlice = createSlice({
@@ -31,6 +39,13 @@ export const postsUtilsSlice = createSlice({
     setIsLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload
     },
+    /* setLikePost: (state, action: PayloadAction<string>) => {
+      const postId = action.payload
+      const likePreviewObject = {
+
+      }
+
+    }, */
     setAddcomment: (
       state,
       action: PayloadAction<{ comment: string; postId: string; uid: string }>
@@ -89,6 +104,24 @@ export const postsUtilsSlice = createSlice({
     builder.addCase(likePostOperationThunk.fulfilled, (state) => {
       state.isLoading = false
     })
+    builder.addCase(getLikesPreviewsThunk.pending, (state) => {
+      state.isLikesPreviewsLoading = true
+    })
+    builder.addCase(getLikesPreviewsThunk.rejected, (state, action) => {
+      state.isLikesPreviewsLoading = false
+      state.likesPreviewError = action.error.message as null | string
+    })
+    builder.addCase(
+      getLikesPreviewsThunk.fulfilled,
+      (
+        state,
+        action: PayloadAction<{ postId: string; likesPreviews: LikePreview[] }>
+      ) => {
+        let postId = action.payload.postId
+        state.isLikesPreviewsLoading = false
+        state.likesPreviews[postId] = action.payload.likesPreviews
+      }
+    )
   },
 })
 

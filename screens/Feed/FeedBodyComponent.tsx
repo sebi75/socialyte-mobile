@@ -30,6 +30,7 @@ const FeedScreen: React.FC<FeedScreenProps> = React.memo(({ posts, uid }) => {
               username,
               mediaURL,
               postDescription,
+              numOfLikes,
               profilePicture,
               postId,
               createdAt,
@@ -40,6 +41,7 @@ const FeedScreen: React.FC<FeedScreenProps> = React.memo(({ posts, uid }) => {
             return (
               <FeedPost
                 uid={uid}
+                numOfLikes={numOfLikes}
                 username={username}
                 postDescription={postDescription}
                 profilePicture={profilePicture}

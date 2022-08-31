@@ -1,4 +1,4 @@
-import { View, FlatList, StyleSheet, ActivityIndicator } from "react-native"
+import { View, FlatList, StyleSheet } from "react-native"
 
 import { useEffect } from "react"
 

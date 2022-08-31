@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
 import FeedScreen from "../../screens/Feed/FeedScreen"
 import CommentsModalScreen from "../../screens/Comments/CommentsModalScreen"
+import LikesModalScreen from "../../screens/Likes/LikesModalScreen"
 
 import { View, Platform } from "react-native"
 import Colors from "../../constants/Colors"
@@ -88,6 +89,23 @@ const FeedStackNavigator: React.FC = () => {
           component={CommentsModalScreen}
           options={{
             title: "Comments: ",
+            headerStyle: {
+              backgroundColor: FeedSettings.backgroundColor,
+            },
+            headerTitleStyle: {
+              color: FeedSettings.titleColor,
+            },
+            headerTintColor: FeedSettings.titleColor,
+          }}
+        />
+        <FeedStack.Screen
+          name={"LikesModal"}
+          initialParams={{
+            postId: "",
+          }}
+          component={LikesModalScreen}
+          options={{
+            title: "Likes: ",
             headerStyle: {
               backgroundColor: FeedSettings.backgroundColor,
             },

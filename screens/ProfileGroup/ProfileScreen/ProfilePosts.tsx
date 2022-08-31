@@ -45,12 +45,14 @@ const ProfilePosts: React.FC<ProfilePostsProps> = ({ uid }) => {
             postOwner,
             profilePicture,
             likes,
+            numOfLikes,
           } = item
           return (
             <PostPreview
               profilePicture={profilePicture}
               mediaURL={mediaURL}
               postDescription={postDescription}
+              numOfLikes={numOfLikes}
               createdAt={createdAt}
               username={username}
               postId={postId}

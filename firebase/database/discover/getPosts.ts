@@ -14,7 +14,6 @@ export const getDiscoverPosts = async (): Promise<Array<Post>> => {
   let posts: Array<Post> = []
   const collectionRef = collection(db, "media")
   const timeNow = Date.now() - 1000 * 3600 * 24 * 7
-  console.log({ timeNow })
   const q = query(collectionRef, where("createdAt", ">=", timeNow), limit(7))
 
   try {
@@ -22,7 +21,6 @@ export const getDiscoverPosts = async (): Promise<Array<Post>> => {
     querySnapshot.forEach((doc) => {
       const post = doc.data()
       post.id = doc.id
-      console.log({ post })
       posts.push(post as Post)
     })
 

@@ -11,6 +11,7 @@ interface IndividualPostScreenProps {
       username: string
       postDescription: string
       profilePicture: string
+      numOfLikes: number
       uid: string
       likes: string[]
       mediaURL: string

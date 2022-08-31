@@ -10,7 +10,7 @@ import { useSelector } from "react-redux"
 import DiscoverBodyComponent from "./DiscoverBodyComponent"
 
 const { width, height } = Dimensions.get("window")
-const MainDiscoverScreen: React.FC = (props) => {
+const MainDiscoverScreen: React.FC = () => {
   const dispatch = useAppDispatch()
   const { isLoading } = useSelector((state: RootState) => state.discover)
   const { uid } = useSelector((state: RootState) => state.user)

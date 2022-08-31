@@ -31,6 +31,7 @@ const PicturePreviewScreen = ({
 }) => {
   const user = useSelector((state: RootState) => state.user)
   const { postLoading } = useSelector((state: RootState) => state.stories)
+
   const resource = route.params.resource
   const isRecording = route.params.isRecording
   const videoRef = useRef<any>(null)

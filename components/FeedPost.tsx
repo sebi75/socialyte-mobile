@@ -26,6 +26,7 @@ interface FeedPostProps {
   username: string
   postDescription: string
   profilePicture: string
+  numOfLikes: number
   mediaURL: string
   createdAt: number
   postId: string
@@ -40,6 +41,7 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
     //uid,
     username,
     postDescription,
+    numOfLikes,
     mediaURL,
     createdAt,
     postId,
@@ -122,7 +124,7 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
           <Image style={styles.postImage} source={{ uri: mediaURL }} />
         </View>
         <View style={styles.thirdLine}>
-          <View>
+          <View style={styles.numOfLikesContainerStyle}>
             {isLoading ? (
               <View
                 style={{
@@ -139,6 +141,13 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
                 handleLikeButtonHandler={handleLikeButtonHandler}
               />
             )}
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("LikesModal", { postId: postId })
+              }
+            >
+              <Text style={styles.numOfLikesTextStyle}>{numOfLikes} likes</Text>
+            </TouchableOpacity>
           </View>
           <View style={{ marginLeft: 10 }}>
             <CustomIconButton
@@ -152,6 +161,11 @@ const FeedPost: React.FC<FeedPostProps> = (props) => {
               }
             />
           </View>
+        </View>
+        <View style={[styles.thirdLine, { marginHorizontal: 10 }]}>
+          <Text style={{ color: "rgba(255,255,255, 0.5)" }}>
+            {postDescription}
+          </Text>
         </View>
       </View>
     </View>
@@ -234,6 +248,7 @@ const styles = StyleSheet.create({
   thirdLine: {
     width: "100%",
     flexDirection: "row",
+    alignItems: "center",
     marginVertical: 10,
   },
   firstLine: {
@@ -251,6 +266,19 @@ const styles = StyleSheet.create({
   firstLineRightSide: {
     fontSize: 12,
     color: "rgba(255,255,255,0.6)",
+  },
+  numOfLikesContainerStyle: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 7,
+    borderRadius: 20,
+    borderColor: Colors.opWhite,
+    borderWidth: 1,
+  },
+  numOfLikesTextStyle: {
+    fontSize: 15,
+    color: "white",
   },
 })
 

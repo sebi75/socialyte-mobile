@@ -37,8 +37,10 @@ export const userFeedSlice = createSlice({
       if (post) {
         if (type === "like") {
           post.likes.push(uid)
+          post.numOfLikes++
         } else {
           post.likes = post.likes.filter((string) => string !== uid)
+          post.numOfLikes--
         }
       }
     },
