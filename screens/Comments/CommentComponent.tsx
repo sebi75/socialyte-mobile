@@ -2,7 +2,6 @@ import { View, Text, StyleSheet, Dimensions, Touchable } from "react-native"
 
 import { calculateTimeAgo } from "../../utils/timeAgo"
 import { useNavigation } from "@react-navigation/native"
-import { TouchableOpacity } from "react-native-gesture-handler"
 
 interface CommentComponentProps {
   comment: string
@@ -16,7 +15,7 @@ const CommentComponent: React.FC<CommentComponentProps> = ({
   createdAt,
 }) => {
   const timeago = calculateTimeAgo(createdAt)
-  const navigation: any = useNavigation()
+  //const navigation: any = useNavigation()
   return (
     <View
       style={styles.screen}
@@ -25,7 +24,9 @@ const CommentComponent: React.FC<CommentComponentProps> = ({
       })} */
     >
       <Text style={styles.textStyle}>{comment}</Text>
-      <Text style={styles.textStyle}>{timeago} ago</Text>
+      <Text style={styles.textStyle}>
+        {parseInt(timeago) < 1 ? "Just now" : timeago + " ago"}
+      </Text>
     </View>
   )
 }

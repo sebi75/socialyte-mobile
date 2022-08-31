@@ -98,6 +98,9 @@ export const userConnectionsSlice = createSlice({
       state.temporaryFollowersPreview = {}
       state.temporaryFollowingPreview = {}
     },
+    clearUserConnectionsSliceState: (state) => {
+      state = userConnectionsInitialState
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -157,6 +160,7 @@ export const {
   setIsLoading,
   setArbitrarySearchResult,
   clearTemporaryStoredData,
+  clearUserConnectionsSliceState,
   setInputSearchText,
 } = userConnectionsSlice.actions
 export default userConnectionsSlice.reducer

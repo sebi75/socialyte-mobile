@@ -32,6 +32,9 @@ const usersSearch = createSlice({
     setIsLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload
     },
+    clearSearchUsersSliceState: (state) => {
+      state = initialState
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUsersSearchThunk.pending, (state, action) => {
@@ -69,5 +72,6 @@ const usersSearch = createSlice({
   },
 })
 
-export const { setUsersSearch, setIsLoading } = usersSearch.actions
+export const { setUsersSearch, setIsLoading, clearSearchUsersSliceState } =
+  usersSearch.actions
 export default usersSearch.reducer

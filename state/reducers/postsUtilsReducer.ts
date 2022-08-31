@@ -45,6 +45,9 @@ export const postsUtilsSlice = createSlice({
         },
       ]
     },
+    clearpostUtilsSliceState: (state) => {
+      state = initialState
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -89,5 +92,6 @@ export const postsUtilsSlice = createSlice({
   },
 })
 
-export const { setIsLoading, setAddcomment } = postsUtilsSlice.actions
+export const { setIsLoading, setAddcomment, clearpostUtilsSliceState } =
+  postsUtilsSlice.actions
 export default postsUtilsSlice.reducer

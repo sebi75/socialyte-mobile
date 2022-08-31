@@ -31,6 +31,9 @@ export const createPostSlice = createSlice({
     setIsLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload
     },
+    clearCreatePostSliceState: (state) => {
+      state = initialState
+    },
   },
 })
 
@@ -40,5 +43,6 @@ export const {
   clearCaption,
   clearImageUri,
   setIsLoading,
+  clearCreatePostSliceState,
 } = createPostSlice.actions
 export default createPostSlice.reducer

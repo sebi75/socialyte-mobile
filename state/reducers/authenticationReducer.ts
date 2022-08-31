@@ -21,6 +21,9 @@ const authenticationSlice = createSlice({
     clearError: (state) => {
       state.error = undefined
     },
+    clearAuthenticationSliceState: (state) => {
+      state = authenticationInitialState
+    },
   },
 
   extraReducers: (builder) => {
@@ -60,6 +63,7 @@ const authenticationSlice = createSlice({
   },
 })
 
-export const { clearError } = authenticationSlice.actions
+export const { clearError, clearAuthenticationSliceState } =
+  authenticationSlice.actions
 
 export default authenticationSlice.reducer

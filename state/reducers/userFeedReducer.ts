@@ -23,6 +23,9 @@ const userFeed = createSlice({
     setUserFeedPosts: (state, action: PayloadAction<UserPostsAction>) => {
       const posts = action.payload.posts
     },
+    clearUserFeedSliceState: (state) => {
+      state = initialState
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserPostsThunk.pending, (state, action) => {
@@ -50,5 +53,5 @@ interface UserPostsAction {
   posts: Array<Post>
 }
 
-export const { setUserFeedPosts } = userFeed.actions
+export const { setUserFeedPosts, clearUserFeedSliceState } = userFeed.actions
 export default userFeed.reducer

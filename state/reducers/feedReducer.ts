@@ -38,14 +38,15 @@ export const userFeedSlice = createSlice({
         if (type === "like") {
           post.likes.push(uid)
         } else {
-          console.log({ message: "called here" })
           post.likes = post.likes.filter((string) => string !== uid)
         }
       }
     },
-
     setIsLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload
+    },
+    clearFeedSliceState: (state) => {
+      state = initialState
     },
   },
   extraReducers(builder) {
@@ -66,6 +67,10 @@ export const userFeedSlice = createSlice({
   },
 })
 
-export const { setUserFeedPosts, setIsLoading, setLikePost } =
-  userFeedSlice.actions
+export const {
+  setUserFeedPosts,
+  setIsLoading,
+  setLikePost,
+  clearFeedSliceState,
+} = userFeedSlice.actions
 export default userFeedSlice.reducer

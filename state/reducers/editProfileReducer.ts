@@ -23,9 +23,16 @@ const editProfileSlice = createSlice({
     setIsLoading: (state, action) => {
       state.isLoading = action.payload
     },
+    clearEditProfileSliceState: (state) => {
+      state = initialState
+    },
   },
 })
 
-export const { setUsername, setDescription, setImageUri } =
-  editProfileSlice.actions
+export const {
+  setUsername,
+  setDescription,
+  setImageUri,
+  clearEditProfileSliceState,
+} = editProfileSlice.actions
 export default editProfileSlice.reducer

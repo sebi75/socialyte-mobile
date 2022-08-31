@@ -33,6 +33,9 @@ const userProfilePosts = createSlice({
       const uid = action.payload.uid
       state.users[uid].push(action.payload.post)
     },
+    clearUserProfilePostsSliceState: (state) => {
+      state = initialState
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserPostsThunk.pending, (state, action) => {
@@ -62,5 +65,6 @@ interface UserPostsAction {
   posts: Array<Post>
 }
 
-export const { setUserPosts, setUserPost } = userProfilePosts.actions
+export const { setUserPosts, setUserPost, clearUserProfilePostsSliceState } =
+  userProfilePosts.actions
 export default userProfilePosts.reducer

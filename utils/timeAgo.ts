@@ -23,13 +23,13 @@ export function formatDateNow(createdAt: number) {
           const timeInMonths = timeInWeeks / 4 // 1.1, 1.111, 1.1232, 2.1...
           if (timeInMonths > 12) {
             const timeInYears = timeInMonths / 12 // 1.1, 1.111, 1.1232, 2.1...
-            return `${Math.round(timeInYears)} years ago`
+            return `${Math.round(timeInYears)} years`
           }
-          return `${Math.round(timeInMonths)} months ago`
+          return `${Math.round(timeInMonths)} months`
         }
-        return `${Math.round(timeInWeeks)} weeks ago`
+        return `${Math.round(timeInWeeks)} weeks`
       }
-      return `${Math.round(timeInDays)} days ago`
+      return `${Math.round(timeInDays)} days`
     } else {
       const fractionalPart =
         parseFloat(timeInHours.toFixed(1)) - Math.floor(timeInHours)

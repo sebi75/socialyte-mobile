@@ -30,6 +30,9 @@ const userStories = createSlice({
     setUserStories: (state, action: PayloadAction<UserStoriesAction>) => {
       state.stories = action.payload.stories
     },
+    clearStoriesSliceState: (state) => {
+      state = initialState
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(postStoryThunk.pending, (state) => {
@@ -64,5 +67,5 @@ interface UserStoriesAction {
   stories: Array<Story>
 }
 
-export const { setUserStories } = userStories.actions
+export const { setUserStories, clearStoriesSliceState } = userStories.actions
 export default userStories.reducer
