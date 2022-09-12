@@ -31,6 +31,7 @@ const CreatePostStackNavigator = ({ navigation }: { navigation: any }) => {
       dispatch(clearImageUri())
       navigation.navigate("FeedScreen")
     } catch (error: any) {
+      console.log({ error })
       dispatch(
         setGlobalAlertData({
           isVisible: true,
