@@ -36,4 +36,6 @@
 </tbody>
   </table>
   
+   Instagram-like user interface, socialyte-mobile is a mobile application built with React-Native managed by Expo, instagram-like, with its intuitive screen navigation and other features implemented like: querying users and updating results by searching in real-time, gain followers or follow other people, see who you're followed by, who you're following, check the feed with most recent posts by the people you're following, update your profile, take pictures with the in-app camera and post them for feed or story, post stories that last 24hours
+  
   ![alt text](https://i.imgur.com/iUS68i1.jpg) ![alt text](https://i.imgur.com/5UdA2eO.jpg) ![alt text](https://i.imgur.com/twgCvy5.jpg)
