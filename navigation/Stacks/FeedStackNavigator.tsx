@@ -55,13 +55,13 @@ const FeedStackNavigator: React.FC = () => {
           ),
           headerRight: () => (
             <View style={{ flexDirection: "row" }}>
-              <CustomIconButton
+              {/* <CustomIconButton
                 style={{ marginRight: 10 }}
                 iconName={"ios-add-circle-outline"}
                 size={25}
                 color={"white"}
                 onPress={testAsync}
-              />
+              /> */}
               <CustomIconButton
                 style={{ marginRight: 10 }}
                 iconName={"ios-add-circle-outline"}

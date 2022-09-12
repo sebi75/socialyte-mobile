@@ -18,12 +18,13 @@ export const sharePost = async () => {
   try {
     mediaUrl = await uploadImage(imageUri, remoteImageLocation)
   } catch (error: any) {
+    console.log({ error })
     throw new Error(error.message)
   }
 
   const post = {
     mediaURL: mediaUrl,
-    postDescription: caption as string,
+    postDescription: caption ?? "",
     mediaType: "image/jpeg",
     username: user.username as string,
     createdAt: Date.now(),
@@ -35,7 +36,7 @@ export const sharePost = async () => {
     comments: [],
   }
 
-  store.dispatch(
+  /* store.dispatch(
     setUserPost({
       post: {
         ...post,
@@ -43,12 +44,12 @@ export const sharePost = async () => {
       },
       uid: user.uid as string,
     })
-  )
+  ) */
 
   try {
     await savePost(post)
   } catch (error: any) {
     console.log(error)
-    throw new Error(error.message)
+    throw new Error(error)
   }
 }
