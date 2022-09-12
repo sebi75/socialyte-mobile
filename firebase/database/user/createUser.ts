@@ -10,6 +10,8 @@ interface UserFollowingInterface {
 interface ConnectionDocumentInterface {
   followers: Array<UserFollowingInterface>
   following: Array<UserFollowingInterface>
+  numberOfFollowers: number
+  numberOfFollowings: number
 }
 
 interface UserDocumentInterface {
@@ -25,6 +27,8 @@ interface UserDocumentInterface {
 const initialConnectionsDocumentState: ConnectionDocumentInterface = {
   followers: [],
   following: [],
+  numberOfFollowers: 0,
+  numberOfFollowings: 0,
 }
 
 export const createUserDocumentAtSignup = async (

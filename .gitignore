@@ -4,6 +4,7 @@
 /.pnp
 
 firebase/firebaseConfig.ts
+socialyte.code-workspace
 
 .pnp.js
 .firebaserc
